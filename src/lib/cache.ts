@@ -51,19 +51,38 @@ const BLOB_PREFIX = "arpg-cache";
 
 async function getBlob<T>(key: string): Promise<CacheEntry<T> | null> {
   try {
-    const { list } = await import("@vercel/blob");
+    const { list, del } = await import("@vercel/blob");
     const pathname = `${BLOB_PREFIX}/${key}.json`;
     const { blobs } = await list({ prefix: pathname });
     const blob = blobs.find((b) => b.pathname === pathname);
     if (!blob) return null;
+
     const res = await fetch(blob.url, {
       headers: { Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}` },
       cache: "no-store",
     });
     if (!res.ok) return null;
-    const entry = (await res.json()) as CacheEntry<T>;
-    if (new Date(entry.expiresAt) > new Date()) return entry;
-    return null;
+
+    const text = await res.text();
+    if (!text || text.trim().length < 2) return null; // empty blob
+
+    let entry: CacheEntry<T>;
+    try {
+      entry = JSON.parse(text) as CacheEntry<T>;
+    } catch {
+      // Corrupted blob — delete it so next write starts fresh
+      del(blob.url).catch(() => {});
+      return null;
+    }
+
+    if (new Date(entry.expiresAt) <= new Date()) {
+      // Expired — delete to keep storage clean, but still return stale data
+      // so the page has something to show until the cron refreshes it
+      del(blob.url).catch(() => {});
+      return entry; // return stale rather than null
+    }
+
+    return entry;
   } catch (e) {
     console.error(`[cache:getBlob] ${key}`, e);
     return null;

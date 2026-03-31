@@ -1,23 +1,11 @@
 /**
- * Season data types. Game data (config + seasons) lives in src/data/games/*.json.
+ * Game season types and data.
+ * Game config + season data lives in src/data/games/*.json
  * Add a new game: create the JSON file and register it in src/data/index.ts.
  */
 
-export interface ManualSeasonEntry {
-  seasonName: string;
-  seasonNumber?: number;
-  startDate: string; // YYYY-MM-DD
-  endDate: string | null; // YYYY-MM-DD or null
-  nextSeasonStartDate?: string; // YYYY-MM-DD — only if officially announced
-  description?: string;
-  sourceUrl?: string;
-  confidence: "high" | "medium" | "low";
-}
+// Re-export types so existing imports keep working.
+export type { ManualSeasonEntry, GameSeasons } from "@/types";
 
-export interface GameSeasons {
-  gameId: string;
-  seasons: ManualSeasonEntry[]; // newest first
-}
-
-// Re-export from central loader so existing imports keep working.
+// Re-export data from the central loader.
 export { GAME_SEASONS } from "@/data";

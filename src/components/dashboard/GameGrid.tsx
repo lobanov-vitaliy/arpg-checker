@@ -120,7 +120,7 @@ function GameGridInner({ games, seasons, cards, tableRows }: GameGridProps) {
   const searchParams = useSearchParams();
 
   const [view, setView] = useState<ViewMode>((searchParams.get("view") as ViewMode) ?? "grid");
-  const [cardSort, setCardSort] = useState<CardSortKey>((searchParams.get("sort") as CardSortKey) ?? "recentStart");
+  const [cardSort, setCardSort] = useState<CardSortKey>((searchParams.get("sort") as CardSortKey) ?? "nextSeason");
   const [tableSort, setTableSort] = useState<TableSortKey>((searchParams.get("tsort") as TableSortKey) ?? "started");
   const [tableSortDir, setTableSortDir] = useState<SortDir>((searchParams.get("tdir") as SortDir) ?? "desc");
   const [selectedGenre, setSelectedGenre] = useState<string>(searchParams.get("genre") ?? "");

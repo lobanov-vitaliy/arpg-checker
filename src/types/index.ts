@@ -1,3 +1,21 @@
+// ─── Season Entry Types (used by game JSON files) ────────────────────────────
+
+export interface ManualSeasonEntry {
+  seasonName: string;
+  seasonNumber?: number;
+  startDate: string; // YYYY-MM-DD
+  endDate: string | null; // YYYY-MM-DD or null
+  nextSeasonStartDate?: string; // YYYY-MM-DD — only if officially announced
+  description?: string;
+  sourceUrl?: string;
+  confidence: "high" | "medium" | "low";
+}
+
+export interface GameSeasons {
+  gameId: string;
+  seasons: ManualSeasonEntry[]; // newest first
+}
+
 // ─── Game Registry Types ─────────────────────────────────────────────────────
 
 export type SeasonType =

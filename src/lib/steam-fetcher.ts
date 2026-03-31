@@ -3,7 +3,7 @@ import { getCached, setCached } from "./cache";
 
 const STEAM_API = "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1";
 const MAX_SNAPSHOTS = 168; // 7 days × 24 hours
-const STEAM_TTL_MS = 60 * 60 * 1000; // 1 hour
+const STEAM_TTL_MS = 25 * 60 * 60 * 1000; // 25 hours — keeps data visible even if cron skips a run
 
 export const STEAM_CACHE_KEY = (gameId: string) => `steam_${gameId}`;
 

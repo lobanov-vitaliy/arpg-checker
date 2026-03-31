@@ -3,8 +3,7 @@
  * To add a new game: create src/data/games/<id>.json and import it here.
  */
 
-import type { GameConfig } from "@/types";
-import type { ManualSeasonEntry, GameSeasons } from "./seasons";
+import type { GameConfig, ManualSeasonEntry, GameSeasons } from "@/types";
 
 import diablo4 from "./games/diablo4.json";
 import diablo2r from "./games/diablo2r.json";
