@@ -16,6 +16,23 @@ export interface GameConfig {
   officialUrl: string;
   searchHints: string[];    // Generic search queries (NO hardcoded years or season numbers)
   popularityScore: number;  // 0–100 based on community size / Twitch / Steam charts
+  steamAppId?: number;      // Steam App ID for live player count (omit if not on Steam)
+}
+
+// ─── Steam Types ──────────────────────────────────────────────────────────────
+
+export interface PlayerSnapshot {
+  t: string;   // ISO timestamp
+  p: number;   // player count
+}
+
+export interface SteamData {
+  gameId: string;
+  steamAppId: number;
+  currentPlayers: number;
+  peakPlayers7d: number;
+  snapshots: PlayerSnapshot[]; // last 168 entries (7 days × 24h)
+  updatedAt: string;
 }
 
 // ─── Season Data Types ────────────────────────────────────────────────────────

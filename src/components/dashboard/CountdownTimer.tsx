@@ -7,6 +7,7 @@ interface CountdownTimerProps {
   targetDate: Date;
   label: string;
   accentColor: string;
+  isEstimated?: boolean;
 }
 
 interface TimeLeft {
@@ -28,7 +29,7 @@ function getTimeLeft(target: Date): TimeLeft | null {
   };
 }
 
-export function CountdownTimer({ targetDate, label, accentColor }: CountdownTimerProps) {
+export function CountdownTimer({ targetDate, label, accentColor, isEstimated }: CountdownTimerProps) {
   const t = useTranslations("countdown");
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(() =>
     getTimeLeft(targetDate)
@@ -42,7 +43,14 @@ export function CountdownTimer({ targetDate, label, accentColor }: CountdownTime
   }, [targetDate]);
 
   if (!timeLeft) {
-    return <p className="text-xs text-gray-500 italic">{t("expired")}</p>;
+    return (
+      <div className="bg-black/30 rounded-lg p-3">
+        <div className="flex items-center gap-1.5 mb-2">
+          <p className="text-xs text-gray-400 uppercase tracking-wider">{label}</p>
+        </div>
+        <p className={`text-sm font-semibold ${accentColor}`}>{t("expired")}</p>
+      </div>
+    );
   }
 
   const units = [
@@ -54,7 +62,14 @@ export function CountdownTimer({ targetDate, label, accentColor }: CountdownTime
 
   return (
     <div className="bg-black/30 rounded-lg p-3">
-      <p className="text-xs text-gray-400 mb-2 uppercase tracking-wider">{label}</p>
+      <div className="flex items-center gap-1.5 mb-2">
+        <p className="text-xs text-gray-400 uppercase tracking-wider">{label}</p>
+        {isEstimated ? (
+          <span className="text-xs text-yellow-500/70 font-medium">~est</span>
+        ) : (
+          <span className="text-xs text-emerald-500/80 font-medium">✓ official</span>
+        )}
+      </div>
       <div className="grid grid-cols-4 gap-1 text-center">
         {units.map(({ value, label: unit }) => (
           <div key={unit}>

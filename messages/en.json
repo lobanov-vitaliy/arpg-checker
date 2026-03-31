@@ -13,6 +13,8 @@
     "endsIn": "Ends in",
     "nextSeasonIn": "Next {seasonType} in",
     "runningFor": "Running for",
+    "playersOnline": "Players online",
+    "dataStale": "Awaiting refresh",
     "unavailable": "Season data unavailable",
     "checkOfficialSite": "Check official site",
     "verify": "Verify"
@@ -22,7 +24,7 @@
     "hrs": "Hrs",
     "min": "Min",
     "sec": "Sec",
-    "expired": "Season has ended or started"
+    "expired": "Season ended"
   },
   "elapsed": {
     "days": "Days",
@@ -43,6 +45,10 @@
     "recently": "Recently",
     "empty": "No news available",
     "emptySubtitle": "News is fetched via AI and cached for 1 hour. Try refreshing."
+  },
+  "estimate": {
+    "avgLabel": "~{days}d avg",
+    "tooltip": "Next {seasonType} date is estimated. We took the last 3–4 {seasonType}s, calculated the average duration ({days} days), and added it to the current {seasonType} start date."
   },
   "popularity": {
     "label": "Popularity",

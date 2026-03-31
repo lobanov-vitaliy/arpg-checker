@@ -1,6 +1,11 @@
-import { list, put } from "@vercel/blob";
+import fs from "fs/promises";
+import path from "path";
 
-const BLOB_PREFIX = "arpg-cache";
+// Set CACHE_DRIVER=local in .env.local for dev
+// Set CACHE_DRIVER=blob  in Vercel environment variables for prod
+const CACHE_DRIVER = process.env.CACHE_DRIVER ?? "local";
+
+const LOCAL_CACHE_DIR = path.join(process.cwd(), ".cache");
 export const SEASON_TTL_MS = 60 * 60 * 1000; // 1 hour
 
 interface CacheEntry<T> {
@@ -9,57 +14,70 @@ interface CacheEntry<T> {
   expiresAt: string;
 }
 
-function isExpired(expiresAt: string): boolean {
-  return new Date(expiresAt).getTime() <= Date.now();
-}
+// ── Local file cache ──────────────────────────────────────────────────────────
 
-function createEntry<T>(data: T, ttlMs: number): CacheEntry<T> {
-  return {
-    data,
-    cachedAt: new Date().toISOString(),
-    expiresAt: new Date(Date.now() + ttlMs).toISOString(),
-  };
-}
-
-async function getBlob<T>(key: string): Promise<CacheEntry<T> | null> {
+async function getLocal<T>(key: string): Promise<CacheEntry<T> | null> {
   try {
-    const pathname = `${BLOB_PREFIX}/${key}.json`;
-
-    const { blobs } = await list({ prefix: pathname });
-
-    const blob = blobs.find((item) => item.pathname === pathname);
-    if (!blob) return null;
-
-    const res = await fetch(blob.url, {
-      headers: {
-        Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`,
-      },
-      cache: "no-store",
-    });
-
-    if (!res.ok) {
-      console.error(`[cache:getBlob] Failed to fetch "${key}": ${res.status}`);
-      return null;
-    }
-
-    const entry = (await res.json()) as CacheEntry<T>;
-
-    if (isExpired(entry.expiresAt)) {
-      return null;
-    }
-
-    return entry;
-  } catch (error) {
-    console.error(`[cache:getBlob] Failed for key "${key}"`, error);
+    const raw = await fs.readFile(
+      path.join(LOCAL_CACHE_DIR, `${key}.json`),
+      "utf-8"
+    );
+    const entry = JSON.parse(raw) as CacheEntry<T>;
+    if (new Date(entry.expiresAt) > new Date()) return entry;
+    await fs.unlink(path.join(LOCAL_CACHE_DIR, `${key}.json`)).catch(() => {});
+    return null;
+  } catch {
     return null;
   }
 }
 
-async function setBlob<T>(key: string, data: T, ttlMs: number): Promise<void> {
-  const pathname = `${BLOB_PREFIX}/${key}.json`;
-  const entry = createEntry(data, ttlMs);
+async function setLocal<T>(key: string, data: T, ttlMs: number) {
+  await fs.mkdir(LOCAL_CACHE_DIR, { recursive: true });
+  const entry: CacheEntry<T> = {
+    data,
+    cachedAt: new Date().toISOString(),
+    expiresAt: new Date(Date.now() + ttlMs).toISOString(),
+  };
+  await fs.writeFile(
+    path.join(LOCAL_CACHE_DIR, `${key}.json`),
+    JSON.stringify(entry, null, 2),
+    "utf-8"
+  );
+}
 
-  await put(pathname, JSON.stringify(entry), {
+// ── Vercel Blob cache ─────────────────────────────────────────────────────────
+
+const BLOB_PREFIX = "arpg-cache";
+
+async function getBlob<T>(key: string): Promise<CacheEntry<T> | null> {
+  try {
+    const { list } = await import("@vercel/blob");
+    const pathname = `${BLOB_PREFIX}/${key}.json`;
+    const { blobs } = await list({ prefix: pathname });
+    const blob = blobs.find((b) => b.pathname === pathname);
+    if (!blob) return null;
+    const res = await fetch(blob.url, {
+      headers: { Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}` },
+      cache: "no-store",
+    });
+    if (!res.ok) return null;
+    const entry = (await res.json()) as CacheEntry<T>;
+    if (new Date(entry.expiresAt) > new Date()) return entry;
+    return null;
+  } catch (e) {
+    console.error(`[cache:getBlob] ${key}`, e);
+    return null;
+  }
+}
+
+async function setBlob<T>(key: string, data: T, ttlMs: number) {
+  const { put } = await import("@vercel/blob");
+  const entry: CacheEntry<T> = {
+    data,
+    cachedAt: new Date().toISOString(),
+    expiresAt: new Date(Date.now() + ttlMs).toISOString(),
+  };
+  await put(`${BLOB_PREFIX}/${key}.json`, JSON.stringify(entry), {
     access: "private",
     contentType: "application/json",
     addRandomSuffix: false,
@@ -67,23 +85,32 @@ async function setBlob<T>(key: string, data: T, ttlMs: number): Promise<void> {
   });
 }
 
+// ── Public API ────────────────────────────────────────────────────────────────
+
 export async function getCached<T>(key: string): Promise<T | null> {
-  const entry = await getBlob<T>(key);
+  const entry =
+    CACHE_DRIVER === "blob"
+      ? await getBlob<T>(key)
+      : await getLocal<T>(key);
   return entry?.data ?? null;
 }
 
 export async function setCached<T>(
   key: string,
   data: T,
-  ttlMs = SEASON_TTL_MS,
+  ttlMs = SEASON_TTL_MS
 ): Promise<void> {
-  await setBlob(key, data, ttlMs);
+  if (CACHE_DRIVER === "blob") {
+    await setBlob(key, data, ttlMs);
+  } else {
+    await setLocal(key, data, ttlMs);
+  }
 }
 
 export async function getCachedWithMeta<T>(
-  key: string,
+  key: string
 ): Promise<CacheEntry<T> | null> {
-  return getBlob<T>(key);
+  return CACHE_DRIVER === "blob" ? getBlob<T>(key) : getLocal<T>(key);
 }
 
 export const CACHE_KEYS = {
