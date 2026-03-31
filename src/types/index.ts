@@ -46,19 +46,30 @@ export interface GameConfig {
 
 // ─── Steam Types ──────────────────────────────────────────────────────────────
 
-export interface PlayerSnapshot {
-  t: string; // ISO timestamp
-  p: number; // player count
-}
+// types/steam.ts
 
-export interface SteamData {
+export type SteamRating = {
+  percent: number | null;
+  totalReviews: number;
+  totalPositive: number;
+  totalNegative: number;
+  reviewScoreDesc: string | null;
+};
+
+export type PlayerSnapshot = {
+  t: string;
+  p: number;
+};
+
+export type SteamData = {
   gameId: string;
   steamAppId: number;
   currentPlayers: number;
   peakPlayers7d: number;
-  snapshots: PlayerSnapshot[]; // last 168 entries (7 days × 24h)
+  snapshots: PlayerSnapshot[];
+  rating: SteamRating | null;
   updatedAt: string;
-}
+};
 
 // ─── Season Data Types ────────────────────────────────────────────────────────
 

@@ -25,6 +25,7 @@ import marvel_rivals from "./games/marvel_rivals.json";
 import delta_force from "./games/delta_force.json";
 import apex_legends from "./games/apex_legends.json";
 import destiny_2 from "./games/destiny_2.json";
+import pubg from "./games/pubg.json";
 
 type GameFileEntry = GameConfig & { seasons: ManualSeasonEntry[] };
 
@@ -40,6 +41,7 @@ const ALL_GAMES = [
   delta_force,
   undecember,
   marvel_rivals,
+  pubg,
   the_division_2,
   call_of_duty,
   lost_ark,

@@ -1,0 +1,54 @@
+{
+  "id": "pubg",
+  "name": "PUBG: BATTLEGROUNDS",
+  "shortName": "PUBG",
+  "developer": "KRAFTON, Inc.",
+  "seasonType": "ranked season",
+  "genres": [
+    "FPS",
+    "Battle Royale",
+    "Tactical Shooter"
+  ],
+  "accentColor": "text-yellow-400",
+  "accentBg": "bg-yellow-400",
+  "bgGradient": "from-yellow-950/90 via-slate-900 to-gray-950",
+  "glowColor": "#facc15",
+  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg",
+  "officialUrl": "https://pubg.com",
+  "popularityScore": 84,
+  "steamAppId": 578080,
+  "searchHints": [
+    "\"PUBG: BATTLEGROUNDS\" current ranked season number start end date",
+    "\"PUBG\" ranked season latest patch notes official",
+    "site:pubg.com ranked season patch notes PUBG"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Ranked Season 40",
+      "seasonNumber": 40,
+      "startDate": "2026-02-04",
+      "endDate": null,
+      "description": "The current PUBG ranked season launched with Update 40.1, adding a new ranked leaderboard reset, season rewards, and season-based ranked map service updates.",
+      "sourceUrl": "https://pubg.com/en/news/9690",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Ranked Season 39",
+      "seasonNumber": 39,
+      "startDate": "2025-12-03",
+      "endDate": "2026-02-04",
+      "description": "Ranked Season 39 launched with Update 39.1, bringing a fresh leaderboard reset, new ranked rewards, and a season-based ranked rotation refresh.",
+      "sourceUrl": "https://pubg.com/news/9466",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Ranked Season 38",
+      "seasonNumber": 38,
+      "startDate": "2025-10-15",
+      "endDate": "2025-12-03",
+      "description": "Ranked Season 38 began with Update 38.1 and continued PUBG's ranked seasonal structure with leaderboard resets, seasonal rewards, and ranked queue adjustments.",
+      "sourceUrl": "https://pubg.com/news/9273",
+      "confidence": "high"
+    }
+  ]
+}

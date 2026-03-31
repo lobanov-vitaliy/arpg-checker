@@ -240,21 +240,6 @@ export function SeasonSwitcher({
           />
         </div>
       )}
-
-      {/* Footer */}
-      <div className="flex items-center gap-2">
-        {season.confidence === "low" && (
-          <a
-            href={game.officialUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 text-yellow-500/70 hover:text-yellow-400 text-xs transition-colors whitespace-nowrap"
-          >
-            <ExternalLink className="w-3 h-3" />
-            {t("verify")}
-          </a>
-        )}
-      </div>
     </div>
   );
 }
