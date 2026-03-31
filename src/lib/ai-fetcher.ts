@@ -1,8 +1,6 @@
 import { openai } from "./openai";
 import type { GameConfig, SeasonData, NewsArticle } from "@/types";
 
-// ─── Season Fetcher ───────────────────────────────────────────────────────────
-
 export async function fetchSeasonFromAI(game: GameConfig): Promise<SeasonData> {
   const today = new Date().toISOString().split("T")[0];
 
@@ -53,8 +51,8 @@ Field rules:
 - seasonNumber: integer or null`;
 
   const response = await openai.responses.create({
-    model: "gpt-4o",
-    tools: [{ type: "web_search_preview" }],
+    model: "gpt-4o-mini",
+    tools: [{ type: "web_search" }],
     input: prompt,
   });
 
@@ -89,64 +87,4 @@ Field rules:
     confidence: parsed.confidence ?? "low",
     fetchedAt: new Date().toISOString(),
   };
-}
-
-// ─── News Fetcher ─────────────────────────────────────────────────────────────
-
-export async function fetchNewsFromAI(
-  gameNames: string[],
-): Promise<NewsArticle[]> {
-  const today = new Date().toISOString().split("T")[0];
-  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-    .toISOString()
-    .split("T")[0];
-
-  const prompt = `Find 10-15 recent ARPG news articles published between ${sevenDaysAgo} and ${today}.
-
-Games: ${gameNames.join(", ")}
-
-Search queries:
-1. Diablo IV Diablo III news latest patch season
-2. Path of Exile Path of Exile 2 news latest league
-3. Last Epoch Lost Ark Torchlight Undecember news latest
-4. ARPG season patch update announcement
-
-Sources: official game blogs, PCGamesN, Kotaku, IGN, PC Gamer, Reddit game subreddits.
-
-Return ONLY a JSON array (no other text):
-[
-  {
-    "title": "string",
-    "summary": "2-3 sentence summary",
-    "url": "https://...",
-    "publishedAt": "YYYY-MM-DD or null",
-    "gameId": "diablo4 | diablo3 | diablo2r | poe1 | poe2 | lastepoch | torchlight_infinite | undecember | lost_ark | null",
-    "gameName": "string or null",
-    "source": "string",
-    "tags": ["string"]
-  }
-]`;
-
-  const response = await openai.responses.create({
-    model: "gpt-4o-mini",
-    tools: [{ type: "web_search" }],
-    input: prompt,
-  });
-
-  const text = response.output_text;
-  if (!text) return [];
-
-  const jsonMatch = text.match(/\[[\s\S]*\]/);
-  if (!jsonMatch) return [];
-
-  try {
-    const articles = JSON.parse(jsonMatch[0]) as Omit<NewsArticle, "id">[];
-    return articles.map((a, i) => ({
-      ...a,
-      id: `${Date.now()}-${i}`,
-      tags: Array.isArray(a.tags) ? a.tags : [],
-    }));
-  } catch {
-    return [];
-  }
 }
