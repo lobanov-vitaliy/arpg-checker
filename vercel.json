@@ -1,12 +1,8 @@
 {
   "crons": [
     {
-      "path": "/api/cron/refresh-seasons",
-      "schedule": "0 6 * * *"
-    },
-    {
       "path": "/api/cron/refresh-steam",
-      "schedule": "0,30 * * * *"
+      "schedule": "0 7 * * *"
     }
   ]
 }
