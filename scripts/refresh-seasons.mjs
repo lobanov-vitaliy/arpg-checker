@@ -79,13 +79,6 @@ async function main() {
       if (s.error) console.log(`     Error: ${s.error}`);
     }
 
-    const news = data.news;
-    if (typeof news === "object" && news.count !== undefined) {
-      console.log(`\n📰 News: ${news.count} articles cached`);
-    } else {
-      console.log(`\n📰 News: ${news}`);
-    }
-
     console.log();
   } catch (err) {
     console.error(`\n❌ Failed: ${err.message}`);

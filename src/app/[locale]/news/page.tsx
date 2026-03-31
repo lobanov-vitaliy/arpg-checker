@@ -2,24 +2,13 @@ import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { NewsGrid } from "@/components/news/NewsGrid";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getCached, setCached, CACHE_KEYS } from "@/lib/cache";
-import { fetchNewsFromAI } from "@/lib/ai-fetcher";
-import { GAMES } from "@/config/games";
+import { getCached, CACHE_KEYS } from "@/lib/cache";
 import type { NewsArticle } from "@/types";
 
 export const dynamic = "force-dynamic";
 
-async function getNews(): Promise<NewsArticle[]> {
-  const cached = await getCached<NewsArticle[]>(CACHE_KEYS.news());
-  if (cached) return cached;
-  const gameNames = GAMES.map((g) => g.name);
-  const articles = await fetchNewsFromAI(gameNames);
-  await setCached(CACHE_KEYS.news(), articles);
-  return articles;
-}
-
 async function NewsFeed() {
-  const articles = await getNews();
+  const articles = (await getCached<NewsArticle[]>(CACHE_KEYS.news())) ?? [];
   return <NewsGrid articles={articles} />;
 }
 
