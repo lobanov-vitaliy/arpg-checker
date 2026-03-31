@@ -1,7 +1,10 @@
 import fs from "fs/promises";
 import path from "path";
 
-const CACHE_DIR = path.join(process.cwd(), ".cache");
+// On Vercel only /tmp is writable; locally use .cache/ in the project root
+const CACHE_DIR = process.env.VERCEL
+  ? "/tmp/arpg-cache"
+  : path.join(process.cwd(), ".cache");
 const SEASON_TTL_MS = 60 * 60 * 1000;  // 1 hour
 
 async function ensureCacheDir(): Promise<void> {
