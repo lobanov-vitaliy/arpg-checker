@@ -1,0 +1,54 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "news": "News"
+  },
+  "dashboard": {
+    "title": "Season Tracker",
+    "subtitle": "Track active ARPG seasons, leagues, and cycles in one place. Stay up to date with current events, start and end dates, and never miss the next reset.",
+    "currentSeason": "Current {seasonType}",
+    "started": "Started",
+    "ends": "Ends",
+    "nextSeason": "Next {seasonType}",
+    "endsIn": "Ends in",
+    "nextSeasonIn": "Next {seasonType} in",
+    "runningFor": "Running for",
+    "unavailable": "Season data unavailable",
+    "checkOfficialSite": "Check official site",
+    "verify": "Verify"
+  },
+  "countdown": {
+    "days": "Days",
+    "hrs": "Hrs",
+    "min": "Min",
+    "sec": "Sec",
+    "expired": "Season has ended or started"
+  },
+  "elapsed": {
+    "days": "Days",
+    "hrs": "Hrs",
+    "min": "Min",
+    "sec": "Sec"
+  },
+  "badge": {
+    "active": "Active",
+    "upcoming": "Upcoming",
+    "ended": "Ended",
+    "unknown": "Unknown"
+  },
+  "news": {
+    "title": "ARPG News",
+    "subtitle": "Latest news from the ARPG community — fetched via AI and cached hourly.",
+    "readMore": "Read more",
+    "recently": "Recently",
+    "empty": "No news available",
+    "emptySubtitle": "News is fetched via AI and cached for 1 hour. Try refreshing."
+  },
+  "popularity": {
+    "label": "Popularity",
+    "tooltip": "Popularity index (0–100) based on active player count, Twitch viewership, and Steam charts. S = top tier, D = niche."
+  },
+  "footer": {
+    "disclaimer": "Season data fetched via AI and cached hourly. Verify dates on official sites."
+  }
+}

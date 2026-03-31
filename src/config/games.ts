@@ -1,0 +1,191 @@
+import type { GameConfig } from "@/types";
+
+const STEAM = (appId: number) =>
+  `https://cdn.akamai.steamstatic.com/steam/apps/${appId}/header.jpg`;
+
+export const GAMES: GameConfig[] = [
+  {
+    id: "diablo4",
+    name: "Diablo IV",
+    shortName: "D4",
+    developer: "Blizzard Entertainment",
+    seasonType: "season",
+    accentColor: "text-red-400",
+    accentBg: "bg-red-400",
+    bgGradient: "from-red-950/90 via-gray-900 to-gray-950",
+    glowColor: "#ef4444",
+    coverImage: STEAM(2344520),
+    officialUrl: "https://diablo.blizzard.com/en-us/news",
+    popularityScore: 85,
+    searchHints: [
+      `"Diablo IV" OR "Diablo 4" current active season name number start end date`,
+      `"Diablo 4" season start date end date latest patch notes`,
+      `site:news.blizzard.com OR site:diablo.blizzard.com season`,
+    ],
+  },
+  {
+    id: "diablo3",
+    name: "Diablo III",
+    shortName: "D3",
+    developer: "Blizzard Entertainment",
+    seasonType: "season",
+    accentColor: "text-orange-400",
+    accentBg: "bg-orange-400",
+    bgGradient: "from-orange-950/90 via-gray-900 to-gray-950",
+    glowColor: "#fb923c",
+    // Diablo III is Battle.net only — using Blizzard CDN image
+    coverImage:
+      "https://gaming-cdn.com/images/products/20/616x353/diablo-iii-pc-mac-game-battle-net-europe-cover.jpg",
+    officialUrl: "https://us.diablo3.blizzard.com/en-us/season",
+    popularityScore: 38,
+    searchHints: [
+      `"Diablo III" OR "Diablo 3" current active season number start end date`,
+      `"Diablo 3" season start date end date latest`,
+      `site:us.diablo3.blizzard.com season`,
+    ],
+  },
+  {
+    id: "diablo2r",
+    name: "Diablo II: Resurrected",
+    shortName: "D2R",
+    developer: "Blizzard Entertainment",
+    seasonType: "ladder",
+    accentColor: "text-amber-400",
+    accentBg: "bg-amber-400",
+    bgGradient: "from-amber-950/90 via-gray-900 to-gray-950",
+    glowColor: "#f59e0b",
+    coverImage:
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2536520/8cfd8f0d73075b10b3b58d9eccfee799baffab79/header.jpg?t=1774399170",
+    officialUrl: "https://diablo2.blizzard.com",
+    popularityScore: 42,
+    searchHints: [
+      `"Diablo II Resurrected" OR "D2R" current ladder season number start end date reset`,
+      `"Diablo 2 Resurrected" ladder reset when next season starts`,
+      `site:news.blizzard.com "Diablo II" ladder reset`,
+    ],
+  },
+  {
+    id: "poe1",
+    name: "Path of Exile",
+    shortName: "PoE",
+    developer: "Grinding Gear Games",
+    seasonType: "league",
+    accentColor: "text-emerald-400",
+    accentBg: "bg-emerald-400",
+    bgGradient: "from-emerald-950/90 via-gray-900 to-gray-950",
+    glowColor: "#34d399",
+    coverImage: STEAM(238960),
+    officialUrl: "https://www.pathofexile.com/forum/view-category/leagues",
+    popularityScore: 88,
+    searchHints: [
+      `"Path of Exile" current active league name start end date`,
+      `"Path of Exile" league start date end date latest announcement`,
+      `site:pathofexile.com/forum league announcement`,
+    ],
+  },
+  {
+    id: "poe2",
+    name: "Path of Exile 2",
+    shortName: "PoE2",
+    developer: "Grinding Gear Games",
+    seasonType: "league",
+    accentColor: "text-teal-400",
+    accentBg: "bg-teal-400",
+    bgGradient: "from-teal-950/90 via-gray-900 to-gray-950",
+    glowColor: "#2dd4bf",
+    coverImage: STEAM(2694490),
+    officialUrl: "https://www.pathofexile.com/poe2",
+    popularityScore: 82,
+    searchHints: [
+      `"Path of Exile 2" current active league season name start end date early access`,
+      `"Path of Exile 2" early access league start date end date latest`,
+      `site:pathofexile.com "Path of Exile 2" league announcement`,
+    ],
+  },
+  {
+    id: "lastepoch",
+    name: "Last Epoch",
+    shortName: "LE",
+    developer: "Eleventh Hour Games",
+    seasonType: "cycle",
+    accentColor: "text-yellow-400",
+    accentBg: "bg-yellow-400",
+    bgGradient: "from-yellow-950/90 via-gray-900 to-gray-950",
+    glowColor: "#eab308",
+    coverImage: STEAM(899770),
+    officialUrl: "https://www.lastepoch.com/news",
+    popularityScore: 72,
+    searchHints: [
+      `"Last Epoch" current active season cycle number name start end date`,
+      `"Last Epoch" season cycle start date end date latest patch`,
+      `site:lastepoch.com cycle season announcement patch notes`,
+    ],
+  },
+  {
+    id: "torchlight_infinite",
+    name: "Torchlight: Infinite",
+    shortName: "TLI",
+    developer: "XD Entertainment",
+    seasonType: "season",
+    accentColor: "text-lime-400",
+    accentBg: "bg-lime-400",
+    bgGradient: "from-lime-950/90 via-gray-900 to-gray-950",
+    glowColor: "#a3e635",
+    coverImage:
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1974050/bac79b8268d5acdef3c0c58781a34fe1fa5f0fe7/header.jpg?t=1768448039",
+    officialUrl: "https://torchlight.game",
+    popularityScore: 28,
+    searchHints: [
+      `"Torchlight Infinite" OR "Torchlight: Infinite" current active season name number start end date`,
+      `"Torchlight Infinite" season start end date latest announcement`,
+      `site:torchlight.game season patch notes announcement`,
+    ],
+  },
+  {
+    id: "undecember",
+    name: "Undecember",
+    shortName: "UD",
+    developer: "LINE Games",
+    seasonType: "season",
+    accentColor: "text-violet-400",
+    accentBg: "bg-violet-400",
+    bgGradient: "from-violet-950/90 via-gray-900 to-gray-950",
+    glowColor: "#a78bfa",
+    coverImage:
+      "https://undecember.line.games/static/launching/common/images/pc/media/new_undecember_media_01.jpg",
+    officialUrl: "https://undecember.com",
+    popularityScore: 18,
+    searchHints: [
+      `"Undecember" current active season name number start end date`,
+      `"Undecember" season start end date latest announcement`,
+      `site:undecember.com season announcement patch notes`,
+    ],
+  },
+  {
+    id: "lost_ark",
+    name: "Lost Ark",
+    shortName: "LA",
+    developer: "Smilegate RPG",
+    seasonType: "season",
+    accentColor: "text-sky-400",
+    accentBg: "bg-sky-400",
+    bgGradient: "from-sky-950/90 via-gray-900 to-gray-950",
+    glowColor: "#38bdf8",
+    coverImage: STEAM(1599340),
+    officialUrl: "https://www.playlostark.com",
+    popularityScore: 55,
+    searchHints: [
+      `"Lost Ark" current active season name number start end date`,
+      `"Lost Ark" season start end date latest announcement update`,
+      `site:playlostark.com season announcement update`,
+    ],
+  },
+];
+
+export const GAMES_BY_ID: Record<string, GameConfig> = Object.fromEntries(
+  GAMES.map((g) => [g.id, g]),
+);
+
+export function getGame(id: string): GameConfig | undefined {
+  return GAMES_BY_ID[id];
+}
