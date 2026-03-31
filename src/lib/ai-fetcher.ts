@@ -64,7 +64,7 @@ Field rules:
   const jsonMatch = text.match(/\{[\s\S]*\}/);
   if (!jsonMatch) {
     throw new Error(
-      `Could not extract JSON for ${game.id}. Response: ${text.slice(0, 200)}`
+      `Could not extract JSON for ${game.id}. Response: ${text.slice(0, 200)}`,
     );
   }
 
@@ -94,7 +94,7 @@ Field rules:
 // ─── News Fetcher ─────────────────────────────────────────────────────────────
 
 export async function fetchNewsFromAI(
-  gameNames: string[]
+  gameNames: string[],
 ): Promise<NewsArticle[]> {
   const today = new Date().toISOString().split("T")[0];
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
@@ -128,8 +128,8 @@ Return ONLY a JSON array (no other text):
 ]`;
 
   const response = await openai.responses.create({
-    model: "gpt-4o",
-    tools: [{ type: "web_search_preview" }],
+    model: "gpt-4o-mini",
+    tools: [{ type: "web_search" }],
     input: prompt,
   });
 
