@@ -29,13 +29,17 @@ function getTimeLeft(target: Date): TimeLeft | null {
   };
 }
 
-export function CountdownTimer({ targetDate, label, accentColor, isEstimated }: CountdownTimerProps) {
+export function CountdownTimer({
+  targetDate,
+  label,
+  accentColor,
+  isEstimated,
+}: CountdownTimerProps) {
   const t = useTranslations("countdown");
-  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(() =>
-    getTimeLeft(targetDate)
-  );
+  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
 
   useEffect(() => {
+    setTimeLeft(getTimeLeft(targetDate));
     const interval = setInterval(() => {
       setTimeLeft(getTimeLeft(targetDate));
     }, 1000);
@@ -46,7 +50,9 @@ export function CountdownTimer({ targetDate, label, accentColor, isEstimated }: 
     return (
       <div className="bg-black/30 rounded-lg p-3">
         <div className="flex items-center gap-1.5 mb-2">
-          <p className="text-xs text-gray-400 uppercase tracking-wider">{label}</p>
+          <p className="text-xs text-gray-400 uppercase tracking-wider">
+            {label}
+          </p>
         </div>
         <p className={`text-sm font-semibold ${accentColor}`}>{t("expired")}</p>
       </div>
@@ -63,17 +69,16 @@ export function CountdownTimer({ targetDate, label, accentColor, isEstimated }: 
   return (
     <div className="bg-black/30 rounded-lg p-3">
       <div className="flex items-center gap-1.5 mb-2">
-        <p className="text-xs text-gray-400 uppercase tracking-wider">{label}</p>
-        {isEstimated ? (
-          <span className="text-xs text-yellow-500/70 font-medium">~est</span>
-        ) : (
-          <span className="text-xs text-emerald-500/80 font-medium">✓ official</span>
-        )}
+        <p className="text-xs text-gray-400 uppercase tracking-wider">
+          {label}
+        </p>
       </div>
       <div className="grid grid-cols-4 gap-1 text-center">
         {units.map(({ value, label: unit }) => (
           <div key={unit}>
-            <div className={`text-xl font-mono font-bold tabular-nums ${accentColor}`}>
+            <div
+              className={`text-xl font-mono font-bold tabular-nums ${accentColor}`}
+            >
               {String(value).padStart(2, "0")}
             </div>
             <div className="text-gray-500 text-xs mt-0.5">{unit}</div>

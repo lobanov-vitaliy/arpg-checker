@@ -1,0 +1,50 @@
+{
+  "id": "lost_ark",
+  "name": "Lost Ark",
+  "shortName": "LA",
+  "developer": "Smilegate RPG",
+  "seasonType": "season",
+  "genres": ["MMORPG", "Free to Play"],
+  "accentColor": "text-sky-400",
+  "accentBg": "bg-sky-400",
+  "bgGradient": "from-sky-950/90 via-gray-900 to-gray-950",
+  "glowColor": "#38bdf8",
+  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/1599340/header.jpg",
+  "officialUrl": "https://www.playlostark.com",
+  "popularityScore": 55,
+  "steamAppId": 1599340,
+  "searchHints": [
+    "\"Lost Ark\" current active season name number start end date",
+    "\"Lost Ark\" season start end date latest announcement update",
+    "site:playlostark.com season announcement update"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Paradise Season 3",
+      "seasonNumber": 3,
+      "startDate": "2026-03-11",
+      "endDate": null,
+      "description": "The current Paradise season launched with the Ends of the Abyss update and continues Lost Ark's repeatable Paradise system with seasonal progression, Hell Keys, and updated reward and balance rules.",
+      "sourceUrl": "https://www.playlostark.com/en-us/game/releases/ends-of-the-abyss",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Paradise Season 2",
+      "seasonNumber": 2,
+      "startDate": "2026-01-14",
+      "endDate": "2026-03-11",
+      "description": "The second Paradise season continued the seasonal progression loop and was later adjusted based on feedback, with Amazon explicitly warning players to use remaining Hell Keys before the season ended.",
+      "sourceUrl": "https://www.playlostark.com/en-gb/news/articles/team-update-heading-toward-march",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Paradise Season 1",
+      "seasonNumber": 1,
+      "startDate": "2025-12-10",
+      "endDate": "2026-03-04",
+      "description": "The first Paradise season introduced the new Paradise progression system with Elysian, Crucible, and Hell, creating a repeatable seasonal loop with Hell Keys, gear progression, and reset-based rewards.",
+      "sourceUrl": "https://www.playlostark.com/en-us/game/releases/welcome-to-paradise",
+      "confidence": "medium"
+    }
+  ]
+}

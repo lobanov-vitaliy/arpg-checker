@@ -1,0 +1,50 @@
+{
+  "id": "arc_raiders",
+  "name": "ARC Raiders",
+  "shortName": "ARC",
+  "developer": "Embark Studios",
+  "seasonType": "expedition",
+  "genres": ["TPS", "Extraction Shooter"],
+  "accentColor": "text-cyan-400",
+  "accentBg": "bg-cyan-400",
+  "bgGradient": "from-cyan-950/90 via-gray-900 to-gray-950",
+  "glowColor": "#22d3ee",
+  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/1808500/header.jpg",
+  "officialUrl": "https://www.arcraiders.com",
+  "popularityScore": 62,
+  "steamAppId": 1808500,
+  "searchHints": [
+    "\"ARC Raiders\" current active expedition name number start end date",
+    "\"ARC Raiders\" expedition season patch notes latest",
+    "site:arcraiders.com expedition announcement"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Second Expedition Cycle",
+      "seasonNumber": 3,
+      "startDate": "2026-03-01",
+      "endDate": null,
+      "description": "The current ARC Raiders reset cycle following the second Expedition departure. It continues the game's optional wipe-based progression model rather than an official season system.",
+      "sourceUrl": "https://arcraiders.com/news/second-expedition-rewards-and-requirements",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "First Expedition Cycle",
+      "seasonNumber": 2,
+      "startDate": "2025-12-22",
+      "endDate": "2026-03-01",
+      "description": "The cycle after the first Expedition departure, during which players progressed toward their second voluntary wipe/reset and stacked Expedition rewards and buffs.",
+      "sourceUrl": "https://arcraiders.com/news/second-expedition-rewards-and-requirements",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Launch Cycle",
+      "seasonNumber": 1,
+      "startDate": "2025-10-30",
+      "endDate": "2025-12-22",
+      "description": "The initial ARC Raiders progression cycle from launch until the first Expedition departure window closed. Players built toward the Expedition Project and could choose their first voluntary reset.",
+      "sourceUrl": "https://arcraiders.com/news/the-expedition-project-is-departing-soon",
+      "confidence": "medium"
+    }
+  ]
+}

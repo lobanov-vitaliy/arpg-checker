@@ -1,27 +1,23 @@
 import { ExternalLink } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { getTranslations } from "next-intl/server";
-import { SeasonBadge } from "./SeasonBadge";
 import { GameImage } from "./GameImage";
 import { PopularityBadge } from "./PopularityBadge";
 import { SeasonSwitcher } from "./SeasonSwitcher";
 import { getCached } from "@/lib/cache";
 import { STEAM_CACHE_KEY } from "@/lib/steam-fetcher";
 import { getSeasonsForGame } from "@/lib/seasons";
-import type { GameConfig, SeasonData, SteamData } from "@/types";
+import type { GameConfig, SteamData } from "@/types";
 
 interface GameCardProps {
   game: GameConfig;
-  season: SeasonData | undefined;
 }
 
-export async function GameCard({ game, season }: GameCardProps) {
+export async function GameCard({ game }: GameCardProps) {
   const t = await getTranslations("dashboard");
   const tPop = await getTranslations("popularity");
 
   const allSeasons = getSeasonsForGame(game.id);
-  const currentSeason = season ?? allSeasons[0];
-
   const steamData = game.steamAppId
     ? await getCached<SteamData>(STEAM_CACHE_KEY(game.id))
     : null;
@@ -36,11 +32,6 @@ export async function GameCard({ game, season }: GameCardProps) {
         <GameImage src={game.coverImage} alt={game.name} glowColor={game.glowColor} />
         <div className="absolute inset-0 bg-linear-to-b from-black/10 via-transparent to-gray-900" />
         <div className="absolute top-0 left-0 right-0 h-1" style={{ backgroundColor: game.glowColor }} />
-        {currentSeason && (
-          <div className="absolute top-3 right-3">
-            <SeasonBadge status={currentSeason.status} />
-          </div>
-        )}
       </div>
 
       {/* ── Card body ── */}

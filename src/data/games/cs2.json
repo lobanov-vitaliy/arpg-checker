@@ -1,0 +1,53 @@
+{
+  "id": "cs2",
+  "name": "Counter-Strike 2",
+  "shortName": "CS2",
+  "developer": "Valve",
+  "seasonType": "premier season",
+  "genres": [
+    "FPS",
+    "Competitive Shooter"
+  ],
+  "accentColor": "text-blue-400",
+  "accentBg": "bg-blue-400",
+  "bgGradient": "from-blue-950/90 via-gray-900 to-gray-950",
+  "glowColor": "#60a5fa",
+  "coverImage": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/730/header.jpg",
+  "officialUrl": "https://www.counter-strike.net/cs2",
+  "popularityScore": 99,
+  "steamAppId": 730,
+  "searchHints": [
+    "\"Counter-Strike 2\" OR \"CS2\" current active Premier Season number start end date",
+    "\"CS2\" Premier season start end date latest announcement",
+    "site:counter-strike.net Premier season announcement Counter-Strike 2"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Premier Season Four",
+      "seasonNumber": 4,
+      "startDate": "2026-01-21",
+      "endDate": null,
+      "description": "The current Premier season brought a new season medal chase, Train replacing Vertigo in the Active Duty map pool, and a fresh CS Rating recalibration for competitive play.",
+      "sourceUrl": "https://www.counter-strike.net/newsentry/511855214544814488",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Premier Season Three",
+      "seasonNumber": 3,
+      "startDate": "2025-07-15",
+      "endDate": "2026-01-21",
+      "description": "Premier Season Three opened with Overpass returning to Active Duty, Anubis rotating out, and a new medal grind for players competing in Premier matchmaking.",
+      "sourceUrl": "https://www.counter-strike.net/newsentry/529852487375519751",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Premier Season Two",
+      "seasonNumber": 2,
+      "startDate": "2025-01-27",
+      "endDate": "2025-07-15",
+      "description": "Premier Season Two reset CS Ratings and party eligibility, resumed Premier matchmaking, and started the Season Two medal progression for players in good standing.",
+      "sourceUrl": "https://www.counter-strike.net/newsentry/520830071182721028",
+      "confidence": "medium"
+    }
+  ]
+}

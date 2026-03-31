@@ -1,0 +1,50 @@
+{
+  "id": "poe2",
+  "name": "Path of Exile 2",
+  "shortName": "PoE2",
+  "developer": "Grinding Gear Games",
+  "seasonType": "league",
+  "genres": ["ARPG", "Free to Play"],
+  "accentColor": "text-teal-400",
+  "accentBg": "bg-teal-400",
+  "bgGradient": "from-teal-950/90 via-gray-900 to-gray-950",
+  "glowColor": "#2dd4bf",
+  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/2694490/header.jpg",
+  "officialUrl": "https://www.pathofexile.com/poe2",
+  "popularityScore": 82,
+  "steamAppId": 2694490,
+  "searchHints": [
+    "\"Path of Exile 2\" current active league season name start end date early access",
+    "\"Path of Exile 2\" early access league start date end date latest",
+    "site:pathofexile.com \"Path of Exile 2\" league announcement"
+  ],
+  "seasons": [
+    {
+      "seasonName": "The Last of the Druids",
+      "seasonNumber": 3,
+      "startDate": "2025-12-12",
+      "endDate": null,
+      "description": "The current Path of Exile 2 league, introduced in The Last of the Druids update, focused on Atziri, Vaal content, and new progression systems.",
+      "sourceUrl": "https://pathofexile2.com/druids",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Rise of the Abyssal",
+      "seasonNumber": 2,
+      "startDate": "2025-08-29",
+      "endDate": "2025-12-12",
+      "description": "The league introduced in The Third Edict update, featuring Abyss-themed content, Act Four, new uniques, and major endgame changes.",
+      "sourceUrl": "https://pathofexile2.com/edict",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Dawn of the Hunt",
+      "seasonNumber": 1,
+      "startDate": "2025-04-04",
+      "endDate": "2025-08-29",
+      "description": "A major Path of Exile 2 content update that introduced Dawn of the Hunt league content, the Huntress class, new Ascendancies, and expanded endgame systems.",
+      "sourceUrl": "https://pathofexile2.com/hunt",
+      "confidence": "high"
+    }
+  ]
+}

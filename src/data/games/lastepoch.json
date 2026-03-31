@@ -1,0 +1,68 @@
+{
+  "id": "lastepoch",
+  "name": "Last Epoch",
+  "shortName": "LE",
+  "developer": "Eleventh Hour Games",
+  "seasonType": "cycle",
+  "genres": ["ARPG"],
+  "accentColor": "text-yellow-400",
+  "accentBg": "bg-yellow-400",
+  "bgGradient": "from-yellow-950/90 via-gray-900 to-gray-950",
+  "glowColor": "#eab308",
+  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/899770/header.jpg",
+  "officialUrl": "https://www.lastepoch.com/news",
+  "popularityScore": 72,
+  "steamAppId": 899770,
+  "searchHints": [
+    "\"Last Epoch\" current active season cycle number name start end date",
+    "\"Last Epoch\" season cycle start date end date latest patch",
+    "site:lastepoch.com cycle season announcement patch notes"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Shattered Omens",
+      "seasonNumber": 5,
+      "startDate": "2026-03-26",
+      "endDate": null,
+      "description": "The current Last Epoch season adds Omen Windows, corruption-focused item systems, new loot, class updates, and wider quality-of-life improvements.",
+      "sourceUrl": "https://forum.lastepoch.com/t/last-epoch-shattered-omens-patch-notes/80571",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Beneath Ancient Skies",
+      "seasonNumber": 4,
+      "startDate": "2025-08-21",
+      "endDate": "2026-03-26",
+      "description": "Season 3 introduced dinosaur-themed content, new encounters, new progression and loot additions, and a large seasonal update built around primal ancient threats.",
+      "sourceUrl": "https://forum.lastepoch.com/t/last-epoch-beneath-ancient-skies-patch-notes/78635",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Tombs of the Erased",
+      "seasonNumber": 3,
+      "startDate": "2025-04-17",
+      "endDate": "2025-08-21",
+      "description": "Season 2 added Tombs and Cemeteries of the Erased, Legendary crafting updates, Weaver faction content, champion enemies, and broad system changes.",
+      "sourceUrl": "https://forum.lastepoch.com/t/last-epoch-tombs-of-the-erased-patch-notes/75247",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Harbingers of Ruin",
+      "seasonNumber": 2,
+      "startDate": "2024-07-09",
+      "endDate": "2025-04-17",
+      "description": "This cycle introduced Harbingers, Aberroth as a pinnacle encounter, new endgame content, faction updates, and major quality-of-life improvements.",
+      "sourceUrl": "https://forum.lastepoch.com/t/last-epoch-harbingers-of-ruin-patch-notes/71790",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Cycle 1.0",
+      "seasonNumber": 1,
+      "startDate": "2024-02-21",
+      "endDate": "2024-07-09",
+      "description": "The first Last Epoch Cycle launched with version 1.0 and introduced Item Factions, the Warlock and Falconer masteries, and the full 1.0 release environment.",
+      "sourceUrl": "https://forum.lastepoch.com/t/last-epoch-1-0-patch-notes/62536",
+      "confidence": "high"
+    }
+  ]
+}

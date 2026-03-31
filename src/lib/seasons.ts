@@ -78,12 +78,20 @@ export function getAllSeasons(): SeasonData[] {
   });
 }
 
+const STATUS_PRIORITY = { active: 0, upcoming: 1, ended: 2, unknown: 3 };
+
 export function getSeasonsForGame(gameId: string): SeasonData[] {
   const game = GAME_SEASONS.find((g) => g.gameId === gameId);
   if (!game) return [];
-  const sorted = [...game.seasons].sort(
-    (a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
-  );
+  // Sort: active first, upcoming second, then ended newest-first
+  const sorted = [...game.seasons].sort((a, b) => {
+    const sa = computeStatus(a.startDate, a.endDate ?? null);
+    const sb = computeStatus(b.startDate, b.endDate ?? null);
+    const pa = STATUS_PRIORITY[sa] ?? 3;
+    const pb = STATUS_PRIORITY[sb] ?? 3;
+    if (pa !== pb) return pa - pb;
+    return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
+  });
   const avgDays = computeAvgDuration(sorted);
   return sorted.map((entry) => toSeasonData(gameId, entry, sorted, avgDays));
 }

@@ -1,0 +1,95 @@
+{
+  "id": "the_division_2",
+  "name": "Tom Clancy's The Division 2",
+  "shortName": "TD2",
+  "developer": "Massive Entertainment",
+  "seasonType": "season",
+  "genres": ["TPS", "Loot Shooter"],
+  "accentColor": "text-orange-400",
+  "accentBg": "bg-orange-400",
+  "bgGradient": "from-orange-950/90 via-gray-900 to-gray-950",
+  "glowColor": "#fb923c",
+  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/2221490/header.jpg",
+  "officialUrl": "https://www.ubisoft.com/en-gb/game/the-division/the-division-2",
+  "popularityScore": 26,
+  "steamAppId": 2221490,
+  "searchHints": [
+    "\"The Division 2\" current active season name number start end date",
+    "\"The Division 2\" season start end date latest announcement",
+    "site:ubisoft.com \"The Division 2\" season announcement"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Anniversary Season",
+      "seasonNumber": 8,
+      "startDate": "2026-03-03",
+      "endDate": null,
+      "description": "A special anniversary season celebrating 10 years of The Division with Realism Mode, returning Global Events, a themed Event Pass, special rewards, and visual improvements.",
+      "sourceUrl": "https://www.ubisoft.com/en-us/game/the-division/the-division-2/news-updates/1myuMJ5wGJFqIy2ic0mYnp/celebrating-10-years-of-the-division",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Mutiny",
+      "seasonNumber": 7,
+      "startDate": "2025-12-02",
+      "endDate": "2026-03-03",
+      "description": "Mutiny introduced recruitable True Sons defectors as Companions through the Command Link system, along with new threats, equipment, and a Master Climax Mission.",
+      "sourceUrl": "https://www.ubisoft.com/en-us/game/the-division/the-division-2/news-updates/5fLsSWyLeFsYWiBxlByY4K/the-division-2-mutiny",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Burden of Truth",
+      "seasonNumber": 6,
+      "startDate": "2025-02-25",
+      "endDate": "2025-12-02",
+      "description": "Year 6 Season 3 followed Agents searching for Kelso, expanding the manhunt storyline with a new season pass, narrative progression, and new gear.",
+      "sourceUrl": "https://www.ubisoft.com/en-us/game/the-division/the-division-2/news-updates/5V9sBiXBdAwdb9Migm4zZW/year-6-season-3-burden-of-truth",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Shades of Red",
+      "seasonNumber": 5,
+      "startDate": "2024-10-29",
+      "endDate": "2025-02-25",
+      "description": "Year 6 Season 2 started a new seasonal journey around Keener's captured network, including new manhunt targets, rewards, and seasonal progression.",
+      "sourceUrl": "https://www.ubisoft.com/en-ca/game/the-division/the-division-2/news-updates/6xHUrSJ9z828rDyJSwzG2V/year-6-season-2-shades-of-red",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "First Rogue",
+      "seasonNumber": 4,
+      "startDate": "2024-06-11",
+      "endDate": "2024-10-29",
+      "description": "Year 6 Season 1 unified the endgame for The Division 2 owners, raised all players into the same level-40 endgame path, and continued the Keener storyline.",
+      "sourceUrl": "https://www.ubisoft.com/en-gb/game/the-division/the-division-2/news-updates/9XK0DbaxzntoNxXqC5ftY/year-6-season-1-first-rogue",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Vanguard",
+      "seasonNumber": 3,
+      "startDate": "2024-02-27",
+      "endDate": "2024-06-11",
+      "description": "Year 5 Season 3 brought a Kelso-focused manhunt, new gear, apparel events, and a major gameplay improvement update tied to Project Resolve.",
+      "sourceUrl": "https://www.ubisoft.com/pl-pl/game/the-division/the-division-2/news-updates/4Q5mYbSvaH9H3YZtMiraHs/year-5-season-3-vanguard",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Puppeteers",
+      "seasonNumber": 2,
+      "startDate": "2023-10-03",
+      "endDate": "2024-02-27",
+      "description": "Year 5 Season 2 introduced the Incursion at Meret Estate, new exotic rewards, seasonal gear, and the next chapter of the seasonal manhunt.",
+      "sourceUrl": "https://www.ubisoft.com/en-us/game/the-division/the-division-2/news-updates/1yBARPbXSYwkKmgCPyqHWa/year-5-season-2-puppeteers",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Broken Wings",
+      "seasonNumber": 1,
+      "startDate": "2023-06-09",
+      "endDate": "2023-10-03",
+      "description": "The first season of Year 5 launched alongside the new Descent mode, a new Manhunt structure, fresh gear, exotics, and vanity rewards.",
+      "sourceUrl": "https://www.ubisoft.com/en-gb/game/the-division/the-division-2/news-updates/2ds4tuZY2fS5x4qSzfmqjX/year-5-season-1-broken-wings",
+      "confidence": "high"
+    }
+  ]
+}

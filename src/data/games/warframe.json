@@ -1,0 +1,68 @@
+{
+  "id": "warframe",
+  "name": "Warframe",
+  "shortName": "WF",
+  "developer": "Digital Extremes",
+  "seasonType": "nightwave",
+  "genres": ["TPS", "Free to Play"],
+  "accentColor": "text-sky-400",
+  "accentBg": "bg-sky-400",
+  "bgGradient": "from-sky-950/90 via-slate-900 to-gray-950",
+  "glowColor": "#38bdf8",
+  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/230410/header.jpg",
+  "officialUrl": "https://www.warframe.com",
+  "popularityScore": 33,
+  "steamAppId": 230410,
+  "searchHints": [
+    "\"Warframe\" current active Nightwave name start end date",
+    "\"Warframe\" Nightwave start end date latest announcement",
+    "site:warframe.com Nightwave Nora's Mix announcement"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Dreams of the Dead",
+      "seasonNumber": 5,
+      "startDate": "2025-10-27",
+      "endDate": null,
+      "description": "The current Nightwave season, themed around Day of the Dead-inspired rewards, haunting cosmetics, and the standard Acts-based seasonal progression.",
+      "sourceUrl": "https://www.warframe.com/en/news/nightwave-dreams-of-the-dead-arrives-october-27",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Nora's Mix Vol. 9",
+      "seasonNumber": 4,
+      "startDate": "2025-05-21",
+      "endDate": "2025-10-27",
+      "description": "A cosmos-themed Nightwave season with celestial cosmetics, Nora's Mix Vol. 9 Cred, and a new rotation of Nightwave rewards.",
+      "sourceUrl": "https://www.warframe.com/en/news/nightwave-noras-mix-vol-9-arrives-may-21",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Nora's Mix Vol. 8",
+      "seasonNumber": 3,
+      "startDate": "2025-02-06",
+      "endDate": "2025-05-21",
+      "description": "A 1999-inspired Nightwave season with Höllvania-themed cosmetics, new rewards, and the standard Nightwave challenge loop.",
+      "sourceUrl": "https://www.warframe.com/en/news/nightwave-noras-mix-vol-8",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Nora's Mix Vol. 7",
+      "seasonNumber": 2,
+      "startDate": "2024-09-03",
+      "endDate": "2025-02-06",
+      "description": "A Stalker-themed Nightwave season featuring darker rewards, new cosmetics, and a fresh set of Acts and Cred offerings.",
+      "sourceUrl": "https://www.warframe.com/en/news/nightwave-noras-mix-vol-7",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Nora's Mix Vol. 6",
+      "seasonNumber": 1,
+      "startDate": "2024-05-15",
+      "endDate": "2024-09-03",
+      "description": "A Daybreak-themed Nightwave season with new cosmetics, Cred rewards, Acts, and the usual Nightwave progression reset.",
+      "sourceUrl": "https://www.warframe.com/en/news/nightwave-mix-da-nora-vol-6",
+      "confidence": "high"
+    }
+  ]
+}

@@ -27,9 +27,10 @@ function getElapsed(start: Date): Elapsed {
 
 export function ElapsedTimer({ startDate, label }: ElapsedTimerProps) {
   const t = useTranslations("elapsed");
-  const [elapsed, setElapsed] = useState<Elapsed>(() => getElapsed(startDate));
+  const [elapsed, setElapsed] = useState<Elapsed>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
+    setElapsed(getElapsed(startDate));
     const interval = setInterval(() => {
       setElapsed(getElapsed(startDate));
     }, 1000);

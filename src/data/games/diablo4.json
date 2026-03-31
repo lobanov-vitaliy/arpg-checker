@@ -1,0 +1,140 @@
+{
+  "id": "diablo4",
+  "name": "Diablo IV",
+  "shortName": "D4",
+  "developer": "Blizzard Entertainment",
+  "seasonType": "season",
+  "genres": ["ARPG"],
+  "accentColor": "text-red-400",
+  "accentBg": "bg-red-400",
+  "bgGradient": "from-red-950/90 via-gray-900 to-gray-950",
+  "glowColor": "#ef4444",
+  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/2344520/header.jpg",
+  "officialUrl": "https://diablo.blizzard.com/en-us/news",
+  "popularityScore": 85,
+  "steamAppId": 2344520,
+  "searchHints": [
+    "\"Diablo IV\" OR \"Diablo 4\" current active season name number start end date",
+    "\"Diablo 4\" season start date end date latest patch notes",
+    "site:news.blizzard.com OR site:diablo.blizzard.com season"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Lord of Hatred",
+      "seasonNumber": 13,
+      "startDate": "2026-04-28",
+      "endDate": null,
+      "description": "Season 13 marks the return of Mephisto, Lord of Hatred. New seasonal mechanics, story content, and rewards centered around the Prime Evil's influence on Sanctuary.",
+      "sourceUrl": "https://news.blizzard.com/en-us/diablo4",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season of Slaughter",
+      "seasonNumber": 12,
+      "startDate": "2026-03-11",
+      "endDate": "2026-04-28",
+      "description": "Season 12 adds Butcher transformation mechanics, Killstreak progression, Bloodied Items, and Slaughterhouse activities.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24244648/become-the-butcher-in-season-of-slaughter",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Divine Intervention",
+      "seasonNumber": 11,
+      "startDate": "2025-12-11",
+      "endDate": "2026-03-11",
+      "description": "Season 11 introduced Divine Gifts, the return of the Lesser Evils, itemization changes, Season Rank, and angelic aid against Hell.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24244465/vanquish-the-lesser-evils-in-season-of-divine-intervention",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Infernal Chaos",
+      "seasonNumber": 10,
+      "startDate": "2025-09-23",
+      "endDate": "2025-12-11",
+      "description": "Season 10 focused on Chaos Armor, Chaos Perks, Chaos Rifts, and a renewed Infernal Hordes experience as hell spilled further into Sanctuary.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24226702/rally-against-hell-in-season-of-infernal-chaos",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Sins of the Horadrim",
+      "seasonNumber": 9,
+      "startDate": "2025-07-01",
+      "endDate": "2025-09-23",
+      "description": "Season 9 introduced Horadric Spellcraft, Blood Relics, and a questline about uncovering and cleansing ancient Horadric corruption.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24215863/purge-the-sins-of-the-horadrim",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Belial's Return",
+      "seasonNumber": 8,
+      "startDate": "2025-04-29",
+      "endDate": "2025-07-01",
+      "description": "Season 8 brought Belial back into the spotlight with Boss Powers, Apparition Monsters, and a deception-focused seasonal storyline.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24189530/combat-deception-in-season-8-belials-return",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season of Witchcraft",
+      "seasonNumber": 7,
+      "startDate": "2025-01-21",
+      "endDate": "2025-04-29",
+      "description": "Season 7 revolved around Witchcraft powers, Headrotten enemies, occult upgrades, and a new mystery tied to the Tree of Whispers.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24167111/master-the-occult-in-season-of-witchcraft",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season of Hatred Rising",
+      "seasonNumber": 6,
+      "startDate": "2024-10-07",
+      "endDate": "2025-01-21",
+      "description": "Season 6 launched alongside Vessel of Hatred and focused on escalating Mephisto's influence with new seasonal progression and monstrous threats.",
+      "sourceUrl": "https://news.blizzard.com/en-us/diablo4/24140803/conquer-colossal-foes-in-season-of-hatred-rising",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season of the Infernal Hordes",
+      "seasonNumber": 5,
+      "startDate": "2024-08-06",
+      "endDate": "2024-10-07",
+      "description": "Season 5 added Infernal Hordes, a wave-based endgame activity, alongside a new seasonal questline and more hell-themed combat rewards.",
+      "sourceUrl": "https://news.blizzard.com/en-gb/article/24119591/slay-endless-demons-in-season-of-the-infernal-hordes",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Loot Reborn",
+      "seasonNumber": 4,
+      "startDate": "2024-05-14",
+      "endDate": "2024-08-06",
+      "description": "Season 4 overhauled itemization with Tempering and Masterworking, revamped Helltides, and focused on permanent loot-system improvements.",
+      "sourceUrl": "https://news.blizzard.com/en-gb/article/24077223/galvanize-your-legend-in-season-4-loot-reborn",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season of the Construct",
+      "seasonNumber": 3,
+      "startDate": "2024-01-23",
+      "endDate": "2024-05-14",
+      "description": "Season 3 sent players beneath Kehjistan to confront demonic constructs, featuring the Seneschal Companion and Vault-themed seasonal content.",
+      "sourceUrl": "https://news.blizzard.com/en-us/diablo4/24053482/unearth-a-looming-threat-in-season-of-the-construct",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season of Blood",
+      "seasonNumber": 2,
+      "startDate": "2023-10-17",
+      "endDate": "2024-01-23",
+      "description": "Season 2 centered on vampiric powers, a vampire-hunting storyline, Blood Harvest activities, and new endgame bosses.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24009152/bite-down-on-darkness-in-season-of-blood",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season of the Malignant",
+      "seasonNumber": 1,
+      "startDate": "2023-07-20",
+      "endDate": "2023-10-17",
+      "description": "The first Diablo IV season introduced Malignant Hearts, a new seasonal questline, battle pass, and corrupted enemies spreading through Sanctuary.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/23976339/season-of-the-malignant-now-live",
+      "confidence": "high"
+    }
+  ]
+}

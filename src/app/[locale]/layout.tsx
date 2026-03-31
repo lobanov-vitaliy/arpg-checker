@@ -18,11 +18,88 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Season Pulse — Track Game Seasons, Leagues, Wipes & Resets",
-  description:
-    "Track active seasons, leagues, ladders, wipes, and cycles across popular games. See current events, start and end dates, and upcoming resets in one place.",
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://seasonpulse.gg";
+const SITE_NAME = "SeasonPulse";
+
+const localeMetadata: Record<string, { title: string; description: string }> = {
+  en: {
+    title: "SeasonPulse — Track Game Seasons, Leagues, Wipes & Resets",
+    description:
+      "Track active seasons, leagues, ladders, wipes, and cycles for Diablo 4, Path of Exile, Last Epoch, and more. Countdown timers, start & end dates, upcoming resets — all in one place.",
+  },
+  ua: {
+    title: "SeasonPulse — Відстежуй сезони, ліги та вайпи ігор",
+    description:
+      "Відстежуй активні сезони, ліги, ладдери, вайпи та цикли Diablo 4, Path of Exile, Last Epoch та інших. Таймери, дати старту й завершення, наступні ресети — все в одному місці.",
+  },
+  ru: {
+    title: "SeasonPulse — Отслеживай сезоны, лиги и вайпы игр",
+    description:
+      "Отслеживай активные сезоны, лиги, ладдеры, вайпы и циклы Diablo 4, Path of Exile, Last Epoch и других игр. Таймеры обратного отсчёта, даты старта и окончания, следующие ресеты — всё в одном месте.",
+  },
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const meta = localeMetadata[locale] ?? localeMetadata.en;
+
+  return {
+    title: {
+      default: meta.title,
+      template: `%s | ${SITE_NAME}`,
+    },
+    description: meta.description,
+    metadataBase: new URL(SITE_URL),
+    keywords: [
+      "ARPG seasons",
+      "game season tracker",
+      "Path of Exile league",
+      "Diablo 4 season",
+      "Last Epoch cycle",
+      "game reset tracker",
+      "league start date",
+      "season countdown",
+      "wipe tracker",
+    ],
+    authors: [{ name: SITE_NAME }],
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true },
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}`,
+      languages: {
+        en: `${SITE_URL}/en`,
+        uk: `${SITE_URL}/ua`,
+        ru: `${SITE_URL}/ru`,
+      },
+    },
+    openGraph: {
+      type: "website",
+      siteName: SITE_NAME,
+      title: meta.title,
+      description: meta.description,
+      url: `${SITE_URL}/${locale}`,
+      locale: locale === "ua" ? "uk_UA" : locale === "ru" ? "ru_RU" : "en_US",
+      alternateLocale: ["en_US", "uk_UA", "ru_RU"].filter(
+        (l) =>
+          l !==
+          (locale === "ua" ? "uk_UA" : locale === "ru" ? "ru_RU" : "en_US"),
+      ),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: meta.title,
+      description: meta.description,
+      site: "@seasonpulse",
+    },
+  };
+}
 
 export default async function LocaleLayout({
   children,
@@ -44,6 +121,8 @@ export default async function LocaleLayout({
       lang={locale}
       className={`${inter.variable} ${geistMono.variable} dark h-full antialiased`}
     >
+      <meta name="apple-mobile-web-app-title" content="SeasonPulse" />
+
       <body className="min-h-full flex flex-col bg-gray-950 text-gray-100">
         <NextIntlClientProvider messages={messages}>
           <Navbar />

@@ -14,6 +14,7 @@ export interface GameConfig {
   shortName: string;
   developer: string;
   seasonType: SeasonType;
+  genres: string[]; // e.g. ["ARPG", "Hack & Slash"]
   accentColor: string; // Tailwind text color: "text-red-400"
   bgGradient: string; // Tailwind gradient: "from-red-950/90 via-gray-900 to-gray-950"
   accentBg: string; // Tailwind bg color: "bg-red-400"

@@ -7,6 +7,7 @@
     "title": "Track Game Seasons in One Place",
     "subtitle": "Track active game seasons, leagues, ladders, wipes, and cycles in one place. Stay up to date with current events, start and end dates, and never miss the next reset.",
     "currentSeason": "Current {seasonType}",
+    "previousSeason": "Previous {seasonType}",
     "started": "Started",
     "ends": "Ends",
     "nextSeason": "Next {seasonType}",
@@ -17,7 +18,14 @@
     "dataStale": "Awaiting refresh",
     "unavailable": "Season data unavailable",
     "checkOfficialSite": "Check official site",
-    "verify": "Verify"
+    "verify": "Verify",
+    "current": "current",
+    "coming": "coming",
+    "official": "Official",
+    "officialTooltip": "This date was officially announced by the developer.",
+    "estimated": "Estimated",
+    "starts": "Starts",
+    "startsIn": "Season starts in"
   },
   "countdown": {
     "days": "Days",
@@ -59,6 +67,23 @@
     "popularity": "Popularity",
     "recentStart": "Recently started",
     "nextSeason": "Next season"
+  },
+  "filter": {
+    "label": "Genre",
+    "all": "All",
+    "grid": "Grid view",
+    "table": "Table view"
+  },
+  "table": {
+    "game": "Game",
+    "genres": "Genres",
+    "season": "Season",
+    "status": "Status",
+    "started": "Started",
+    "ends": "Ends",
+    "nextSeason": "Next Season",
+    "players": "Players",
+    "popularity": "Pop."
   },
   "footer": {
     "disclaimer": "Season data fetched via AI and cached hourly. Verify dates on official sites."

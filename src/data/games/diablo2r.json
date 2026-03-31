@@ -1,0 +1,140 @@
+{
+  "id": "diablo2r",
+  "name": "Diablo II: Resurrected",
+  "shortName": "D2R",
+  "developer": "Blizzard Entertainment",
+  "seasonType": "ladder",
+  "genres": ["ARPG"],
+  "accentColor": "text-amber-400",
+  "accentBg": "bg-amber-400",
+  "bgGradient": "from-amber-950/90 via-gray-900 to-gray-950",
+  "glowColor": "#f59e0b",
+  "coverImage": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2536520/8cfd8f0d73075b10b3b58d9eccfee799baffab79/header.jpg?t=1774399170",
+  "officialUrl": "https://diablo2.blizzard.com",
+  "popularityScore": 42,
+  "steamAppId": 2536520,
+  "searchHints": [
+    "\"Diablo II Resurrected\" OR \"D2R\" current ladder season number start end date reset",
+    "\"Diablo 2 Resurrected\" ladder reset when next season starts",
+    "site:news.blizzard.com \"Diablo II\" ladder reset"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Ladder Season 13",
+      "seasonNumber": 13,
+      "startDate": "2026-02-20",
+      "endDate": null,
+      "description": "The current Ladder season gives players a fresh reset to race to Level 99 again, with all standard Diablo II: Resurrected Ladder modes available.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24246296/diablo-ii-resurrected-ladder-season-13-now-live",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Ladder Season 12",
+      "seasonNumber": 12,
+      "startDate": "2025-10-03",
+      "endDate": "2026-02-20",
+      "description": "Season 12 was the final completed Ladder season before the current reset, maintaining the same multi-mode competitive race and seasonal reset structure.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24226703/diablo-ii-resurrected-ladder-season-12-has-concluded",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Ladder Season 11",
+      "seasonNumber": 11,
+      "startDate": "2025-06-20",
+      "endDate": "2025-10-03",
+      "description": "Season 11 continued the recurring Ladder cycle, bringing another leaderboard reset and another fresh start for optimized progression routes.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24208340/diablo-ii-resurrected-ladder-season-11-has-concluded",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Ladder Season 10",
+      "seasonNumber": 10,
+      "startDate": "2025-03-07",
+      "endDate": "2025-06-20",
+      "description": "Season 10 reset all Ladder rankings again, preserving the classic seasonal structure of fresh characters, a reset economy, and leaderboard competition.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24179243/diablo-ii-resurrected-ladder-season-10-has-concluded",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Ladder Season 9",
+      "seasonNumber": 9,
+      "startDate": "2024-12-06",
+      "endDate": "2025-03-07",
+      "description": "Season 9 arrived with Patch 2.8.0 and continued the traditional Ladder reset with a new opportunity to race to Level 99 and rebuild from scratch.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24158875/diablo-ii-resurrected-ladder-season-9-has-concluded",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Ladder Season 8",
+      "seasonNumber": 8,
+      "startDate": "2024-08-23",
+      "endDate": "2024-12-06",
+      "description": "Season 8 maintained the established Ladder structure, offering another reset for players chasing top rankings, loot, and optimized leveling routes.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24111638/diablo-ii-resurrected-ladder-season-8-has-concluded",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Ladder Season 7",
+      "seasonNumber": 7,
+      "startDate": "2024-05-23",
+      "endDate": "2024-08-23",
+      "description": "Season 7 launched after Patch 2.7.3 and continued Diablo II: Resurrected's recurring Ladder format with a fresh economy and leaderboard reset.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24096018/diablo-ii-resurrected-ladder-season-7-has-concluded",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Ladder Season 6",
+      "seasonNumber": 6,
+      "startDate": "2024-02-22",
+      "endDate": "2024-05-23",
+      "description": "Season 6 offered another full Ladder reset with the familiar seasonal race to Level 99 across Standard, Hardcore, and their expansion variants.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24061888/diablo-ii-resurrected-ladder-season-6-has-concluded",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Ladder Season 5",
+      "seasonNumber": 5,
+      "startDate": "2023-09-28",
+      "endDate": "2024-02-22",
+      "description": "Season 5 reset the Ladder again and kept the core Diablo II competitive formula focused on speed-leveling, loot progression, and leaderboard placement.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/23991801/diablo-ii-resurrected-ladder-season-5-has-concluded",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Ladder Season 4",
+      "seasonNumber": 4,
+      "startDate": "2023-05-04",
+      "endDate": "2023-09-28",
+      "description": "Season 4 continued the regular Ladder reset cadence, giving players a fresh start and another leaderboard race in all standard Ladder variants.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/23938388/diablo-ii-resurrected-ladder-season-4-has-concluded",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Ladder Season 3",
+      "seasonNumber": 3,
+      "startDate": "2023-02-16",
+      "endDate": "2023-05-04",
+      "description": "Season 3 refreshed the Ladder with new rune word support and updates tied to Patch 2.6 while preserving the classic competitive reset format.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/23899624/diablo-ii-resurrected-ladder-season-three-has-concluded",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Ladder Season 2",
+      "seasonNumber": 2,
+      "startDate": "2022-10-06",
+      "endDate": "2023-02-16",
+      "description": "Season 2 was the first Ladder season with Terror Zones and continued the Level 99 race with fresh Ladder characters and reset leaderboards.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/23827590/diablo-ii-resurrected-ladder-season-two-has-concluded",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Ladder Season 1",
+      "seasonNumber": 1,
+      "startDate": "2022-04-28",
+      "endDate": "2022-10-06",
+      "description": "The first competitive Ladder season in Diablo II: Resurrected launched with Patch 2.4 and introduced the ranked race to Level 99 across multiple Ladder modes.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/23788293/diablo-ii-resurrected-patch-2-4-ladder-now-live",
+      "confidence": "high"
+    }
+  ]
+}
