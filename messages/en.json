@@ -4,8 +4,8 @@
     "news": "News"
   },
   "dashboard": {
-    "title": "Season Tracker",
-    "subtitle": "Track active ARPG seasons, leagues, and cycles in one place. Stay up to date with current events, start and end dates, and never miss the next reset.",
+    "title": "Track Game Seasons in One Place",
+    "subtitle": "Track active game seasons, leagues, ladders, wipes, and cycles in one place. Stay up to date with current events, start and end dates, and never miss the next reset.",
     "currentSeason": "Current {seasonType}",
     "started": "Started",
     "ends": "Ends",

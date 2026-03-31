@@ -19,9 +19,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ARPG Checker — Season & League Tracker",
+  title: "Season Pulse — Track Game Seasons, Leagues, Wipes & Resets",
   description:
-    "Real-time season and league information for Diablo, Path of Exile, Last Epoch and more.",
+    "Track active seasons, leagues, ladders, wipes, and cycles across popular games. See current events, start and end dates, and upcoming resets in one place.",
 };
 
 export default async function LocaleLayout({

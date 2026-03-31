@@ -618,4 +618,253 @@ export const GAME_SEASONS: GameSeasons[] = [
       },
     ],
   },
+  {
+    gameId: "undecember",
+    seasons: [
+      {
+        seasonName: "Re:Birth",
+        seasonNumber: 1,
+        startDate: "2024-11-07",
+        endDate: "2025-01-09",
+        description:
+          "The first officially named Undecember season introduced Re:Birth Mode and marked the start of the new unique-name season format instead of the previous numbering system.",
+        sourceUrl:
+          "https://ud.floor.line.games/us/bbsCmn/detail/1730901162975031522",
+        confidence: "high",
+      },
+      {
+        seasonName: "Trials of Power",
+        seasonNumber: 2,
+        startDate: "2025-01-09",
+        endDate: "2025-05-02",
+        description:
+          "This season followed Re:Birth, resetting Void Rift progression and adding a new season-focused competitive cycle built around Trials of Power content.",
+        sourceUrl:
+          "https://ud.floor.line.games/us/bbsCmn/detail/1736760579410018644",
+        confidence: "high",
+      },
+      {
+        seasonName: "Starwalker",
+        seasonNumber: 3,
+        startDate: "2025-05-02",
+        endDate: "2025-09-04",
+        description:
+          "Season Starwalker added a new Season Mode cycle with its own gear, pass rewards, raid schedule, and season-limited progression systems.",
+        sourceUrl:
+          "https://ud.floor.line.games/us/bbsCmn/detail/1746187599491003314",
+        confidence: "high",
+      },
+      {
+        seasonName: "Abyss Gate",
+        seasonNumber: 4,
+        startDate: "2025-09-04",
+        endDate: "2026-01-15",
+        description:
+          "Abyss Gate centered on descending through Chaos Statue-linked dungeon depths with progressively stronger monsters and season-exclusive progression.",
+        sourceUrl:
+          "https://ud.floor.line.games/us/bbsCmn/detail/1755844453621021669",
+        confidence: "high",
+      },
+      {
+        seasonName: "New Age",
+        seasonNumber: 5,
+        startDate: "2026-01-15",
+        endDate: null,
+        description:
+          "The current Undecember season focuses on a large-scale skill overhaul, Season Mode progression through Abyss Gate New Age, and season-specific rewards and passes.",
+        sourceUrl:
+          "https://ud.floor.line.games/us/bbsCmn/detail/1766123994211003441",
+        confidence: "high",
+      },
+    ],
+  },
+  {
+    gameId: "the_division_2",
+    seasons: [
+      {
+        seasonName: "Broken Wings",
+        seasonNumber: 1,
+        startDate: "2023-06-09",
+        endDate: "2023-10-03",
+        description:
+          "The first season of Year 5 launched alongside the new Descent mode, a new Manhunt structure, fresh gear, exotics, and vanity rewards.",
+        sourceUrl:
+          "https://www.ubisoft.com/en-gb/game/the-division/the-division-2/news-updates/2ds4tuZY2fS5x4qSzfmqjX/year-5-season-1-broken-wings",
+        confidence: "high",
+      },
+      {
+        seasonName: "Puppeteers",
+        seasonNumber: 2,
+        startDate: "2023-10-03",
+        endDate: "2024-02-27",
+        description:
+          "Year 5 Season 2 introduced the Incursion at Meret Estate, new exotic rewards, seasonal gear, and the next chapter of the seasonal manhunt.",
+        sourceUrl:
+          "https://www.ubisoft.com/en-us/game/the-division/the-division-2/news-updates/1yBARPbXSYwkKmgCPyqHWa/year-5-season-2-puppeteers",
+        confidence: "high",
+      },
+      {
+        seasonName: "Vanguard",
+        seasonNumber: 3,
+        startDate: "2024-02-27",
+        endDate: "2024-06-11",
+        description:
+          "Year 5 Season 3 brought a Kelso-focused manhunt, new gear, apparel events, and a major gameplay improvement update tied to Project Resolve.",
+        sourceUrl:
+          "https://www.ubisoft.com/pl-pl/game/the-division/the-division-2/news-updates/4Q5mYbSvaH9H3YZtMiraHs/year-5-season-3-vanguard",
+        confidence: "high",
+      },
+      {
+        seasonName: "First Rogue",
+        seasonNumber: 4,
+        startDate: "2024-06-11",
+        endDate: "2024-10-29",
+        description:
+          "Year 6 Season 1 unified the endgame for The Division 2 owners, raised all players into the same level-40 endgame path, and continued the Keener storyline.",
+        sourceUrl:
+          "https://www.ubisoft.com/en-gb/game/the-division/the-division-2/news-updates/9XK0DbaxzntoNxXqC5ftY/year-6-season-1-first-rogue",
+        confidence: "high",
+      },
+      {
+        seasonName: "Shades of Red",
+        seasonNumber: 5,
+        startDate: "2024-10-29",
+        endDate: "2025-02-25",
+        description:
+          "Year 6 Season 2 started a new seasonal journey around Keener’s captured network, including new manhunt targets, rewards, and seasonal progression.",
+        sourceUrl:
+          "https://www.ubisoft.com/en-ca/game/the-division/the-division-2/news-updates/6xHUrSJ9z828rDyJSwzG2V/year-6-season-2-shades-of-red",
+        confidence: "high",
+      },
+      {
+        seasonName: "Burden of Truth",
+        seasonNumber: 6,
+        startDate: "2025-02-25",
+        endDate: "2025-12-02",
+        description:
+          "Year 6 Season 3 followed Agents searching for Kelso, expanding the manhunt storyline with a new season pass, narrative progression, and new gear.",
+        sourceUrl:
+          "https://www.ubisoft.com/en-us/game/the-division/the-division-2/news-updates/5V9sBiXBdAwdb9Migm4zZW/year-6-season-3-burden-of-truth",
+        confidence: "medium",
+      },
+      {
+        seasonName: "Mutiny",
+        seasonNumber: 7,
+        startDate: "2025-12-02",
+        endDate: "2026-03-03",
+        description:
+          "Mutiny introduced recruitable True Sons defectors as Companions through the Command Link system, along with new threats, equipment, and a Master Climax Mission.",
+        sourceUrl:
+          "https://www.ubisoft.com/en-us/game/the-division/the-division-2/news-updates/5fLsSWyLeFsYWiBxlByY4K/the-division-2-mutiny",
+        confidence: "high",
+      },
+      {
+        seasonName: "Anniversary Season",
+        seasonNumber: 8,
+        startDate: "2026-03-03",
+        endDate: null,
+        description:
+          "A special anniversary season celebrating 10 years of The Division with Realism Mode, returning Global Events, a themed Event Pass, special rewards, and visual improvements.",
+        sourceUrl:
+          "https://www.ubisoft.com/en-us/game/the-division/the-division-2/news-updates/1myuMJ5wGJFqIy2ic0mYnp/celebrating-10-years-of-the-division",
+        confidence: "high",
+      },
+    ],
+  },
+  {
+    gameId: "lost_ark",
+    seasons: [
+      {
+        seasonName: "Paradise Season 1",
+        seasonNumber: 1,
+        startDate: "2025-12-10",
+        endDate: "2026-03-04",
+        description:
+          "The first Paradise season introduced the new Paradise progression system with Elysian, Crucible, and Hell, creating a repeatable seasonal loop with Hell Keys, gear progression, and reset-based rewards.",
+        sourceUrl:
+          "https://www.playlostark.com/en-us/game/releases/welcome-to-paradise",
+        confidence: "medium",
+      },
+      {
+        seasonName: "Paradise Season 2",
+        seasonNumber: 2,
+        startDate: "2026-01-14",
+        endDate: "2026-03-11",
+        description:
+          "The second Paradise season continued the seasonal progression loop and was later adjusted based on feedback, with Amazon explicitly warning players to use remaining Hell Keys before the season ended.",
+        sourceUrl:
+          "https://www.playlostark.com/en-gb/news/articles/team-update-heading-toward-march",
+        confidence: "medium",
+      },
+      {
+        seasonName: "Paradise Season 3",
+        seasonNumber: 3,
+        startDate: "2026-03-11",
+        endDate: null,
+        description:
+          "The current Paradise season launched with the Ends of the Abyss update and continues Lost Ark's repeatable Paradise system with seasonal progression, Hell Keys, and updated reward and balance rules.",
+        sourceUrl:
+          "https://www.playlostark.com/en-us/game/releases/ends-of-the-abyss",
+        confidence: "high",
+      },
+    ],
+  },
+  {
+    gameId: "warframe",
+    seasons: [
+      {
+        seasonName: "Nora's Mix Vol. 6",
+        seasonNumber: 1,
+        startDate: "2024-05-15",
+        endDate: "2024-09-03",
+        description:
+          "A Daybreak-themed Nightwave season with new cosmetics, Cred rewards, Acts, and the usual Nightwave progression reset.",
+        sourceUrl:
+          "https://www.warframe.com/en/news/nightwave-mix-da-nora-vol-6",
+        confidence: "high",
+      },
+      {
+        seasonName: "Nora's Mix Vol. 7",
+        seasonNumber: 2,
+        startDate: "2024-09-03",
+        endDate: "2025-02-06",
+        description:
+          "A Stalker-themed Nightwave season featuring darker rewards, new cosmetics, and a fresh set of Acts and Cred offerings.",
+        sourceUrl: "https://www.warframe.com/en/news/nightwave-noras-mix-vol-7",
+        confidence: "high",
+      },
+      {
+        seasonName: "Nora's Mix Vol. 8",
+        seasonNumber: 3,
+        startDate: "2025-02-06",
+        endDate: "2025-05-21",
+        description:
+          "A 1999-inspired Nightwave season with Höllvania-themed cosmetics, new rewards, and the standard Nightwave challenge loop.",
+        sourceUrl: "https://www.warframe.com/en/news/nightwave-noras-mix-vol-8",
+        confidence: "high",
+      },
+      {
+        seasonName: "Nora's Mix Vol. 9",
+        seasonNumber: 4,
+        startDate: "2025-05-21",
+        endDate: "2025-10-27",
+        description:
+          "A cosmos-themed Nightwave season with celestial cosmetics, Nora's Mix Vol. 9 Cred, and a new rotation of Nightwave rewards.",
+        sourceUrl:
+          "https://www.warframe.com/en/news/nightwave-noras-mix-vol-9-arrives-may-21",
+        confidence: "high",
+      },
+      {
+        seasonName: "Dreams of the Dead",
+        seasonNumber: 5,
+        startDate: "2025-10-27",
+        endDate: null,
+        description:
+          "The current Nightwave season, themed around Day of the Dead-inspired rewards, haunting cosmetics, and the standard Acts-based seasonal progression.",
+        sourceUrl:
+          "https://www.warframe.com/en/news/nightwave-dreams-of-the-dead-arrives-october-27",
+        confidence: "high",
+      },
+    ],
+  },
 ];
