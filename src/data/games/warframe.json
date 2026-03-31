@@ -9,7 +9,7 @@
   "accentBg": "bg-sky-400",
   "bgGradient": "from-sky-950/90 via-slate-900 to-gray-950",
   "glowColor": "#38bdf8",
-  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/230410/header.jpg",
+  "coverImage": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/230410/60ce7425b864dd3c0dd855bfc66004c6f9ca4844/header.jpg",
   "officialUrl": "https://www.warframe.com",
   "popularityScore": 33,
   "steamAppId": 230410,

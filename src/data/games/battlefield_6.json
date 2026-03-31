@@ -1,0 +1,41 @@
+{
+  "id": "battlefield_6",
+  "name": "Battlefield™ 6",
+  "shortName": "BF6",
+  "developer": "Battlefield Studios",
+  "seasonType": "season",
+  "genres": ["FPS", "Military Shooter"],
+  "accentColor": "text-lime-400",
+  "accentBg": "bg-lime-400",
+  "bgGradient": "from-lime-950/90 via-slate-900 to-gray-950",
+  "glowColor": "#a3e635",
+  "coverImage": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2807960/c12d12ce3c7d217398d3fcad77427bfc9d57c570/header.jpg",
+  "officialUrl": "https://battlefield.com",
+  "popularityScore": 79,
+  "steamAppId": 2807960,
+  "searchHints": [
+    "\"Battlefield 6\" current active season number name start end date",
+    "\"Battlefield 6\" season launch date latest announcement official",
+    "site:battlefield.com \"Battlefield 6\" season announcement"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Season 2: Nightfall",
+      "seasonNumber": 2,
+      "startDate": "2026-02-17",
+      "endDate": null,
+      "description": "The current Battlefield 6 season adds Nightfall content across Battlefield 6 and REDSEC, introducing new map content, modes, weapons, vehicles, and seasonal progression themed around fighting through darkness.",
+      "sourceUrl": "https://battlefield.com",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 1: Rogue Ops",
+      "seasonNumber": 1,
+      "startDate": "2025-10-28",
+      "endDate": "2026-02-17",
+      "description": "The first live season launched shortly after release and introduced Rogue Ops, followed by additional themed updates such as California Resistance and Winter Offensive as part of Battlefield 6's first seasonal content cycle.",
+      "sourceUrl": "https://blog.playstation.com/2025/10/22/battlefield-6-season-1-first-details-and-hands-on-report/",
+      "confidence": "high"
+    }
+  ]
+}

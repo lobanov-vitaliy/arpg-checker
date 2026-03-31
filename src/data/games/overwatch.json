@@ -1,0 +1,41 @@
+{
+  "id": "overwatch",
+  "name": "Overwatch 2",
+  "shortName": "OW2",
+  "developer": "Blizzard Entertainment",
+  "seasonType": "season",
+  "genres": ["FPS", "Hero Shooter", "Team-Based"],
+  "accentColor": "text-orange-400",
+  "accentBg": "bg-orange-400",
+  "bgGradient": "from-orange-950/90 via-slate-900 to-gray-950",
+  "glowColor": "#fb923c",
+  "coverImage": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2357570/26446ff05a359d4942e277f82fd347e89b275be3/header.jpg",
+  "officialUrl": "https://overwatch.blizzard.com",
+  "popularityScore": 86,
+  "steamAppId": 2357570,
+  "searchHints": [
+    "\"Overwatch 2\" current active season number name start end date",
+    "\"Overwatch 2\" season launch date latest announcement Blizzard",
+    "site:overwatch.blizzard.com \"Overwatch 2\" season announcement"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Season 1",
+      "seasonNumber": 1,
+      "startDate": "2026-02-10",
+      "endDate": null,
+      "description": "The current Overwatch seasonal cycle begins the 2026 Reign of Talon story arc, adds five new heroes across the season roadmap, refreshes core systems, and starts a new competitive year.",
+      "sourceUrl": "https://overwatch.blizzard.com/en-us/news/24246206/overwatch-spotlight-the-reign-of-talon-begins/",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 20: Vendetta",
+      "seasonNumber": 20,
+      "startDate": "2025-12-02",
+      "endDate": "2026-02-10",
+      "description": "Season 20 introduced Vendetta, the first melee DPS hero in Overwatch history, along with Winter Wonderland content, Stadium updates, and new cosmetics.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24247510/give-the-gift-of-vengeance-in-season-20-vendetta",
+      "confidence": "high"
+    }
+  ]
+}

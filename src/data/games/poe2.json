@@ -9,7 +9,7 @@
   "accentBg": "bg-teal-400",
   "bgGradient": "from-teal-950/90 via-gray-900 to-gray-950",
   "glowColor": "#2dd4bf",
-  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/2694490/header.jpg",
+  "coverImage": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2694490/cf9f17c1f9eaa59a6a87f2faf3c03ac5a750b9da/header.jpg",
   "officialUrl": "https://www.pathofexile.com/poe2",
   "popularityScore": 82,
   "steamAppId": 2694490,

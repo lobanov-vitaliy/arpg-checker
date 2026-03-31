@@ -1,0 +1,50 @@
+{
+  "id": "marvel_rivals",
+  "name": "Marvel Rivals",
+  "shortName": "MR",
+  "developer": "NetEase Games",
+  "seasonType": "season",
+  "genres": ["Hero Shooter", "TPS", "PvP"],
+  "accentColor": "text-fuchsia-400",
+  "accentBg": "bg-fuchsia-400",
+  "bgGradient": "from-fuchsia-950/90 via-slate-900 to-gray-950",
+  "glowColor": "#e879f9",
+  "coverImage": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2767030/d0fbd193f4a68c7563ae47ab3322d08f184633f9/header.jpg",
+  "officialUrl": "https://www.marvelrivals.com",
+  "popularityScore": 88,
+  "steamAppId": 2767030,
+  "searchHints": [
+    "\"Marvel Rivals\" current active season number name start end date",
+    "\"Marvel Rivals\" season start date latest official patch notes",
+    "site:marvelrivals.com \"Season 7\" OR \"Season 6.5\" \"Marvel Rivals\""
+  ],
+  "seasons": [
+    {
+      "seasonName": "Season 7: The Hunt Is On",
+      "seasonNumber": 7,
+      "startDate": "2026-03-20",
+      "endDate": null,
+      "description": "The current season adds the Season 7 update, integrated esports features, Marvel Rivals Championship Season 7 support, new events, and ongoing hero balance and content updates.",
+      "sourceUrl": "https://www.marvelrivals.com/gameupdate/20260318/41548_1291772.html",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 6.5",
+      "seasonNumber": 6.5,
+      "startDate": "2026-02-13",
+      "endDate": "2026-03-20",
+      "description": "Season 6.5 introduced Elsa Bloodstone, seasonal events, Twitch Drops, Team-Up changes, and the mid-season refresh before Season 7.",
+      "sourceUrl": "https://www.marvelrivals.com/gameupdate/20260211/41548_1286781.html",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 6",
+      "seasonNumber": 6,
+      "startDate": "2026-01-16",
+      "endDate": "2026-02-13",
+      "description": "Season 6 launched a new seasonal cycle with fresh content, major patch changes, and the setup for Marvel Rivals Championship Season 7 and the 2026 competitive structure.",
+      "sourceUrl": "https://www.marvelrivals.com/20260115/41525_1281774.html",
+      "confidence": "high"
+    }
+  ]
+}

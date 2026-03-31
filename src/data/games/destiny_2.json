@@ -1,0 +1,50 @@
+{
+  "id": "destiny_2",
+  "name": "Destiny 2",
+  "shortName": "D2",
+  "developer": "Bungie",
+  "seasonType": "season",
+  "genres": ["FPS", "Looter Shooter", "Sci-Fi"],
+  "accentColor": "text-indigo-400",
+  "accentBg": "bg-indigo-400",
+  "bgGradient": "from-indigo-950/90 via-slate-900 to-gray-950",
+  "glowColor": "#818cf8",
+  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/1085660/header.jpg",
+  "officialUrl": "https://www.bungie.net/7/en/destiny",
+  "popularityScore": 89,
+  "steamAppId": 1085660,
+  "searchHints": [
+    "\"Destiny 2\" current active season name start end date Bungie",
+    "\"Destiny 2\" Lawless Reclamation Heresy launch dates official",
+    "site:bungie.net Destiny 2 season launch blog"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Lawless",
+      "seasonNumber": 3,
+      "startDate": "2025-12-02",
+      "endDate": null,
+      "description": "The current Year 8 season launched alongside Renegades and covers the next six months of content with the Lawless Frontier mode, new characters, a new social hub, and ongoing major updates.",
+      "sourceUrl": "https://www.bungie.net/7/en/News/Article/renegades_launch_blog",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Reclamation",
+      "seasonNumber": 2,
+      "startDate": "2025-07-15",
+      "endDate": "2025-12-02",
+      "description": "The first Year 8 season began with The Edge of Fate and the Year of Prophecy, starting Destiny 2's new long-form seasonal structure with major updates like Ash & Iron.",
+      "sourceUrl": "https://www.bungie.net/7/en/News/Article/twid_07_17_2025",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Heresy",
+      "seasonNumber": 1,
+      "startDate": "2025-02-04",
+      "endDate": "2025-07-15",
+      "description": "The final Year 7 episode launched before Year 8 and added new story content aboard the Dreadnaught, the Nether activity, the Sundered Doctrine dungeon, and wide sandbox updates.",
+      "sourceUrl": "https://www.bungie.net/7/en/News/Article/twid-01-23-25",
+      "confidence": "medium"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "id": "apex_legends",
+  "name": "Apex Legends",
+  "shortName": "Apex",
+  "developer": "Respawn Entertainment",
+  "seasonType": "season",
+  "genres": [
+    "FPS",
+    "Hero Shooter",
+    "Battle Royale"
+  ],
+  "accentColor": "text-rose-400",
+  "accentBg": "bg-rose-400",
+  "bgGradient": "from-rose-950/90 via-slate-900 to-gray-950",
+  "glowColor": "#fb7185",
+  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/1172470/header.jpg",
+  "officialUrl": "https://www.ea.com/games/apex-legends",
+  "popularityScore": 91,
+  "steamAppId": 1172470,
+  "searchHints": [
+    "\"Apex Legends\" current active season number name start end date",
+    "\"Apex Legends\" season launch date latest official patch notes",
+    "site:help.ea.com \"Apex Legends\" seasons and updates"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Breach",
+      "seasonNumber": 28,
+      "startDate": "2026-02-10",
+      "endDate": null,
+      "description": "The current Apex Legends season introduces Breach, adding Hardlight windows, Bot Royale Evolved, and notable updates to Fuse, Catalyst, and Bloodhound.",
+      "sourceUrl": "https://help.ea.com/en/articles/apex-legends/seasons-and-updates/",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Amped",
+      "seasonNumber": 27,
+      "startDate": "2025-11-04",
+      "endDate": "2026-02-10",
+      "description": "Season 27 refreshed Olympus and featured balance updates for Horizon, Rampart, and Valkyrie as part of the seasonal ranked and Battle Pass reset.",
+      "sourceUrl": "https://help.ea.com/en/articles/apex-legends/seasons-and-updates/",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Showdown",
+      "seasonNumber": 26,
+      "startDate": "2025-08-05",
+      "endDate": "2025-11-04",
+      "description": "Season 26 introduced the Wildcard mode and balance changes for Bangalore and Caustic within Apex Legends' regular season cadence.",
+      "sourceUrl": "https://help.ea.com/en/articles/apex-legends/seasons-and-updates/",
+      "confidence": "high"
+    }
+  ]
+}

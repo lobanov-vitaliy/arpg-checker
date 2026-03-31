@@ -1,0 +1,35 @@
+{
+  "id": "marathon",
+  "name": "Marathon",
+  "shortName": "MTH",
+  "developer": "Bungie",
+  "seasonType": "season",
+  "genres": [
+    "FPS",
+    "Extraction Shooter"
+  ],
+  "accentColor": "text-emerald-400",
+  "accentBg": "bg-emerald-400",
+  "bgGradient": "from-emerald-950/90 via-slate-900 to-gray-950",
+  "glowColor": "#34d399",
+  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/3065800/header.jpg",
+  "officialUrl": "https://marathonthegame.com",
+  "popularityScore": 74,
+  "steamAppId": 3065800,
+  "searchHints": [
+    "\"Marathon\" current active season number name start end date Bungie",
+    "\"Marathon\" season 1 start date latest seasonal update Bungie",
+    "site:bungie.net Marathon season announcement Bungie"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Season 1",
+      "seasonNumber": 1,
+      "startDate": "2026-03-05",
+      "endDate": null,
+      "description": "The launch season introduced Marathon's first full seasonal cycle with faction and contract progression, all six launch Runner shells, three launch zones, and the first wave of post-launch progression and rewards.",
+      "sourceUrl": "https://www.bungie.net/7/en/News/Article/introducing_seasons_marathon",
+      "confidence": "high"
+    }
+  ]
+}

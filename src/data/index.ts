@@ -17,6 +17,14 @@ import lost_ark from "./games/lost_ark.json";
 import arc_raiders from "./games/arc_raiders.json";
 import warframe from "./games/warframe.json";
 import cs2 from "./games/cs2.json";
+import marathon from "./games/marathon.json";
+import overwatch from "./games/overwatch.json";
+import battlefield_6 from "./games/battlefield_6.json";
+import call_of_duty from "./games/call_of_duty.json";
+import marvel_rivals from "./games/marvel_rivals.json";
+import delta_force from "./games/delta_force.json";
+import apex_legends from "./games/apex_legends.json";
+import destiny_2 from "./games/destiny_2.json";
 
 type GameFileEntry = GameConfig & { seasons: ManualSeasonEntry[] };
 
@@ -25,12 +33,20 @@ const ALL_GAMES = [
   diablo2r,
   poe1,
   poe2,
+  destiny_2,
   lastepoch,
   torchlight_infinite,
+  apex_legends,
+  delta_force,
   undecember,
+  marvel_rivals,
   the_division_2,
+  call_of_duty,
   lost_ark,
   cs2,
+  overwatch,
+  battlefield_6,
+  marathon,
   arc_raiders,
   warframe,
 ] as unknown as GameFileEntry[];

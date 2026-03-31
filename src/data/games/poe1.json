@@ -9,7 +9,7 @@
   "accentBg": "bg-emerald-400",
   "bgGradient": "from-emerald-950/90 via-gray-900 to-gray-950",
   "glowColor": "#34d399",
-  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/238960/header.jpg",
+  "coverImage": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/238960/558fd9078de800b7528a8e96bee0108a8fac17aa/header.jpg",
   "officialUrl": "https://www.pathofexile.com/forum/view-category/leagues",
   "popularityScore": 88,
   "steamAppId": 238960,

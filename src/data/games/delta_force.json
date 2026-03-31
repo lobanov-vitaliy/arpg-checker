@@ -1,0 +1,72 @@
+{
+  "id": "delta_force",
+  "name": "Delta Force",
+  "shortName": "DF",
+  "developer": "Team Jade",
+  "seasonType": "season",
+  "genres": [
+    "FPS",
+    "Extraction Shooter",
+    "Military Shooter"
+  ],
+  "accentColor": "text-emerald-400",
+  "accentBg": "bg-emerald-400",
+  "bgGradient": "from-emerald-950/90 via-slate-900 to-gray-950",
+  "glowColor": "#34d399",
+  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/2507950/header.jpg",
+  "officialUrl": "https://www.playdeltaforce.com",
+  "popularityScore": 73,
+  "steamAppId": 2507950,
+  "searchHints": [
+    "\"Delta Force\" current active season name number start end date",
+    "\"Delta Force\" season update latest official announcement",
+    "site:playdeltaforce.com \"Delta Force\" season announcement"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Morphosis",
+      "seasonNumber": 8,
+      "startDate": "2026-02-03",
+      "endDate": null,
+      "description": "The current Delta Force season adds the Morphosis content update with a new Operator, seasonal events and rewards, fresh store content, and balance changes across the game's modes.",
+      "sourceUrl": "https://www.playdeltaforce.com/en/detail/news-version-update-new-season-morphosis-coming-soon.html",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Ahsarah",
+      "seasonNumber": 7,
+      "startDate": "2025-11-18",
+      "endDate": "2026-02-03",
+      "description": "Season Ahsarah introduced a new Operator, a new map, new mini-mode content, seasonal events, and large cross-mode improvements before ending in late January 2026.",
+      "sourceUrl": "https://www.playdeltaforce.com/en/detail/news-version-update-new-season-ahsarah-events-rewards-store-updates.html",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "War Ablaze",
+      "seasonNumber": 6,
+      "startDate": "2025-09-23",
+      "endDate": "2025-11-18",
+      "description": "Season War Ablaze launched as the game's first anniversary season with a new seasonal reward track, new content, and a broad live-service refresh across events and progression.",
+      "sourceUrl": "https://www.playdeltaforce.com/en/detail/news-announcement-wildfire-rages-new-season-war-ablaze-preview.html",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Break",
+      "seasonNumber": 5,
+      "startDate": "2025-07-09",
+      "endDate": "2025-09-23",
+      "description": "Season Break brought a new seasonal update with reward events, progression incentives, and refreshed store offerings as part of Delta Force's ongoing live-service cadence.",
+      "sourceUrl": "https://deltaforce.garena.com/en/news/all/PTVR3X",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Eclipse Vigil",
+      "seasonNumber": 4,
+      "startDate": "2025-04-21",
+      "endDate": "2025-07-09",
+      "description": "Eclipse Vigil launched with Delta Force's global official launch and introduced the first major season content package for the worldwide release.",
+      "sourceUrl": "https://www.playdeltaforce.com/en/detail/news-announcement-i-global-official-launch-new-season-eclipse-vigil-arrives-april-21-.html",
+      "confidence": "high"
+    }
+  ]
+}
