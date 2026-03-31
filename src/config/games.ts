@@ -188,6 +188,26 @@ export const GAMES: GameConfig[] = [
   //     `site:playlostark.com season announcement update`,
   //   ],
   // },
+  {
+    id: "arc_raiders",
+    name: "ARC Raiders",
+    shortName: "ARC",
+    developer: "Embark Studios",
+    seasonType: "expedition",
+    accentColor: "text-cyan-400",
+    accentBg: "bg-cyan-400",
+    bgGradient: "from-cyan-950/90 via-gray-900 to-gray-950",
+    glowColor: "#22d3ee",
+    coverImage: STEAM(1808500),
+    officialUrl: "https://www.arcraiders.com",
+    popularityScore: 62,
+    steamAppId: 1808500,
+    searchHints: [
+      `"ARC Raiders" current active expedition name number start end date`,
+      `"ARC Raiders" expedition season patch notes latest`,
+      `site:arcraiders.com expedition announcement`,
+    ],
+  },
 ];
 
 export const GAMES_BY_ID: Record<string, GameConfig> = Object.fromEntries(

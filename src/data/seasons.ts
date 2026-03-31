@@ -580,4 +580,42 @@ export const GAME_SEASONS: GameSeasons[] = [
       },
     ],
   },
+  {
+    gameId: "arc_raiders",
+    seasons: [
+      {
+        seasonName: "Launch Cycle",
+        seasonNumber: 1,
+        startDate: "2025-10-30",
+        endDate: "2025-12-22",
+        description:
+          "The initial ARC Raiders progression cycle from launch until the first Expedition departure window closed. Players built toward the Expedition Project and could choose their first voluntary reset.",
+        sourceUrl:
+          "https://arcraiders.com/news/the-expedition-project-is-departing-soon",
+        confidence: "medium",
+      },
+      {
+        seasonName: "First Expedition Cycle",
+        seasonNumber: 2,
+        startDate: "2025-12-22",
+        endDate: "2026-03-01",
+        description:
+          "The cycle after the first Expedition departure, during which players progressed toward their second voluntary wipe/reset and stacked Expedition rewards and buffs.",
+        sourceUrl:
+          "https://arcraiders.com/news/second-expedition-rewards-and-requirements",
+        confidence: "medium",
+      },
+      {
+        seasonName: "Second Expedition Cycle",
+        seasonNumber: 3,
+        startDate: "2026-03-01",
+        endDate: null,
+        description:
+          "The current ARC Raiders reset cycle following the second Expedition departure. It continues the game's optional wipe-based progression model rather than an official season system.",
+        sourceUrl:
+          "https://arcraiders.com/news/second-expedition-rewards-and-requirements",
+        confidence: "medium",
+      },
+    ],
+  },
 ];

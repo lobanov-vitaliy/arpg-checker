@@ -54,6 +54,12 @@
     "label": "Popularity",
     "tooltip": "Popularity index (0–100) based on active player count, Twitch viewership, and Steam charts. S = top tier, D = niche."
   },
+  "sort": {
+    "label": "Sort by",
+    "popularity": "Popularity",
+    "recentStart": "Recently started",
+    "nextSeason": "Next season"
+  },
   "footer": {
     "disclaimer": "Season data fetched via AI and cached hourly. Verify dates on official sites."
   }

@@ -1,6 +1,6 @@
 // ─── Game Registry Types ─────────────────────────────────────────────────────
 
-export type SeasonType = "season" | "ladder" | "cycle" | "league";
+export type SeasonType = "season" | "ladder" | "cycle" | "league" | "expedition";
 
 export interface GameConfig {
   id: string;
