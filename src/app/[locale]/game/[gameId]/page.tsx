@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { ExternalLink, CalendarDays } from "lucide-react";
 import { getGame, GAMES } from "@/config/games";
 import { getSeasonsForGame } from "@/lib/seasons";
@@ -24,11 +24,11 @@ export default async function GamePage({
 }: {
   params: Promise<{ locale: string; gameId: string }>;
 }) {
-  const { gameId } = await params;
+  const { gameId, locale } = await params;
   const game = getGame(gameId);
   if (!game) notFound();
 
-  const [t, locale] = await Promise.all([getTranslations("game"), getLocale()]);
+  const t = await getTranslations("game");
 
   const allSeasons = getSeasonsForGame(game.id);
   const steamData = game.steamAppId
