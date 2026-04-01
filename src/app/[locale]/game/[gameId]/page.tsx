@@ -15,9 +15,7 @@ import { PlayerChartFull } from "@/components/game/PlayerChartFull";
 import { SeasonsHistory } from "@/components/game/SeasonsHistory";
 import type { SteamData } from "@/types";
 
-export async function generateStaticParams() {
-  return GAMES.map((g) => ({ gameId: g.id }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function GamePage({
   params,
