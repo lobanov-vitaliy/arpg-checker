@@ -1,6 +1,6 @@
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Sparkles, CalendarDays } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import { GameImage } from "./GameImage";
 import { PopularityBadge } from "./PopularityBadge";
 import { SeasonSwitcher } from "./SeasonSwitcher";
@@ -18,7 +18,13 @@ export async function GameCard({ game }: GameCardProps) {
   const t = await getTranslations("dashboard");
   const tPop = await getTranslations("popularity");
 
-  const allSeasons = getSeasonsForGame(game.id);
+  const [locale, allSeasons] = await Promise.all([
+    getLocale(),
+    Promise.resolve(getSeasonsForGame(game.id)),
+  ]);
+  const isFirstSeason = allSeasons.some(
+    (s) => (s.status === "active" || s.status === "upcoming") && s.seasonNumber === 1
+  );
   const steamData = game.steamAppId
     ? await getCached<SteamData>(STEAM_CACHE_KEY(game.id))
     : null;
@@ -40,6 +46,12 @@ export async function GameCard({ game }: GameCardProps) {
           className="absolute top-0 left-0 right-0 h-1"
           style={{ backgroundColor: game.glowColor }}
         />
+        {isFirstSeason && (
+          <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-black/60 backdrop-blur-sm border border-white/10 text-white">
+            <Sparkles className="w-2.5 h-2.5" style={{ color: game.glowColor }} />
+            {t("newGame")}
+          </div>
+        )}
       </div>
 
       {/* ── Card body ── */}
@@ -73,7 +85,7 @@ export async function GameCard({ game }: GameCardProps) {
             playersOnlineLabel={t("playersOnline")}
           />
         )}
-        <div className="flex flex-col justify-center">
+        <div className="flex items-center justify-between gap-2">
           <a
             href={game.officialUrl}
             target="_blank"
@@ -82,6 +94,13 @@ export async function GameCard({ game }: GameCardProps) {
             style={{ color: game.glowColor }}
           >
             <ExternalLink className="w-3 h-3" /> {t("checkOfficialSite")}
+          </a>
+          <a
+            href={`/${locale}/calendar?game=${game.id}`}
+            className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-400 transition-colors"
+            title={t("viewCalendar")}
+          >
+            <CalendarDays className="w-3.5 h-3.5" />
           </a>
         </div>
       </div>

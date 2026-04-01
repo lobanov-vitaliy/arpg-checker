@@ -4,11 +4,7 @@
   "shortName": "COD",
   "developer": "Activision",
   "seasonType": "season",
-  "genres": [
-    "FPS",
-    "Military Shooter",
-    "Battle Royale"
-  ],
+  "genres": ["FPS", "Military Shooter", "Battle Royale"],
   "accentColor": "text-red-400",
   "accentBg": "bg-red-400",
   "bgGradient": "from-red-950/90 via-slate-900 to-gray-950",
@@ -26,7 +22,7 @@
     {
       "seasonName": "Season 03",
       "seasonNumber": 3,
-      "startDate": "2026-03-25",
+      "startDate": "2026-04-02",
       "endDate": null,
       "description": "The current Call of Duty seasonal cycle for Black Ops 7 and Warzone adds new maps, modes, weapons, events, Battle Pass content, and a new Launch Pad POI in Verdansk.",
       "sourceUrl": "https://www.callofduty.com/blog/2026/03/call-of-duty-black-ops-7-warzone-season-03-announcement",
@@ -36,7 +32,7 @@
       "seasonName": "Season 02",
       "seasonNumber": 2,
       "startDate": "2026-02-05",
-      "endDate": "2026-03-25",
+      "endDate": "2026-04-02",
       "description": "Season 02 brought new and returning multiplayer maps and modes, new Zombies content, endgame progression updates, and a winter refresh for Rebirth Island in Warzone.",
       "sourceUrl": "https://www.callofduty.com/blog/2026/01/call-of-duty-black-ops-7-warzone-zombies-season-02-announcement",
       "confidence": "high"
@@ -44,7 +40,7 @@
     {
       "seasonName": "Season 01",
       "seasonNumber": 1,
-      "startDate": "2025-12-03",
+      "startDate": "2025-12-04",
       "endDate": "2026-02-05",
       "description": "The first Black Ops 7 and Warzone live season introduced the initial seasonal roadmap, Battle Pass, and cross-game content cadence for multiplayer, Zombies, endgame, and Warzone.",
       "sourceUrl": "https://www.callofduty.com/blog/2025/11/call-of-duty-black-ops-7-warzone-zombies-season-01",

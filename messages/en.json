@@ -1,7 +1,8 @@
 {
   "nav": {
     "dashboard": "Dashboard",
-    "news": "News"
+    "news": "News",
+    "calendar": "Calendar"
   },
   "dashboard": {
     "title": "Track Game Seasons in One Place",
@@ -12,7 +13,7 @@
     "ends": "Ends",
     "nextSeason": "Next {seasonType}",
     "endsIn": "Ends in",
-    "nextSeasonIn": "Next {seasonType} in",
+    "nextSeasonIn": "Next in",
     "runningFor": "Running for",
     "playersOnline": "Players online",
     "dataStale": "Awaiting refresh",
@@ -25,7 +26,9 @@
     "officialTooltip": "This date was officially announced by the developer.",
     "estimated": "Estimated",
     "starts": "Starts",
-    "startsIn": "Season starts in"
+    "startsIn": "Season starts in",
+    "newGame": "New Game",
+    "viewCalendar": "Season calendar"
   },
   "countdown": {
     "days": "Days",
@@ -72,7 +75,9 @@
     "label": "Genre",
     "all": "All",
     "grid": "Grid view",
-    "table": "Table view"
+    "table": "Table view",
+    "search": "Search games...",
+    "noResults": "No games match your search"
   },
   "table": {
     "game": "Game",
@@ -84,6 +89,35 @@
     "nextSeason": "Next Season",
     "players": "Players",
     "popularity": "Pop."
+  },
+  "calendar": {
+    "title": "Season Calendar",
+    "subtitle": "Upcoming season starts and ends across all tracked games.",
+    "starts": "Starts",
+    "ends": "Ends",
+    "next": "Next",
+    "estimated": "est.",
+    "noEvents": "No events this month",
+    "upcoming": "Upcoming Events",
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat",
+    "sun": "Sun",
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December"
   },
   "footer": {
     "disclaimer": "Season data fetched via AI and cached hourly. Verify dates on official sites."

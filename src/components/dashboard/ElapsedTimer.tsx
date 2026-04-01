@@ -50,7 +50,7 @@ export function ElapsedTimer({ startDate, label }: ElapsedTimerProps) {
       <div className="grid grid-cols-4 gap-1 text-center">
         {units.map(({ value, label: unit }) => (
           <div key={unit}>
-            <div className="text-xl font-mono font-bold tabular-nums text-gray-300">
+            <div className="text-base font-mono font-bold tabular-nums text-gray-300">
               {String(value).padStart(2, "0")}
             </div>
             <div className="text-gray-600 text-xs mt-0.5">{unit}</div>

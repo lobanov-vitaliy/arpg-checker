@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CountdownTimer } from "./CountdownTimer";
 import { ElapsedTimer } from "./ElapsedTimer";
 import { useTranslations } from "next-intl";
@@ -35,9 +35,13 @@ export function SeasonSwitcher({
   // Default to the active ("live") season
   const liveIdx = displaySeasons.findIndex((s) => s.status === "active");
   const [idx, setIdx] = useState(liveIdx >= 0 ? liveIdx : 0);
+  const [now, setNow] = useState(0);
+
+  useEffect(() => {
+    setNow(Date.now());
+  }, []);
 
   const season = displaySeasons[idx];
-  const now = Date.now();
 
   const startDate = season.startDate ? new Date(season.startDate) : null;
   const endDate = season.endDate ? new Date(season.endDate) : null;
@@ -209,19 +213,19 @@ export function SeasonSwitcher({
               accentColor={game.accentColor}
               isEstimated={false}
             />
-          ) : nextDateRaw && nextDateRaw.getTime() <= now ? (
+          ) : (
             <div className="bg-black/30 rounded-lg p-3">
               <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">
                 {t("nextSeasonIn", { seasonType: game.seasonType })}
               </p>
               <p className="text-xs text-yellow-500/70">{t("dataStale")}</p>
             </div>
-          ) : null}
+          )}
         </div>
       ) : null}
 
       {/* Steam sparkline */}
-      {steam && steam.snapshots.length > 0 && season.status !== "upcoming" && (
+      {season.status !== "upcoming" && game.steamAppId && (
         <div
           className="rounded-md px-2.5 py-2"
           style={{
@@ -232,12 +236,16 @@ export function SeasonSwitcher({
           <p className="text-xs text-gray-500 uppercase tracking-wider mb-1.5">
             {playersOnlineLabel}
           </p>
-          <PlayerSparkline
-            steam={steam}
-            glowColor={game.glowColor}
-            seasonStart={season.startDate}
-            seasonEnd={season.endDate}
-          />
+          {steam && steam.snapshots.length > 0 ? (
+            <PlayerSparkline
+              steam={steam}
+              glowColor={game.glowColor}
+              seasonStart={season.startDate}
+              seasonEnd={season.endDate}
+            />
+          ) : (
+            <p className="text-xs text-yellow-500/70">{t("dataStale")}</p>
+          )}
         </div>
       )}
     </div>

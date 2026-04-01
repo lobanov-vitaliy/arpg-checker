@@ -20,10 +20,19 @@
   ],
   "seasons": [
     {
+      "seasonName": "Lunaria",
+      "seasonNumber": 12,
+      "startDate": "2026-04-17",
+      "endDate": null,
+      "description": "The upcoming season is Lunaria. It has been officially announced to launch on April 16, 2026 at 7:00 PM PDT, which is April 17, 2026 in UTC/date-only format. Full seasonal mechanics were not yet detailed in the official launch notice I checked.",
+      "sourceUrl": "https://torchlight.xd.com",
+      "confidence": "high"
+    },
+    {
       "seasonName": "Vorax",
       "seasonNumber": 11,
       "startDate": "2026-01-15",
-      "endDate": null,
+      "endDate": "2026-04-17",
       "description": "The current season introduces the Vorax plague mechanic, surgical monster modification, graft-based gear customization, and Erika's new trait.",
       "sourceUrl": "https://store.steampowered.com/news/app/1974050/view/521985143331621000",
       "confidence": "high"

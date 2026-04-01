@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://seasonpulse.gg";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://seasonpulse.fun";
 const LOCALES = ["en", "ua", "ru"] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -16,7 +16,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: path === "" ? 1.0 : 0.8,
       alternates: {
         languages: Object.fromEntries(
-          LOCALES.map((l) => [l === "ua" ? "uk" : l, `${SITE_URL}/${l}${path}`]),
+          LOCALES.map((l) => [
+            l === "ua" ? "uk" : l,
+            `${SITE_URL}/${l}${path}`,
+          ]),
         ),
       },
     })),

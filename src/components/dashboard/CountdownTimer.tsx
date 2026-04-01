@@ -77,7 +77,7 @@ export function CountdownTimer({
         {units.map(({ value, label: unit }) => (
           <div key={unit}>
             <div
-              className={`text-xl font-mono font-bold tabular-nums ${accentColor}`}
+              className={`text-base font-mono font-bold tabular-nums ${accentColor}`}
             >
               {String(value).padStart(2, "0")}
             </div>
