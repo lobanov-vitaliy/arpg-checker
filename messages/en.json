@@ -121,5 +121,31 @@
   },
   "footer": {
     "disclaimer": "Season data fetched via AI and cached hourly. Verify dates on official sites."
+  },
+  "game": {
+    "back": "Dashboard",
+    "officialSite": "Official Website",
+    "seasonProgress": "Season Progress",
+    "playersOnline": "Players Online",
+    "allSeasons": "Season History",
+    "otherTimers": "Other Timers",
+    "totalSeasons": "Total Seasons",
+    "avgDuration": "Avg. Duration",
+    "days": "days",
+    "currentSeason": "Current {seasonType}",
+    "upcomingSeason": "Upcoming {seasonType}",
+    "endedSeason": "Previous {seasonType}",
+    "source": "Source",
+    "noDescription": "No description available.",
+    "runningFor": "Running for",
+    "endsIn": "Ends in",
+    "startsIn": "Starts in",
+    "nextSeasonIn": "Next {seasonType} in",
+    "started": "Started",
+    "ends": "Ends",
+    "duration": "Duration",
+    "dataStale": "Awaiting refresh",
+    "estimated": "Estimated",
+    "official": "Official"
   }
 }

@@ -121,5 +121,31 @@
   },
   "footer": {
     "disclaimer": "Дані про сезони отримуються через ШІ та кешуються щогодини. Перевіряйте дати на офіційних сайтах."
+  },
+  "game": {
+    "back": "Дашборд",
+    "officialSite": "Офіційний сайт",
+    "seasonProgress": "Прогрес сезону",
+    "playersOnline": "Гравців онлайн",
+    "allSeasons": "Історія сезонів",
+    "otherTimers": "Інші таймери",
+    "totalSeasons": "Всього сезонів",
+    "avgDuration": "Сер. тривалість",
+    "days": "дн",
+    "currentSeason": "Поточний {seasonType}",
+    "upcomingSeason": "Наступний {seasonType}",
+    "endedSeason": "Попередній {seasonType}",
+    "source": "Джерело",
+    "noDescription": "Опис відсутній.",
+    "runningFor": "Триває вже",
+    "endsIn": "До кінця",
+    "startsIn": "Починається через",
+    "nextSeasonIn": "Наступний {seasonType} через",
+    "started": "Почався",
+    "ends": "Закінчується",
+    "duration": "Тривалість",
+    "dataStale": "Очікується оновлення",
+    "estimated": "Приблизна",
+    "official": "Офіційна"
   }
 }

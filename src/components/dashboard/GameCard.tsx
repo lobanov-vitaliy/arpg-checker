@@ -35,13 +35,13 @@ export async function GameCard({ game }: GameCardProps) {
       style={{ borderColor: `${game.glowColor}60`, borderWidth: "1.5px" }}
     >
       {/* ── Game image ── */}
-      <div className="relative h-36 overflow-hidden shrink-0 bg-gray-800">
+      <a href={`/${locale}/game/${game.id}`} className="relative h-36 overflow-hidden shrink-0 bg-gray-800 block group">
         <GameImage
           src={game.coverImage}
           alt={game.name}
           glowColor={game.glowColor}
         />
-        <div className="absolute inset-0 bg-linear-to-b from-black/10 via-transparent to-gray-900" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/10 via-transparent to-gray-900 group-hover:from-black/20 transition-all" />
         <div
           className="absolute top-0 left-0 right-0 h-1"
           style={{ backgroundColor: game.glowColor }}
@@ -52,7 +52,7 @@ export async function GameCard({ game }: GameCardProps) {
             {t("newGame")}
           </div>
         )}
-      </div>
+      </a>
 
       {/* ── Card body ── */}
       <div className="px-4 pt-3 pb-4 flex flex-col flex-1 gap-3">
@@ -62,12 +62,14 @@ export async function GameCard({ game }: GameCardProps) {
             {game.developer}
           </p>
           <div className="flex items-center justify-between gap-2">
+            <a href={`/${locale}/game/${game.id}`}>
             <h2
-              className="text-lg font-bold leading-tight"
+              className="text-lg font-bold leading-tight hover:underline"
               style={{ color: game.glowColor }}
             >
               {game.name}
             </h2>
+            </a>
             <PopularityBadge
               score={game.popularityScore}
               glowColor={game.glowColor}

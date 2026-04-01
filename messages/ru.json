@@ -121,5 +121,31 @@
   },
   "footer": {
     "disclaimer": "Данные о сезонах получаются через ИИ и кешируются каждый час. Проверяйте даты на официальных сайтах."
+  },
+  "game": {
+    "back": "Дашборд",
+    "officialSite": "Официальный сайт",
+    "seasonProgress": "Прогресс сезона",
+    "playersOnline": "Игроков онлайн",
+    "allSeasons": "История сезонов",
+    "otherTimers": "Другие таймеры",
+    "totalSeasons": "Всего сезонов",
+    "avgDuration": "Сред. длительность",
+    "days": "дн",
+    "currentSeason": "Текущий {seasonType}",
+    "upcomingSeason": "Следующий {seasonType}",
+    "endedSeason": "Предыдущий {seasonType}",
+    "source": "Источник",
+    "noDescription": "Описание недоступно.",
+    "runningFor": "Идёт уже",
+    "endsIn": "До конца",
+    "startsIn": "Начнётся через",
+    "nextSeasonIn": "Следующий {seasonType} через",
+    "started": "Начался",
+    "ends": "Заканчивается",
+    "duration": "Длительность",
+    "dataStale": "Ожидается обновление",
+    "estimated": "Приблизительная",
+    "official": "Официальная"
   }
 }
