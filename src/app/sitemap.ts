@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://seasonpulse.fun";
-const LOCALES = ["en", "ua", "ru"] as const;
+const LOCALES = ["en", "ua", "es", "pl", "de", "fr"] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date().toISOString();

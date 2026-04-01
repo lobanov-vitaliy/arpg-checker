@@ -5,6 +5,7 @@ import type { SeasonData } from "@/types";
 interface SeasonsHistoryProps {
   seasons: SeasonData[];
   glowColor: string;
+  locale: string;
   labels: {
     title: string;
     started: string;
@@ -36,7 +37,7 @@ function durationDays(start: string, end: string | null): string | null {
   return `${days}d`;
 }
 
-export function SeasonsHistory({ seasons, glowColor, labels }: SeasonsHistoryProps) {
+export function SeasonsHistory({ seasons, glowColor, locale, labels }: SeasonsHistoryProps) {
   return (
     <div>
       <h2 className="text-lg font-semibold text-white mb-4">{labels.title}</h2>
@@ -84,7 +85,7 @@ export function SeasonsHistory({ seasons, glowColor, labels }: SeasonsHistoryPro
                 {labels.started}:
               </span>
               <span className="text-gray-300 text-xs">
-                {season.startDate ? formatDate(season.startDate) : "—"}
+                {season.startDate ? formatDate(season.startDate, locale) : "—"}
               </span>
             </div>
 
@@ -94,7 +95,7 @@ export function SeasonsHistory({ seasons, glowColor, labels }: SeasonsHistoryPro
                 {labels.ends}:
               </span>
               <span className="text-gray-300 text-xs">
-                {season.endDate ? formatDate(season.endDate) : "—"}
+                {season.endDate ? formatDate(season.endDate, locale) : "—"}
               </span>
             </div>
 

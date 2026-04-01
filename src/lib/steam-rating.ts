@@ -98,26 +98,31 @@ export function formatSteamPercent(percent: number | null, digits = 2): string {
   return `${percent.toFixed(digits)}%`;
 }
 
-export function getSteamRatingLabel(rating: SteamRating | null): string {
+export type SteamRatingKey =
+  | "noReviews"
+  | "overwhelminglyPositive"
+  | "veryPositive"
+  | "mostlyPositive"
+  | "positive"
+  | "mixed"
+  | "mostlyNegative"
+  | "veryNegative";
+
+export function getSteamRatingKey(rating: SteamRating | null): SteamRatingKey {
   if (!rating || rating.percent === null || rating.totalReviews === 0) {
-    return "No reviews";
+    return "noReviews";
   }
-
-  if (rating.reviewScoreDesc) {
-    return rating.reviewScoreDesc;
-  }
-
-  if (rating.percent >= 95) return "Overwhelmingly Positive";
-  if (rating.percent >= 85) return "Very Positive";
-  if (rating.percent >= 75) return "Mostly Positive";
-  if (rating.percent >= 60) return "Positive";
-  if (rating.percent >= 40) return "Mixed";
-  if (rating.percent >= 20) return "Mostly Negative";
-  return "Very Negative";
+  if (rating.percent >= 95) return "overwhelminglyPositive";
+  if (rating.percent >= 85) return "veryPositive";
+  if (rating.percent >= 75) return "mostlyPositive";
+  if (rating.percent >= 60) return "positive";
+  if (rating.percent >= 40) return "mixed";
+  if (rating.percent >= 20) return "mostlyNegative";
+  return "veryNegative";
 }
 
 export function getSteamRatingMeta(rating: SteamRating | null): {
-  label: string;
+  labelKey: SteamRatingKey;
   emoji: string;
   icon: string;
   text: string;
@@ -129,7 +134,7 @@ export function getSteamRatingMeta(rating: SteamRating | null): {
   const tone = getSteamRatingTone(percent);
 
   return {
-    label: getSteamRatingLabel(rating),
+    labelKey: getSteamRatingKey(rating),
     emoji: tone.emoji,
     icon: tone.icon,
     text: tone.text,

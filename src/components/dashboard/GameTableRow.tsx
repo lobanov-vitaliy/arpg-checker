@@ -1,5 +1,5 @@
 import { ExternalLink } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import { SeasonBadge } from "./SeasonBadge";
 import { getCached } from "@/lib/cache";
 import { STEAM_CACHE_KEY } from "@/lib/steam-fetcher";
@@ -12,7 +12,7 @@ interface GameTableRowProps {
 }
 
 export async function GameTableRow({ game, season }: GameTableRowProps) {
-  const t = await getTranslations("dashboard");
+  const [t, locale] = await Promise.all([getTranslations("dashboard"), getLocale()]);
 
   const steamData = game.steamAppId
     ? await getCached<SteamData>(STEAM_CACHE_KEY(game.id))
@@ -81,21 +81,21 @@ export async function GameTableRow({ game, season }: GameTableRowProps) {
       {/* Started */}
       <td className="py-3 px-4 whitespace-nowrap">
         <span className="text-gray-400 text-xs">
-          {season?.startDate ? formatDate(season.startDate) : "—"}
+          {season?.startDate ? formatDate(season.startDate, locale) : "—"}
         </span>
       </td>
 
       {/* Ends */}
       <td className="py-3 px-4 whitespace-nowrap">
         <span className="text-gray-400 text-xs">
-          {season?.endDate ? formatDate(season.endDate) : "—"}
+          {season?.endDate ? formatDate(season.endDate, locale) : "—"}
         </span>
       </td>
 
       {/* Next season */}
       <td className="py-3 px-4 whitespace-nowrap">
         {nextDate ? (
-          <span className="text-gray-300 text-xs">{formatDate(nextDate)}</span>
+          <span className="text-gray-300 text-xs">{formatDate(nextDate, locale)}</span>
         ) : (
           <span className="text-gray-600 text-xs">—</span>
         )}

@@ -1,7 +1,7 @@
 import { ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { formatDate } from "@/lib/utils";
 import type { NewsArticle } from "@/types";
 
@@ -17,6 +17,7 @@ const GAME_COLORS: Record<string, string> = {
 
 export function NewsCard({ article }: { article: NewsArticle }) {
   const t = useTranslations("news");
+  const locale = useLocale();
   const gameBadgeClass = article.gameId
     ? (GAME_COLORS[article.gameId] ?? "bg-gray-500/20 text-gray-400 border-gray-500/30")
     : null;
@@ -42,7 +43,7 @@ export function NewsCard({ article }: { article: NewsArticle }) {
             ))}
           </div>
           <span className="text-xs text-gray-500 shrink-0">
-            {article.publishedAt ? formatDate(article.publishedAt) : t("recently")}
+            {article.publishedAt ? formatDate(article.publishedAt, locale) : t("recently")}
           </span>
         </div>
 

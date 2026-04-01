@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
+import { Manrope, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { Navbar } from "@/components/layout/Navbar";
-import { getTranslations } from "next-intl/server";
 import "@/app/globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin", "cyrillic"],
+const mainFont = Manrope({
+  variable: "--font-main",
+  subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
@@ -20,6 +18,19 @@ const geistMono = Geist_Mono({
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://seasonpulse.fun";
 const SITE_NAME = "SeasonPulse";
+
+const OG_LOCALE_MAP: Record<string, string> = {
+  en: "en_US",
+  ua: "uk_UA",
+  es: "es_ES",
+  pl: "pl_PL",
+  de: "de_DE",
+  fr: "fr_FR",
+};
+
+function localeToOg(locale: string) {
+  return OG_LOCALE_MAP[locale] ?? "en_US";
+}
 
 const localeMetadata: Record<string, { title: string; description: string }> = {
   en: {
@@ -32,10 +43,25 @@ const localeMetadata: Record<string, { title: string; description: string }> = {
     description:
       "Відстежуй активні сезони, ліги, ладдери, вайпи та цикли Diablo 4, Path of Exile, Last Epoch та інших. Таймери, дати старту й завершення, наступні ресети — все в одному місці.",
   },
-  ru: {
-    title: "SeasonPulse — Отслеживай сезоны, лиги и вайпы игр",
+  es: {
+    title: "SeasonPulse — Sigue temporadas, ligas y reinicios de juegos",
     description:
-      "Отслеживай активные сезоны, лиги, ладдеры, вайпы и циклы Diablo 4, Path of Exile, Last Epoch и других игр. Таймеры обратного отсчёта, даты старта и окончания, следующие ресеты — всё в одном месте.",
+      "Sigue temporadas activas, ligas, escaleras, wipes y ciclos de Diablo 4, Path of Exile, Last Epoch y más. Temporizadores, fechas de inicio y fin, próximos reinicios — todo en un solo lugar.",
+  },
+  pl: {
+    title: "SeasonPulse — Śledź sezony, ligi i wipy gier",
+    description:
+      "Śledź aktywne sezony, ligi, drabinki, wipy i cykle Diablo 4, Path of Exile, Last Epoch i innych. Timery, daty startów i zakończeń, nadchodzące resety — wszystko w jednym miejscu.",
+  },
+  de: {
+    title: "SeasonPulse — Verfolge Spielsaisons, Ligen, Wipes & Resets",
+    description:
+      "Verfolge aktive Saisons, Ligen, Ranglisten, Wipes und Zyklen von Diablo 4, Path of Exile, Last Epoch und mehr. Countdown-Timer, Start- & Enddaten, kommende Resets — alles an einem Ort.",
+  },
+  fr: {
+    title: "SeasonPulse — Suivez les saisons, ligues et resets de jeux",
+    description:
+      "Suivez les saisons actives, ligues, classements, wipes et cycles de Diablo 4, Path of Exile, Last Epoch et plus. Minuteurs, dates de début et fin, prochains resets — tout en un seul endroit.",
   },
 };
 
@@ -76,7 +102,10 @@ export async function generateMetadata({
       languages: {
         en: `${SITE_URL}/en`,
         uk: `${SITE_URL}/ua`,
-        ru: `${SITE_URL}/ru`,
+        es: `${SITE_URL}/es`,
+        pl: `${SITE_URL}/pl`,
+        de: `${SITE_URL}/de`,
+        fr: `${SITE_URL}/fr`,
       },
     },
     openGraph: {
@@ -85,11 +114,9 @@ export async function generateMetadata({
       title: meta.title,
       description: meta.description,
       url: `${SITE_URL}/${locale}`,
-      locale: locale === "ua" ? "uk_UA" : locale === "ru" ? "ru_RU" : "en_US",
-      alternateLocale: ["en_US", "uk_UA", "ru_RU"].filter(
-        (l) =>
-          l !==
-          (locale === "ua" ? "uk_UA" : locale === "ru" ? "ru_RU" : "en_US"),
+      locale: localeToOg(locale),
+      alternateLocale: ["en_US", "uk_UA", "es_ES", "pl_PL", "de_DE", "fr_FR"].filter(
+        (l) => l !== localeToOg(locale),
       ),
     },
     twitter: {
@@ -110,7 +137,7 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale as "en" | "ua" | "ru")) {
+  if (!routing.locales.includes(locale as (typeof routing.locales)[number])) {
     notFound();
   }
 
@@ -119,28 +146,15 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${geistMono.variable} dark h-full antialiased`}
+      className={`${mainFont.variable} ${geistMono.variable} dark h-full antialiased`}
     >
       <meta name="apple-mobile-web-app-title" content="SeasonPulse" />
 
       <body className="min-h-full flex flex-col bg-gray-950 text-gray-100">
         <NextIntlClientProvider messages={messages}>
-          <Navbar />
-          <div className="flex-1">{children}</div>
-          <LocaleFooter />
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>
-  );
-}
-
-async function LocaleFooter() {
-  const t = await getTranslations("footer");
-  return (
-    <footer className="border-t border-gray-800 py-4 mt-8">
-      <div className="container mx-auto px-4 text-center text-gray-600 text-xs">
-        {t("disclaimer")}
-      </div>
-    </footer>
   );
 }

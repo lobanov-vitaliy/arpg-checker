@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter, usePathname } from "next/navigation";
 import {
@@ -11,7 +11,9 @@ import {
   ArrowUp,
   ArrowDown,
   Search,
+  Star,
 } from "lucide-react";
+import { getFavorites } from "./FavoriteButton";
 import type { GameConfig, SeasonData } from "@/types";
 import type { ReactNode } from "react";
 
@@ -187,6 +189,15 @@ function GameGridInner({ games, seasons, cards, tableRows, initialParams = {} }:
   const [genreOpen, setGenreOpen] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
   const [query, setQuery] = useState<string>(initialParams.q ?? "");
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const [favorites, setFavoritesState] = useState<string[]>([]);
+
+  useEffect(() => {
+    setFavoritesState(getFavorites());
+    const handler = () => setFavoritesState(getFavorites());
+    window.addEventListener("sp_favoritechange", handler);
+    return () => window.removeEventListener("sp_favoritechange", handler);
+  }, []);
 
   const allGenres = [...new Set(games.flatMap((g) => g.genres))].sort();
   const cardMap = Object.fromEntries(cards.map((c) => [c.gameId, c.node]));
@@ -242,6 +253,7 @@ function GameGridInner({ games, seasons, cards, tableRows, initialParams = {} }:
   const filteredIds = baseIds.filter((id) => {
     const game = games.find((g) => g.id === id);
     if (!game) return false;
+    if (favoritesOnly && !favorites.includes(id)) return false;
     if (selectedGenre && !game.genres.includes(selectedGenre)) return false;
     if (query && !game.name.toLowerCase().includes(query.toLowerCase()))
       return false;
@@ -281,8 +293,24 @@ function GameGridInner({ games, seasons, cards, tableRows, initialParams = {} }:
     <div>
       {/* Controls bar */}
       <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
-        {/* Left: Search + Genre filter */}
+        {/* Left: Search + Genre filter + Favorites */}
         <div className="flex items-center gap-2 flex-wrap">
+          {/* All / Favorites toggle */}
+          <div className="flex items-center rounded-lg border border-gray-700 bg-gray-900 overflow-hidden">
+            <button
+              onClick={() => setFavoritesOnly(false)}
+              className={`px-3 py-1.5 text-xs font-medium transition-colors ${!favoritesOnly ? "bg-gray-700 text-white" : "text-gray-500 hover:text-gray-300"}`}
+            >
+              {tFilter("all")}
+            </button>
+            <button
+              onClick={() => setFavoritesOnly(true)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-colors ${favoritesOnly ? "bg-gray-700 text-white" : "text-gray-500 hover:text-gray-300"}`}
+            >
+              <Star className="w-3 h-3" style={{ fill: favoritesOnly ? "#facc15" : "transparent", stroke: favoritesOnly ? "#facc15" : "currentColor" }} />
+              {tFilter("favorites")}
+            </button>
+          </div>
           {/* Search */}
           <div className="relative flex items-center">
             <Search className="absolute left-2.5 w-3.5 h-3.5 text-gray-500 pointer-events-none" />

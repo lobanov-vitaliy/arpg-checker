@@ -1,4 +1,5 @@
-import { ExternalLink, Sparkles, CalendarDays } from "lucide-react";
+import { ExternalLink, Sparkles, CalendarDays, Timer } from "lucide-react";
+import { FavoriteButton } from "./FavoriteButton";
 import { Card } from "@/components/ui/card";
 import { getTranslations, getLocale } from "next-intl/server";
 import { GameImage } from "./GameImage";
@@ -63,18 +64,21 @@ export async function GameCard({ game }: GameCardProps) {
           </p>
           <div className="flex items-center justify-between gap-2">
             <a href={`/${locale}/game/${game.id}`}>
-            <h2
-              className="text-lg font-bold leading-tight hover:underline"
-              style={{ color: game.glowColor }}
-            >
-              {game.name}
-            </h2>
+              <h2
+                className="text-lg font-bold leading-tight hover:underline"
+                style={{ color: game.glowColor }}
+              >
+                {game.name}
+              </h2>
             </a>
-            <PopularityBadge
-              score={game.popularityScore}
-              glowColor={game.glowColor}
-              tooltip={tPop("tooltip")}
-            />
+            <div className="flex items-center gap-1">
+              <FavoriteButton gameId={game.id} />
+              <PopularityBadge
+                score={game.popularityScore}
+                glowColor={game.glowColor}
+                tooltip={tPop("tooltip")}
+              />
+            </div>
           </div>
           <SteamReviewBadge rating={steamData?.rating ?? null} />
         </div>
@@ -97,13 +101,24 @@ export async function GameCard({ game }: GameCardProps) {
           >
             <ExternalLink className="w-3 h-3" /> {t("checkOfficialSite")}
           </a>
-          <a
-            href={`/${locale}/calendar?game=${game.id}`}
-            className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-400 transition-colors"
-            title={t("viewCalendar")}
-          >
-            <CalendarDays className="w-3.5 h-3.5" />
-          </a>
+          <div className="flex items-center gap-2">
+            <a
+              href={`/${locale}/countdown/${game.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-400 transition-colors"
+              title="Countdown"
+            >
+              <Timer className="w-3.5 h-3.5" />
+            </a>
+            <a
+              href={`/${locale}/calendar?game=${game.id}`}
+              className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-400 transition-colors"
+              title={t("viewCalendar")}
+            >
+              <CalendarDays className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
       </div>
     </Card>

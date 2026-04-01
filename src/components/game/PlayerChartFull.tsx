@@ -1,6 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import {
+  AreaChart,
+  Area,
+  Tooltip,
+  CartesianGrid,
+  ResponsiveContainer,
+} from "recharts";
+import { useTranslations, useLocale } from "next-intl";
+import { toIntlLocale } from "@/lib/utils";
 import type { SteamData, PlayerSnapshot } from "@/types";
 
 interface PlayerChartFullProps {
@@ -8,13 +16,7 @@ interface PlayerChartFullProps {
   glowColor: string;
   seasonStart?: string | null;
   seasonEnd?: string | null;
-}
-
-interface TooltipState {
-  x: number;
-  y: number;
-  value: number;
-  date: string;
+  seasonLabel: string;
 }
 
 function formatCount(n: number): string {
@@ -23,44 +25,52 @@ function formatCount(n: number): string {
   return String(n);
 }
 
-function formatTooltipDate(iso: string): string {
-  const d = new Date(iso);
-  return d.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
-
-function filterSnapshots(
+function getSeasonData(
   snapshots: PlayerSnapshot[],
   seasonStart?: string | null,
-  seasonEnd?: string | null
-): PlayerSnapshot[] {
-  if (!seasonStart && !seasonEnd) return snapshots;
-  const from = seasonStart ? new Date(seasonStart).getTime() : 0;
+  seasonEnd?: string | null,
+): { data: PlayerSnapshot[]; hasSeasonFilter: boolean } {
+  if (!seasonStart) return { data: snapshots, hasSeasonFilter: false };
+  const from = new Date(seasonStart).getTime();
   const to = seasonEnd ? new Date(seasonEnd).getTime() : Date.now();
   const filtered = snapshots.filter((s) => {
     const t = new Date(s.t).getTime();
     return t >= from && t <= to;
   });
-  return filtered.length >= 2 ? filtered : snapshots;
+  return { data: filtered.length >= 2 ? filtered : [], hasSeasonFilter: true };
 }
 
-function buildPath(values: number[], width: number, height: number, pad: number) {
-  if (values.length < 2) return { path: "", points: [] as { x: number; y: number }[] };
-  const min = Math.min(...values);
-  const max = Math.max(...values);
-  const range = max - min || 1;
 
-  const points = values.map((v, i) => ({
-    x: (i / (values.length - 1)) * width,
-    y: height - pad - ((v - min) / range) * (height - pad * 2),
-  }));
-
-  const path = `M ${points.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" L ")}`;
-  return { path, points };
+function ChartTooltip({
+  active,
+  payload,
+  glowColor,
+  playersOnlineLabel,
+  locale,
+}: {
+  active?: boolean;
+  payload?: { value: number; payload: { t: string } }[];
+  glowColor: string;
+  playersOnlineLabel: string;
+  locale: string;
+}) {
+  if (!active || !payload?.length) return null;
+  const { value, payload: pt } = payload[0];
+  const date = new Date(pt.t).toLocaleDateString(toIntlLocale(locale), {
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  return (
+    <div className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 shadow-2xl pointer-events-none">
+      <p className="text-xs text-gray-400 mb-0.5">{date}</p>
+      <p className="text-base font-bold" style={{ color: glowColor }}>
+        {formatCount(value)}
+      </p>
+      <p className="text-[10px] text-gray-500">{playersOnlineLabel}</p>
+    </div>
+  );
 }
 
 export function PlayerChartFull({
@@ -68,121 +78,129 @@ export function PlayerChartFull({
   glowColor,
   seasonStart,
   seasonEnd,
+  seasonLabel,
 }: PlayerChartFullProps) {
-  const W = 800;
-  const H = 120;
-  const PAD = 6;
-  const [tooltip, setTooltip] = useState<TooltipState | null>(null);
+  const t = useTranslations("players");
+  const locale = useLocale();
+  const { data, hasSeasonFilter } = getSeasonData(
+    steam.snapshots,
+    seasonStart,
+    seasonEnd,
+  );
 
-  const filtered = filterSnapshots(steam.snapshots, seasonStart, seasonEnd);
-  const values = filtered.map((s) => s.p);
-  const { path, points } = buildPath(values, W, H, PAD);
+  if (data.length < 2) {
+    return (
+      <p className="text-sm text-gray-500 py-4">
+        {hasSeasonFilter ? t("noDataSeason") : t("notEnoughData")}
+      </p>
+    );
+  }
 
+  const values = data.map((s) => s.p);
   const last = values[values.length - 1] ?? 0;
   const prev = values[Math.max(0, values.length - 49)] ?? last;
   const trendPct = prev > 0 ? ((last - prev) / prev) * 100 : 0;
   const trendUp = trendPct >= 0;
-  const peakInRange = values.length > 0 ? Math.max(...values) : 0;
+  const peakShown = Math.max(...values);
+
+  const gradId = `chart-full-${steam.gameId}`;
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex items-center justify-between flex-wrap gap-2">
+      {/* Stats row */}
+      <div className="flex items-center justify-between flex-wrap gap-3">
         <div className="flex items-baseline gap-2">
-          <span className="text-white font-bold text-xl">{formatCount(steam.currentPlayers)}</span>
-          <span className="text-gray-500 text-sm">Steam online</span>
-        </div>
-        <div className="flex items-center gap-3">
-          {values.length > 48 && (
-            <span className={`text-sm font-medium ${trendUp ? "text-emerald-400" : "text-red-400"}`}>
-              {trendUp ? "▲" : "▼"} {Math.abs(trendPct).toFixed(1)}%
+          <span className="text-2xl font-bold text-white">
+            {formatCount(steam.currentPlayers)}
+          </span>
+          <span className="text-gray-500 text-sm">{t("playingNow")}</span>
+          {hasSeasonFilter && (
+            <span className="text-[10px] text-gray-600 bg-white/5 border border-white/8 px-1.5 py-0.5 rounded">
+              {seasonLabel}
             </span>
           )}
-          <span className="text-gray-500 text-sm">
-            Peak <span className="text-gray-300 font-medium">{formatCount(peakInRange)}</span>
-          </span>
-          <span className="text-gray-500 text-sm">
-            7d Peak <span className="text-gray-300 font-medium">{formatCount(steam.peakPlayers7d)}</span>
-          </span>
+        </div>
+        <div className="flex items-center gap-4">
+          {values.length > 48 && (
+            <div className="flex items-center gap-1">
+              <span
+                className={`text-sm font-semibold ${trendUp ? "text-emerald-400" : "text-red-400"}`}
+              >
+                {trendUp ? "▲" : "▼"} {Math.abs(trendPct).toFixed(1)}%
+              </span>
+              <span className="text-gray-600 text-xs">{t("trend48h")}</span>
+            </div>
+          )}
+          <div>
+            <span className="text-xs text-gray-500">{t("peak7d")} </span>
+            <span className="text-xs font-semibold text-gray-300">
+              {formatCount(steam.peakPlayers7d)}
+            </span>
+          </div>
+          <div>
+            <span className="text-xs text-gray-500">{t("seasonPeak")} </span>
+            <span className="text-xs font-semibold text-gray-300">
+              {formatCount(peakShown)}
+            </span>
+          </div>
         </div>
       </div>
 
-      {path && (
-        <div
-          className="relative cursor-crosshair rounded-md overflow-hidden"
-          style={{ height: H }}
-          onMouseMove={(e) => {
-            if (points.length < 2) return;
-            const rect = e.currentTarget.getBoundingClientRect();
-            const pct = (e.clientX - rect.left) / rect.width;
-            const idx = Math.round(pct * (points.length - 1));
-            const clamped = Math.max(0, Math.min(points.length - 1, idx));
-            setTooltip({
-              x: pct * 100,
-              y: (points[clamped].y / H) * 100,
-              value: values[clamped],
-              date: filtered[clamped].t,
-            });
-          }}
-          onMouseLeave={() => setTooltip(null)}
-        >
-          <svg
-            width="100%"
-            height={H}
-            viewBox={`0 0 ${W} ${H}`}
-            className="w-full overflow-visible"
-            preserveAspectRatio="none"
-          >
-            <defs>
-              <linearGradient id={`chart-fill-${steam.gameId}`} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={glowColor} stopOpacity="0.25" />
-                <stop offset="100%" stopColor={glowColor} stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path d={`${path} V ${H} H 0 Z`} fill={`url(#chart-fill-${steam.gameId})`} />
-            <path
-              d={path}
-              fill="none"
-              stroke={glowColor}
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-
-          {tooltip && (
-            <>
-              <div
-                className="absolute top-0 bottom-0 w-px pointer-events-none"
-                style={{ left: `${tooltip.x}%`, backgroundColor: `${glowColor}60` }}
+      {/* Chart */}
+      <ResponsiveContainer width="100%" height={160}>
+        <AreaChart data={data} margin={{ top: 8, right: 4, left: 4, bottom: 0 }}>
+          <defs>
+            <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={glowColor} stopOpacity={0.25} />
+              <stop offset="100%" stopColor={glowColor} stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke="rgba(255,255,255,0.04)"
+            vertical={false}
+          />
+          <Tooltip
+            content={(props) => (
+              <ChartTooltip
+                active={props.active}
+                payload={
+                  props.payload as unknown as {
+                    value: number;
+                    payload: { t: string };
+                  }[]
+                }
+                glowColor={glowColor}
+                playersOnlineLabel={t("playersOnline")}
+                locale={locale}
               />
-              <div
-                className="absolute w-3 h-3 rounded-full border-2 pointer-events-none -translate-x-1/2 -translate-y-1/2"
-                style={{
-                  left: `${tooltip.x}%`,
-                  top: `${tooltip.y}%`,
-                  backgroundColor: glowColor,
-                  borderColor: "#111827",
-                }}
-              />
-              <div
-                className="absolute bottom-full mb-2 pointer-events-none z-20 whitespace-nowrap"
-                style={{
-                  left: `${tooltip.x}%`,
-                  transform: `translateX(${tooltip.x > 70 ? "-90%" : tooltip.x < 30 ? "-10%" : "-50%"})`,
-                }}
-              >
-                <div className="bg-gray-800 border border-gray-700 rounded-md px-2.5 py-1.5 shadow-xl">
-                  <p className="text-white text-sm font-semibold">{formatCount(tooltip.value)}</p>
-                  <p className="text-gray-400 text-xs">{formatTooltipDate(tooltip.date)}</p>
-                </div>
-              </div>
-            </>
-          )}
-        </div>
-      )}
+            )}
+            cursor={{ stroke: `${glowColor}40`, strokeWidth: 1 }}
+          />
+<Area
+            type="monotone"
+            dataKey="p"
+            stroke={glowColor}
+            strokeWidth={2}
+            fill={`url(#${gradId})`}
+            dot={false}
+            activeDot={{
+              r: 4,
+              fill: glowColor,
+              stroke: "#0f172a",
+              strokeWidth: 2,
+            }}
+            isAnimationActive={false}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
 
-      <p className="text-xs text-gray-600 text-right">
-        Last updated {new Date(steam.updatedAt).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}
+      <p className="text-[10px] text-gray-700 text-right">
+        {t("updated")}{" "}
+        {new Date(steam.updatedAt).toLocaleTimeString(toIntlLocale(locale), {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
       </p>
     </div>
   );

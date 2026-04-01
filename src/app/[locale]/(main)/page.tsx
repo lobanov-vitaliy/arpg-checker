@@ -10,10 +10,17 @@ export default async function DashboardPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const [t, sp] = await Promise.all([getTranslations("dashboard"), searchParams]);
+  const [t, tHero, sp] = await Promise.all([
+    getTranslations("dashboard"),
+    getTranslations("hero"),
+    searchParams,
+  ]);
   const seasons = getAllSeasons();
   const initialParams = Object.fromEntries(
-    Object.entries(sp).map(([k, v]) => [k, Array.isArray(v) ? v[0] : v ?? ""])
+    Object.entries(sp).map(([k, v]) => [
+      k,
+      Array.isArray(v) ? v[0] : (v ?? ""),
+    ]),
   );
 
   const [cards, tableRows] = await Promise.all([
@@ -39,10 +46,28 @@ export default async function DashboardPage({
 
   return (
     <main className="container mx-auto p-4">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">{t("title")}</h1>
-        <p className="text-gray-400 text-sm">{t("subtitle")}</p>
-      </div>
+      <section className="relative  px-6 py-6 sm:px-10 sm:py-8">
+        <div className="text-center flex flex-col items-center">
+          <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan-400/80 mb-6">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+            {tHero("tagline")}
+          </p>
+
+          <h1 className="font-black leading-[0.85] tracking-tighter">
+            <span className="block text-[clamp(3rem,8vw,6.5rem)] text-white">
+              {tHero("line1")}
+            </span>
+            <span className="block text-[clamp(3rem,8vw,6.5rem)] text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500">
+              {tHero("line2")}
+            </span>
+          </h1>
+
+          <p className="mt-6 text-sm sm:text-base text-gray-400 max-w-lg">
+            {tHero("sub", { count: "20+" })}
+          </p>
+        </div>
+      </section>
+
       <GameGrid
         games={GAMES}
         seasons={seasons}

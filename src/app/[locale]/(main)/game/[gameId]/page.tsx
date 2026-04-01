@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { ExternalLink, CalendarDays } from "lucide-react";
+import { ExternalLink, CalendarDays, Timer } from "lucide-react";
 import { getGame, GAMES } from "@/config/games";
 import { getSeasonsForGame } from "@/lib/seasons";
 import { getCached } from "@/lib/cache";
@@ -13,9 +14,115 @@ import { SteamReviewBadge } from "@/components/dashboard/SteamReviewBadge";
 import { SeasonProgressBar } from "@/components/game/SeasonProgressBar";
 import { PlayerChartFull } from "@/components/game/PlayerChartFull";
 import { SeasonsHistory } from "@/components/game/SeasonsHistory";
+import { toIntlLocale } from "@/lib/utils";
 import type { SteamData } from "@/types";
 
 export const dynamic = "force-dynamic";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://seasonpulse.fun";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; gameId: string }>;
+}): Promise<Metadata> {
+  const { locale, gameId } = await params;
+  const game = getGame(gameId);
+  if (!game) return {};
+
+  const seasons = getSeasonsForGame(game.id);
+  const active =
+    seasons.find((s) => s.status === "active") ??
+    seasons.find((s) => s.status === "upcoming") ??
+    seasons[0];
+
+  const OG_MAP: Record<string, string> = {
+    en: "en_US",
+    ua: "uk_UA",
+    es: "es_ES",
+    pl: "pl_PL",
+    de: "de_DE",
+    fr: "fr_FR",
+  };
+  const ogLocale = OG_MAP[locale] ?? "en_US";
+
+  // Build title: "Diablo IV — Season of Slaughter #12"
+  const titleSuffix = active
+    ? active.seasonNumber
+      ? `${active.seasonName} #${active.seasonNumber}`
+      : active.seasonName
+    : game.seasonType;
+  const title = `${game.name} — ${titleSuffix}`;
+
+  // Build description with season status + dates
+  const parts: string[] = [];
+  if (active) {
+    const statusMap = {
+      active: "Active",
+      upcoming: "Upcoming",
+      ended: "Ended",
+      unknown: "Unknown",
+    };
+    parts.push(
+      `${statusMap[active.status]} ${game.seasonType}: ${active.seasonName}.`,
+    );
+    if (active.startDate) {
+      const fmt = (d: string) =>
+        new Date(d).toLocaleDateString(toIntlLocale(locale), {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        });
+      if (active.status === "upcoming") {
+        parts.push(`Starts ${fmt(active.startDate)}.`);
+      } else {
+        parts.push(`Started ${fmt(active.startDate)}.`);
+      }
+      if (active.endDate) parts.push(`Ends ${fmt(active.endDate)}.`);
+    }
+    if (active.description) parts.push(active.description);
+  }
+  parts.push(
+    `Track all ${game.name} ${game.seasonType}s, countdowns, and player stats on SeasonPulse.`,
+  );
+  const description = parts.join(" ");
+
+  const pageUrl = `${SITE_URL}/${locale}/game/${gameId}`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: pageUrl,
+      languages: {
+        en: `${SITE_URL}/en/game/${gameId}`,
+        uk: `${SITE_URL}/ua/game/${gameId}`,
+        ru: `${SITE_URL}/ru/game/${gameId}`,
+      },
+    },
+    openGraph: {
+      type: "website",
+      title,
+      description,
+      url: pageUrl,
+      locale: ogLocale,
+      images: [
+        {
+          url: game.coverImage,
+          width: 460,
+          height: 215,
+          alt: `${game.name} cover`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [game.coverImage],
+    },
+  };
+}
 
 export default async function GamePage({
   params,
@@ -96,7 +203,7 @@ export default async function GamePage({
         <div className="flex items-start gap-5">
           {/* Avatar */}
           <div
-            className="w-24 h-16 sm:w-32 sm:h-20 rounded-lg overflow-hidden shrink-0 border"
+            className="w-24 h-16 sm:w-48 sm:h-20 rounded-lg overflow-hidden shrink-0 border"
             style={{ borderColor: `${game.glowColor}40` }}
           >
             <GameImage
@@ -133,6 +240,14 @@ export default async function GamePage({
           {/* Actions */}
           <div className="flex items-center gap-2 shrink-0">
             <a
+              href={`/${locale}/countdown/${game.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg"
+            >
+              <Timer className="w-3.5 h-3.5" />
+            </a>
+            <a
               href={`/${locale}/calendar?game=${game.id}`}
               className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg"
             >
@@ -156,7 +271,7 @@ export default async function GamePage({
         {/* Quick stats strip */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { label: t("totalSeasons"), value: String(allSeasons.length) },
+            { label: t("totalSeasons"), value: String(allSeasons.filter((s) => s.status !== "upcoming").length) },
             {
               label: t("avgDuration"),
               value: avgDuration ? `${avgDuration} ${t("days")}` : "—",
@@ -230,7 +345,7 @@ export default async function GamePage({
                   </p>
                   <p className="text-gray-200 text-sm">
                     {new Date(activeSeason.startDate).toLocaleDateString(
-                      "en-US",
+                      toIntlLocale(locale),
                       {
                         month: "long",
                         day: "numeric",
@@ -247,7 +362,7 @@ export default async function GamePage({
                   </p>
                   <p className="text-gray-200 text-sm">
                     {new Date(activeSeason.endDate).toLocaleDateString(
-                      "en-US",
+                      toIntlLocale(locale),
                       {
                         month: "long",
                         day: "numeric",
@@ -303,6 +418,9 @@ export default async function GamePage({
                 glowColor={game.glowColor}
                 seasonStart={activeSeason?.startDate}
                 seasonEnd={activeSeason?.endDate}
+                seasonLabel={t("currentSeason", {
+                  seasonType: game.seasonType,
+                })}
               />
             ) : (
               <p className="text-xs text-yellow-500/70">{t("dataStale")}</p>
@@ -395,10 +513,27 @@ export default async function GamePage({
           </div>
         )}
 
+        {/* Steam widget */}
+        {game.steamAppId && (
+          <div>
+            <h2 className="text-lg font-semibold text-white mb-4">
+              {t("steamStore")}
+            </h2>
+            {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
+            <iframe
+              src={`https://store.steampowered.com/widget/${game.steamAppId}?utm_source=seasonpulse&utm_content=steam_embed`}
+              width="100%"
+              height="190"
+              className="w-full"
+            />
+          </div>
+        )}
+
         {/* Season history */}
         <SeasonsHistory
           seasons={allSeasons}
           glowColor={game.glowColor}
+          locale={locale}
           labels={{
             title: t("allSeasons"),
             started: t("started"),

@@ -77,7 +77,10 @@
     "grid": "Grid view",
     "table": "Table view",
     "search": "Search games...",
-    "noResults": "No games match your search"
+    "noResults": "No games match your search",
+    "favorites": "Favorites",
+    "favoriteAdd": "Add to favorites",
+    "favoriteRemove": "Remove from favorites"
   },
   "table": {
     "game": "Game",
@@ -119,8 +122,80 @@
     "november": "November",
     "december": "December"
   },
+  "countdownPage": {
+    "nextSeason": "Next {seasonType}",
+    "seasonEnds": "{seasonType} ends in",
+    "seasonStarted": "{seasonType} started",
+    "noUpcoming": "No upcoming season date available",
+    "checkBack": "Check back later for updates",
+    "copyLink": "Copy link",
+    "copied": "Copied!",
+    "share": "Share",
+    "embed": "Embed",
+    "embedCode": "Embed code",
+    "embedCopied": "Embed code copied!",
+    "back": "Back to {game}",
+    "poweredBy": "Powered by SeasonPulse"
+  },
+  "hero": {
+    "tagline": "Real-time season intelligence",
+    "line1": "SEASON",
+    "line2": "PULSE",
+    "sub": "Live countdowns for {count} competitive games — updated every second."
+  },
   "footer": {
-    "disclaimer": "Season data fetched via AI and cached hourly. Verify dates on official sites."
+    "disclaimer": "Season data fetched via AI and cached hourly. Verify dates on official sites.",
+    "about": "About",
+    "privacy": "Privacy Policy"
+  },
+  "about": {
+    "title": "About SeasonPulse",
+    "intro": "SeasonPulse is a free, community-driven tool that tracks active seasons, leagues, ladders, wipes, and cycles across popular online games.",
+    "whatTitle": "What We Track",
+    "whatText": "We monitor season start and end dates, countdown timers, player statistics, and upcoming resets for games like Path of Exile, Diablo IV, Last Epoch, and more. All data is refreshed automatically every hour.",
+    "howTitle": "How It Works",
+    "howText": "Season data is fetched using AI-powered scrapers that monitor official game sources. Player counts come directly from Steam. Everything is cached and served instantly — no manual updates needed.",
+    "openTitle": "Open & Free",
+    "openText": "SeasonPulse is completely free to use. No accounts, no tracking. We believe season information should be accessible to everyone.",
+    "contactTitle": "Contact",
+    "contactText": "Have feedback, found a bug, or want to suggest a game? Reach out via email."
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "intro": "Your privacy matters. SeasonPulse is designed to be as privacy-friendly as possible.",
+    "collectTitle": "What We Collect",
+    "collectText": "We do not collect any personal data. No accounts are required, no cookies are used for tracking, and no analytics services monitor your behavior.",
+    "storageTitle": "Local Storage",
+    "storageText": "We use your browser's local storage only to save your preferences such as favorite games and display settings. This data never leaves your device.",
+    "thirdTitle": "Third-Party Services",
+    "thirdText": "We embed Steam store widgets and fetch player data from Steam's public API. These requests go directly to Valve's servers and are subject to their privacy policy.",
+    "changesTitle": "Changes",
+    "changesText": "We may update this policy as needed. Any changes will be reflected on this page.",
+    "lastUpdated": "Last updated: April 2026"
+  },
+  "steam": {
+    "reviews": "reviews",
+    "noReviews": "No reviews",
+    "overwhelminglyPositive": "Overwhelmingly Positive",
+    "veryPositive": "Very Positive",
+    "mostlyPositive": "Mostly Positive",
+    "positive": "Positive",
+    "mixed": "Mixed",
+    "mostlyNegative": "Mostly Negative",
+    "veryNegative": "Very Negative"
+  },
+  "players": {
+    "online": "online",
+    "playingNow": "playing now",
+    "peak": "peak",
+    "peak7d": "7d peak",
+    "seasonPeak": "season peak",
+    "trend48h": "48h",
+    "updated": "Updated",
+    "noData": "No data",
+    "noDataSeason": "No data for this season",
+    "notEnoughData": "Not enough data",
+    "playersOnline": "players online"
   },
   "game": {
     "back": "Dashboard",
@@ -146,6 +221,7 @@
     "duration": "Duration",
     "dataStale": "Awaiting refresh",
     "estimated": "Estimated",
-    "official": "Official"
+    "official": "Official",
+    "steamStore": "Steam Store"
   }
 }

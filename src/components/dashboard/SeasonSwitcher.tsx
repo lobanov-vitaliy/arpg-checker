@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { CountdownTimer } from "./CountdownTimer";
 import { ElapsedTimer } from "./ElapsedTimer";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { formatDate } from "@/lib/utils";
 import { ExternalLink, Clock } from "lucide-react";
 import type { SeasonData, GameConfig, SteamData } from "@/types";
@@ -24,6 +24,7 @@ export function SeasonSwitcher({
 }: SeasonSwitcherProps) {
   const t = useTranslations("dashboard");
   const tEst = useTranslations("estimate");
+  const locale = useLocale();
 
   // Display order: upcoming first, active second ("live"), ended rest
   const displaySeasons = [
@@ -115,7 +116,7 @@ export function SeasonSwitcher({
               {season.status === "upcoming" ? t("starts") : t("started")}
             </p>
             <p className="text-gray-200 text-xs">
-              {formatDate(season.startDate)}
+              {formatDate(season.startDate, locale)}
             </p>
           </div>
         )}
@@ -125,7 +126,7 @@ export function SeasonSwitcher({
               {t("ends")}
             </p>
             <p className="text-gray-200 text-xs">
-              {formatDate(season.endDate)}
+              {formatDate(season.endDate, locale)}
             </p>
           </div>
         )}
@@ -147,7 +148,7 @@ export function SeasonSwitcher({
               {t("nextSeason", { seasonType: game.seasonType })}:
             </span>
             <span className="text-gray-100 font-medium">
-              {formatDate(season.nextSeasonStartDate!)}
+              {formatDate(season.nextSeasonStartDate!, locale)}
             </span>
             <span className="ml-auto relative group cursor-default shrink-0">
               {season.nextSeasonIsEstimated ? (
@@ -222,7 +223,14 @@ export function SeasonSwitcher({
             </div>
           )}
         </div>
-      ) : null}
+      ) : (
+        <div className="bg-black/30 rounded-lg p-3">
+          <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">
+            {t("nextSeasonIn", { seasonType: game.seasonType })}
+          </p>
+          <p className="text-xs text-yellow-500/70">{t("dataStale")}</p>
+        </div>
+      )}
 
       {/* Steam sparkline */}
       {season.status !== "upcoming" && game.steamAppId && (
