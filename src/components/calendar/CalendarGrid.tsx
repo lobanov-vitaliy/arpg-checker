@@ -228,7 +228,7 @@ function CalendarGridInner({
       </div>
 
       {/* ── Weeks ── */}
-      <div className="grid grid-cols-7 border-l border-t border-gray-800 overflow-visible">
+      <div className="grid grid-cols-7 border-l border-t border-gray-800 overflow-visible backdrop-blur-md bg-gray-900/30 rounded-b-lg">
         {weeks.flat().map((date, i) => {
           const isCurrentMonth = date.getMonth() === month;
           const isToday = toDateStr(date) === todayStr;
@@ -295,7 +295,7 @@ function CalendarGridInner({
                       event.avgSeasonDurationDays &&
                       event.seasonType && (
                         <div className="absolute bottom-full left-0 mb-1.5 w-56 z-50 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-                          <span className="block bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-xs text-gray-300 leading-snug shadow-xl">
+                          <span className="block bg-gray-800/80 backdrop-blur-md border border-gray-700 rounded-md px-3 py-2 text-xs text-gray-300 leading-snug shadow-xl">
                             {tEst("tooltip", {
                               seasonType: event.seasonType,
                               days: event.avgSeasonDurationDays,
@@ -307,7 +307,7 @@ function CalendarGridInner({
                     {/* Official tooltip */}
                     {event.isEstimated === false && event.type === "starts" && (
                       <div className="absolute bottom-full left-0 mb-1.5 w-56 z-50 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-                        <span className="block bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-xs text-gray-300 leading-snug shadow-xl">
+                        <span className="block bg-gray-800/80 backdrop-blur-md border border-gray-700 rounded-md px-3 py-2 text-xs text-gray-300 leading-snug shadow-xl">
                           {tDash("officialTooltip")}
                         </span>
                       </div>

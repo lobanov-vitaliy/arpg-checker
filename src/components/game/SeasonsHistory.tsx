@@ -55,7 +55,7 @@ export function SeasonsHistory({ seasons, glowColor, locale, labels }: SeasonsHi
         {seasons.map((season, i) => (
           <div
             key={i}
-            className="rounded-lg px-4 py-3 grid grid-cols-1 sm:grid-cols-[1fr_120px_120px_72px_28px] gap-x-4 gap-y-2 items-center"
+            className="rounded-lg px-4 py-3 grid grid-cols-1 sm:grid-cols-[1fr_120px_120px_72px_28px] gap-x-4 gap-y-2 items-center backdrop-blur-md"
             style={{
               backgroundColor: season.status === "active" ? `${glowColor}0a` : "rgba(255,255,255,0.02)",
               border: `1px solid ${season.status === "active" ? `${glowColor}30` : "rgba(255,255,255,0.06)"}`,

@@ -302,7 +302,7 @@ function GameGridInner({
         {/* Left: Search + Genre filter + Favorites */}
         <div className="flex items-center gap-2 flex-wrap">
           {/* All / Favorites toggle */}
-          <div className="flex items-center rounded-lg border border-gray-700 bg-gray-900 overflow-hidden">
+          <div className="flex items-center rounded-lg border border-white/5 bg-gray-900/60 backdrop-blur-md overflow-hidden">
             <button
               onClick={() => setFavoritesOnly(false)}
               className={`px-3 py-1.5 text-xs font-medium transition-colors ${!favoritesOnly ? "bg-gray-700 text-white" : "text-gray-500 hover:text-gray-300"}`}
@@ -331,7 +331,7 @@ function GameGridInner({
               value={query}
               onChange={(e) => handleQuery(e.target.value)}
               placeholder={tFilter("search")}
-              className="pl-8 pr-3 py-1.5 rounded-lg text-xs border border-gray-700 bg-gray-900 text-gray-300 placeholder-gray-600 focus:outline-none focus:border-gray-500 transition-colors w-56"
+              className="pl-8 pr-3 py-1.5 rounded-lg text-xs border border-white/5 bg-gray-900/60 backdrop-blur-md text-gray-300 placeholder-gray-600 focus:outline-none focus:border-gray-500 transition-colors w-56"
               suppressHydrationWarning
             />
           </div>
@@ -357,7 +357,7 @@ function GameGridInner({
         <div className="overflow-x-auto rounded-lg border border-gray-800">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-gray-800 bg-gray-900/80">
+              <tr className="border-b border-white/5 bg-gray-900/60 backdrop-blur-md">
                 <ColHeader col="name" label={tTable("game")} />
                 <th className="py-2.5 px-4 text-xs text-gray-500 uppercase tracking-wider font-medium whitespace-nowrap">
                   {tTable("genres")}
@@ -375,7 +375,7 @@ function GameGridInner({
                 <th className="py-2.5 px-4 text-xs text-gray-500 uppercase tracking-wider font-medium" />
               </tr>
             </thead>
-            <tbody className="bg-gray-950/50">
+            <tbody className="bg-gray-950/30 backdrop-blur-md">
               {filteredIds.map((id) => rowMap[id])}
             </tbody>
           </table>

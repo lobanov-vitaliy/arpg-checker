@@ -224,5 +224,15 @@
     "estimated": "Geschätzt",
     "official": "Offiziell",
     "steamStore": "Steam Store"
+  },
+  "errors": {
+    "notFoundTitle": "Seite nicht gefunden",
+    "notFoundText": "Die Seite, die Sie suchen, existiert nicht oder wurde verschoben.",
+    "notFoundCode": "404",
+    "serverTitle": "Etwas ist schiefgelaufen",
+    "serverText": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.",
+    "serverCode": "500",
+    "backHome": "Zurück zum Dashboard",
+    "tryAgain": "Erneut versuchen"
   }
 }

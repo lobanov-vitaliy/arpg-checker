@@ -224,5 +224,15 @@
     "estimated": "Szacunkowa",
     "official": "Oficjalna",
     "steamStore": "Sklep Steam"
+  },
+  "errors": {
+    "notFoundTitle": "Nie znaleziono strony",
+    "notFoundText": "Strona, której szukasz, nie istnieje lub została przeniesiona.",
+    "notFoundCode": "404",
+    "serverTitle": "Coś poszło nie tak",
+    "serverText": "Wystąpił nieoczekiwany błąd. Spróbuj ponownie później.",
+    "serverCode": "500",
+    "backHome": "Powrót do panelu",
+    "tryAgain": "Spróbuj ponownie"
   }
 }

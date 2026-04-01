@@ -224,5 +224,15 @@
     "estimated": "Приблизна",
     "official": "Офіційна",
     "steamStore": "Магазин Steam"
+  },
+  "errors": {
+    "notFoundTitle": "Сторінку не знайдено",
+    "notFoundText": "Сторінка, яку ви шукаєте, не існує або була переміщена.",
+    "notFoundCode": "404",
+    "serverTitle": "Щось пішло не так",
+    "serverText": "Сталася непередбачена помилка. Спробуйте пізніше.",
+    "serverCode": "500",
+    "backHome": "На головну",
+    "tryAgain": "Спробувати ще"
   }
 }

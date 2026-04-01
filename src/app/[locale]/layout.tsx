@@ -1,20 +1,8 @@
 import type { Metadata } from "next";
-import { Manrope, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import "@/app/globals.css";
-
-const mainFont = Manrope({
-  variable: "--font-main",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://seasonpulse.fun";
 const SITE_NAME = "SeasonPulse";
@@ -144,18 +132,8 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html
-      lang={locale}
-      suppressHydrationWarning
-      className={`${mainFont.variable} ${geistMono.variable} dark h-full antialiased`}
-    >
-      <meta name="apple-mobile-web-app-title" content="SeasonPulse" />
-
-      <body className="has-bg min-h-full flex flex-col bg-gray-950 text-gray-100">
-        <NextIntlClientProvider messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages}>
+      {children}
+    </NextIntlClientProvider>
   );
 }

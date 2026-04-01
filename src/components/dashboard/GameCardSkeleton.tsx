@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export function GameCardSkeleton() {
   return (
-    <Card className="border-gray-700/50 bg-gray-900/60 overflow-hidden">
+    <Card className="border-white/5 bg-gray-900/60 backdrop-blur-md overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-0.5 bg-gray-700 opacity-50" />
       <CardHeader className="pb-2 pt-5">
         <Skeleton className="h-3 w-32 mb-2" />

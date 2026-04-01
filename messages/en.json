@@ -224,5 +224,15 @@
     "estimated": "Estimated",
     "official": "Official",
     "steamStore": "Steam Store"
+  },
+  "errors": {
+    "notFoundTitle": "Page Not Found",
+    "notFoundText": "The page you're looking for doesn't exist or has been moved.",
+    "notFoundCode": "404",
+    "serverTitle": "Something Went Wrong",
+    "serverText": "An unexpected error occurred. Please try again later.",
+    "serverCode": "500",
+    "backHome": "Back to Dashboard",
+    "tryAgain": "Try Again"
   }
 }

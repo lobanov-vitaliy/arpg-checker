@@ -33,7 +33,7 @@ export async function GameCard({ game }: GameCardProps) {
     : null;
 
   return (
-    <Card className="overflow-hidden bg-gray-900 flex flex-col hover:shadow-xl hover:shadow-black/60 transition-all duration-300">
+    <Card className="overflow-hidden bg-gray-900/60 backdrop-blur-md border-white/5 flex flex-col hover:shadow-xl hover:shadow-black/60 transition-all duration-300">
       {/* ── Game image ── */}
       <a
         href={`/${locale}/game/${game.id}`}

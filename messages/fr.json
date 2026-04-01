@@ -224,5 +224,15 @@
     "estimated": "Estimée",
     "official": "Officielle",
     "steamStore": "Boutique Steam"
+  },
+  "errors": {
+    "notFoundTitle": "Page introuvable",
+    "notFoundText": "La page que vous recherchez n'existe pas ou a été déplacée.",
+    "notFoundCode": "404",
+    "serverTitle": "Une erreur est survenue",
+    "serverText": "Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+    "serverCode": "500",
+    "backHome": "Retour au tableau de bord",
+    "tryAgain": "Réessayer"
   }
 }

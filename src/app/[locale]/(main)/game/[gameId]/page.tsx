@@ -287,7 +287,7 @@ export default async function GamePage({
           ].map(({ label, value }) => (
             <div
               key={label}
-              className="rounded-lg px-4 py-3 bg-white/3 border border-white/8"
+              className="rounded-lg px-4 py-3 bg-white/3 border border-white/8 backdrop-blur-md"
             >
               <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
                 {label}
@@ -300,7 +300,7 @@ export default async function GamePage({
         {/* Current season card */}
         {activeSeason && (
           <div
-            className="rounded-xl p-5 flex flex-col gap-4"
+            className="rounded-xl p-5 flex flex-col gap-4 backdrop-blur-md"
             style={{
               backgroundColor: `${game.glowColor}08`,
               border: `1px solid ${game.glowColor}30`,
@@ -408,7 +408,7 @@ export default async function GamePage({
 
         {/* Steam chart */}
         {game.steamAppId && (
-          <div className="rounded-xl p-5 bg-white/3 border border-white/8">
+          <div className="rounded-xl p-5 bg-white/3 border border-white/8 backdrop-blur-md">
             <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">
               {t("playersOnline")}
             </h2>
@@ -448,7 +448,7 @@ export default async function GamePage({
                   <a
                     key={rg.id}
                     href={`/${locale}/game/${rg.id}`}
-                    className="rounded-xl p-4 flex flex-col gap-3 hover:brightness-110 transition-all"
+                    className="rounded-xl p-4 flex flex-col gap-3 hover:brightness-110 transition-all backdrop-blur-md"
                     style={{
                       backgroundColor: `${rg.glowColor}08`,
                       border: `1px solid ${rg.glowColor}25`,
