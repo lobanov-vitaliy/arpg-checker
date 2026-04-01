@@ -146,11 +146,12 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
+      suppressHydrationWarning
       className={`${mainFont.variable} ${geistMono.variable} dark h-full antialiased`}
     >
       <meta name="apple-mobile-web-app-title" content="SeasonPulse" />
 
-      <body className="min-h-full flex flex-col bg-gray-950 text-gray-100">
+      <body className="has-bg min-h-full flex flex-col bg-gray-950 text-gray-100">
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

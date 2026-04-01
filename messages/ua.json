@@ -195,7 +195,8 @@
     "noData": "Немає даних",
     "noDataSeason": "Немає даних для цього сезону",
     "notEnoughData": "Недостатньо даних",
-    "playersOnline": "гравців онлайн"
+    "playersOnline": "гравців онлайн",
+    "avgSeason": "сер."
   },
   "game": {
     "back": "Дашборд",

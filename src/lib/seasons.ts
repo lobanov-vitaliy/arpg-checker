@@ -78,7 +78,7 @@ export function getAllSeasons(): SeasonData[] {
   });
 }
 
-const STATUS_PRIORITY = { active: 0, upcoming: 1, ended: 2, unknown: 3 };
+const STATUS_PRIORITY = { upcoming: 0, active: 1, ended: 2, unknown: 3 };
 
 export function getSeasonsForGame(gameId: string): SeasonData[] {
   const game = GAME_SEASONS.find((g) => g.gameId === gameId);

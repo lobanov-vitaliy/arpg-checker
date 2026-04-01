@@ -195,7 +195,8 @@
     "noData": "No data",
     "noDataSeason": "No data for this season",
     "notEnoughData": "Not enough data",
-    "playersOnline": "players online"
+    "playersOnline": "players online",
+    "avgSeason": "avg"
   },
   "game": {
     "back": "Dashboard",

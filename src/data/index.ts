@@ -26,6 +26,7 @@ import delta_force from "./games/delta_force.json";
 import apex_legends from "./games/apex_legends.json";
 import destiny_2 from "./games/destiny_2.json";
 import pubg from "./games/pubg.json";
+import the_finals from "./games/the_finals.json";
 
 type GameFileEntry = GameConfig & { seasons: ManualSeasonEntry[] };
 
@@ -35,6 +36,7 @@ const ALL_GAMES = [
   poe1,
   poe2,
   destiny_2,
+  the_finals,
   lastepoch,
   torchlight_infinite,
   apex_legends,

@@ -4,6 +4,7 @@ import {
   AreaChart,
   Area,
   Tooltip,
+  ReferenceLine,
   ResponsiveContainer,
   XAxis,
 } from "recharts";
@@ -88,11 +89,8 @@ export function PlayerSparkline({
   }
 
   const values = data.map((s) => s.p);
-  const last = values[values.length - 1] ?? 0;
-  const prev = values[Math.max(0, values.length - 49)] ?? last;
-  const trendPct = prev > 0 ? ((last - prev) / prev) * 100 : 0;
-  const trendUp = trendPct >= 0;
   const peak = Math.max(...values);
+  const avg = Math.round(values.reduce((a, b) => a + b, 0) / values.length);
   const gradId = `spark-${steam.gameId}`;
 
   return (
@@ -105,13 +103,7 @@ export function PlayerSparkline({
           <span className="text-gray-500 text-xs">{t("online")}</span>
         </div>
         <div className="flex items-center gap-1.5">
-          {values.length > 48 && (
-            <span
-              className={`text-xs font-medium ${trendUp ? "text-emerald-400" : "text-red-400"}`}
-            >
-              {trendUp ? "▲" : "▼"} {Math.abs(trendPct).toFixed(1)}%
-            </span>
-          )}
+          <span className="text-gray-600 text-xs">{t("avgSeason")} {formatCount(avg)}</span>
           <span className="text-gray-600 text-xs">{t("peak")} {formatCount(peak)}</span>
         </div>
       </div>
@@ -125,6 +117,11 @@ export function PlayerSparkline({
             </linearGradient>
           </defs>
           <XAxis dataKey="t" hide />
+          <ReferenceLine
+            y={avg}
+            stroke="rgba(255,255,255,0.2)"
+            strokeDasharray="3 3"
+          />
           <Tooltip
             content={<SparkTooltip locale={locale} />}
             cursor={{ stroke: `${glowColor}60`, strokeWidth: 1 }}

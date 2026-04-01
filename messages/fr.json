@@ -195,7 +195,8 @@
     "noData": "Aucune donnée",
     "noDataSeason": "Aucune donnée pour cette saison",
     "notEnoughData": "Données insuffisantes",
-    "playersOnline": "joueurs en ligne"
+    "playersOnline": "joueurs en ligne",
+    "avgSeason": "moy."
   },
   "game": {
     "back": "Tableau de bord",

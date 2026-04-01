@@ -24,19 +24,21 @@ export async function GameCard({ game }: GameCardProps) {
     Promise.resolve(getSeasonsForGame(game.id)),
   ]);
   const isFirstSeason = allSeasons.some(
-    (s) => (s.status === "active" || s.status === "upcoming") && s.seasonNumber === 1
+    (s) =>
+      (s.status === "active" || s.status === "upcoming") &&
+      s.seasonNumber === 1,
   );
   const steamData = game.steamAppId
     ? await getCached<SteamData>(STEAM_CACHE_KEY(game.id))
     : null;
 
   return (
-    <Card
-      className="overflow-hidden bg-gray-900 flex flex-col hover:shadow-xl hover:shadow-black/60 transition-all duration-300"
-      style={{ borderColor: `${game.glowColor}60`, borderWidth: "1.5px" }}
-    >
+    <Card className="overflow-hidden bg-gray-900 flex flex-col hover:shadow-xl hover:shadow-black/60 transition-all duration-300">
       {/* ── Game image ── */}
-      <a href={`/${locale}/game/${game.id}`} className="relative h-36 overflow-hidden shrink-0 bg-gray-800 block group">
+      <a
+        href={`/${locale}/game/${game.id}`}
+        className="relative h-36 overflow-hidden shrink-0 bg-gray-800 block group"
+      >
         <GameImage
           src={game.coverImage}
           alt={game.name}
@@ -49,7 +51,10 @@ export async function GameCard({ game }: GameCardProps) {
         />
         {isFirstSeason && (
           <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-black/60 backdrop-blur-sm border border-white/10 text-white">
-            <Sparkles className="w-2.5 h-2.5" style={{ color: game.glowColor }} />
+            <Sparkles
+              className="w-2.5 h-2.5"
+              style={{ color: game.glowColor }}
+            />
             {t("newGame")}
           </div>
         )}

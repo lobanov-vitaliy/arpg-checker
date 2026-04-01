@@ -11,15 +11,19 @@ export async function Navbar() {
   ];
 
   return (
-    <header className="border-b border-gray-800 bg-gray-950/80 backdrop-blur-sm sticky top-0 z-50">
+    <header className="backdrop-blur-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 h-14 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <a
             href={`/${locale}`}
             className="flex items-center gap-2 font-bold text-white hover:text-gray-200 transition-colors"
           >
-            <img src="/logo.png" alt="SeasonPulse" width={42} className="shrink-0" />
-            <span>Season Pulse</span>
+            <img
+              src="/logo.png"
+              alt="SeasonPulse"
+              width={42}
+              className="shrink-0"
+            />
           </a>
           <NavLinks links={links} />
         </div>

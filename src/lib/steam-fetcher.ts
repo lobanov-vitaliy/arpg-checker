@@ -12,8 +12,42 @@ const STEAM_PLAYERS_API =
   "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1";
 const STEAM_REVIEWS_API = "https://store.steampowered.com/appreviews";
 
-const MAX_SNAPSHOTS = 168; // 7 days × 24 hours
+const MAX_SNAPSHOTS = 50_000;
 const STEAM_TTL_MS = 25 * 60 * 60 * 1000; // 25 hours
+
+const HOUR_MS = 60 * 60 * 1000;
+const DAY_MS = 24 * HOUR_MS;
+const RECENT_WINDOW = 7 * DAY_MS;
+const MID_WINDOW = 90 * DAY_MS;
+
+function downsample(snapshots: PlayerSnapshot[]): PlayerSnapshot[] {
+  if (snapshots.length < 2000) return snapshots;
+
+  const now = Date.now();
+  const result: PlayerSnapshot[] = [];
+  let lastKeptTs = 0;
+
+  for (const snap of snapshots) {
+    const ts = new Date(snap.t).getTime();
+    const age = now - ts;
+
+    let minGap: number;
+    if (age <= RECENT_WINDOW) {
+      minGap = 0;
+    } else if (age <= MID_WINDOW) {
+      minGap = HOUR_MS;
+    } else {
+      minGap = DAY_MS;
+    }
+
+    if (ts - lastKeptTs >= minGap) {
+      result.push(snap);
+      lastKeptTs = ts;
+    }
+  }
+
+  return result;
+}
 
 export const STEAM_CACHE_KEY = (gameId: string) => `steam_${gameId}`;
 
@@ -116,12 +150,20 @@ export async function refreshSteamData(game: GameConfig): Promise<SteamData> {
       : (existing?.rating ?? null);
 
   const now = new Date().toISOString();
+  const nowMs = Date.now();
+  const lastSnapMs = previousSnapshots.length
+    ? new Date(previousSnapshots[previousSnapshots.length - 1].t).getTime()
+    : 0;
 
-  const snapshots = [...previousSnapshots, { t: now, p: currentPlayers }];
-
-  if (snapshots.length > MAX_SNAPSHOTS) {
-    snapshots.splice(0, snapshots.length - MAX_SNAPSHOTS);
-  }
+  const raw =
+    nowMs - lastSnapMs < 30 * 60 * 1000
+      ? previousSnapshots
+      : [...previousSnapshots, { t: now, p: currentPlayers }];
+  const snapshots = downsample(
+    raw.length > MAX_SNAPSHOTS
+      ? raw.slice(raw.length - MAX_SNAPSHOTS)
+      : raw,
+  );
 
   const peakPlayers7d =
     snapshots.length > 0

@@ -1,0 +1,117 @@
+{
+  "id": "the_finals",
+  "name": "THE FINALS",
+  "shortName": "TF",
+  "developer": "Embark Studios",
+  "seasonType": "season",
+  "genres": [
+    "FPS",
+    "Arena Shooter",
+    "Team-Based"
+  ],
+  "accentColor": "text-pink-400",
+  "accentBg": "bg-pink-400",
+  "bgGradient": "from-pink-950/90 via-slate-900 to-gray-950",
+  "glowColor": "#f472b6",
+  "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/2073850/header.jpg",
+  "officialUrl": "https://www.reachthefinals.com",
+  "popularityScore": 72,
+  "steamAppId": 2073850,
+  "searchHints": [
+    "\"THE FINALS\" current active season number name start end date",
+    "\"THE FINALS\" season launch patch notes official Embark",
+    "site:reachthefinals.com/patchnotes \"THE FINALS\" season launch"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Fantasy League",
+      "seasonNumber": 10,
+      "startDate": "2026-03-26",
+      "endDate": null,
+      "description": "The current season introduces Fantasy League, adding the Aerialist playstyle, ranked tournament improvements, broad quality-of-life changes, and a medieval fantasy theme across the Arena.",
+      "sourceUrl": "https://www.reachthefinals.com/patchnotes/10-00",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Dragon Rising",
+      "seasonNumber": 9,
+      "startDate": "2025-12-10",
+      "endDate": "2026-03-26",
+      "description": "Season 9 introduced Dragon Rising, World Tour 2.0 progression, seasonal rewards, and the start of year 3 of THE FINALS.",
+      "sourceUrl": "https://www.reachthefinals.com/patchnotes/900",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Game Time",
+      "seasonNumber": 8,
+      "startDate": "2025-09-10",
+      "endDate": "2025-12-10",
+      "description": "Season 8 launched with the Game Time update, expanded tutorials, improved onboarding, refreshed seasonal progression, and a new wave of content and balance changes.",
+      "sourceUrl": "https://www.reachthefinals.com/patchnotes/800",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "The Divide",
+      "seasonNumber": 7,
+      "startDate": "2025-06-12",
+      "endDate": "2025-09-10",
+      "description": "Season 7 focused on improving the new-player experience, cheaper unlocks, new seasonal content, and the debut of NOZOMI/CITADEL and the breach-themed seasonal arc.",
+      "sourceUrl": "https://www.reachthefinals.com/patchnotes/700",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Rising Stars",
+      "seasonNumber": 6,
+      "startDate": "2025-03-20",
+      "endDate": "2025-06-12",
+      "description": "Season 6 brought new ways to compete, an updated arsenal, new sponsor-driven progression, and a more frequent balance cadence for the live service.",
+      "sourceUrl": "https://www.reachthefinals.com/patchnotes/600",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Next Stage",
+      "seasonNumber": 5,
+      "startDate": "2024-12-12",
+      "endDate": "2025-03-20",
+      "description": "Season 5 celebrated one year of THE FINALS, expanded platform support, refreshed progression, and continued the game's evolving ranked and live-service systems.",
+      "sourceUrl": "https://www.reachthefinals.com/patchnotes/500",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 4",
+      "seasonNumber": 4,
+      "startDate": "2024-09-26",
+      "endDate": "2024-12-12",
+      "description": "Season 4 reintroduced Ranked Cashout as the core ranked mode, added Fortune Stadium, and delivered new weapons, gadgets, and a more polished tournament experience.",
+      "sourceUrl": "https://www.reachthefinals.com/patchnotes/400",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 3",
+      "seasonNumber": 3,
+      "startDate": "2024-06-13",
+      "endDate": "2024-09-26",
+      "description": "Season 3 introduced Kyoto 1568, World Tour, Terminal Attack as the ranked mode, new weapons, and a Japan-inspired Battle Pass.",
+      "sourceUrl": "https://www.reachthefinals.com/patchnotes/300",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 2",
+      "seasonNumber": 2,
+      "startDate": "2024-03-14",
+      "endDate": "2024-06-13",
+      "description": "Season 2 brought a CNS-themed takeover, new gadgets, new weapons, a fresh Battle Pass, and major meta changes to classes and modes.",
+      "sourceUrl": "https://www.reachthefinals.com/patchnotes/200",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 1",
+      "seasonNumber": 1,
+      "startDate": "2023-12-08",
+      "endDate": "2024-03-14",
+      "description": "The launch season of THE FINALS introduced Las Vegas, the first Battle Pass, live-service progression, and the first competitive seasonal cycle.",
+      "sourceUrl": "https://www.reachthefinals.com/patchnotes/120",
+      "confidence": "high"
+    }
+  ]
+}

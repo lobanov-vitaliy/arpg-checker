@@ -5,6 +5,7 @@ import {
   Area,
   Tooltip,
   CartesianGrid,
+  ReferenceLine,
   ResponsiveContainer,
 } from "recharts";
 import { useTranslations, useLocale } from "next-intl";
@@ -97,11 +98,8 @@ export function PlayerChartFull({
   }
 
   const values = data.map((s) => s.p);
-  const last = values[values.length - 1] ?? 0;
-  const prev = values[Math.max(0, values.length - 49)] ?? last;
-  const trendPct = prev > 0 ? ((last - prev) / prev) * 100 : 0;
-  const trendUp = trendPct >= 0;
   const peakShown = Math.max(...values);
+  const avg = Math.round(values.reduce((a, b) => a + b, 0) / values.length);
 
   const gradId = `chart-full-${steam.gameId}`;
 
@@ -121,16 +119,12 @@ export function PlayerChartFull({
           )}
         </div>
         <div className="flex items-center gap-4">
-          {values.length > 48 && (
-            <div className="flex items-center gap-1">
-              <span
-                className={`text-sm font-semibold ${trendUp ? "text-emerald-400" : "text-red-400"}`}
-              >
-                {trendUp ? "▲" : "▼"} {Math.abs(trendPct).toFixed(1)}%
-              </span>
-              <span className="text-gray-600 text-xs">{t("trend48h")}</span>
-            </div>
-          )}
+          <div>
+            <span className="text-xs text-gray-500">{t("avgSeason")} </span>
+            <span className="text-xs font-semibold text-gray-300">
+              {formatCount(avg)}
+            </span>
+          </div>
           <div>
             <span className="text-xs text-gray-500">{t("peak7d")} </span>
             <span className="text-xs font-semibold text-gray-300">
@@ -159,6 +153,17 @@ export function PlayerChartFull({
             strokeDasharray="3 3"
             stroke="rgba(255,255,255,0.04)"
             vertical={false}
+          />
+          <ReferenceLine
+            y={avg}
+            stroke="rgba(255,255,255,0.25)"
+            strokeDasharray="4 4"
+            label={{
+              value: `avg ${formatCount(avg)}`,
+              position: "right",
+              fill: "rgba(255,255,255,0.35)",
+              fontSize: 10,
+            }}
           />
           <Tooltip
             content={(props) => (

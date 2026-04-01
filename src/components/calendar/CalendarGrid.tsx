@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, Suspense } from "react";
-import { ChevronLeft, ChevronRight, ChevronDown, Check } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
@@ -82,7 +82,6 @@ function CalendarGridInner({
 
   const [year, setYear] = useState(initialYear);
   const [month, setMonth] = useState(initialMonth);
-  const [gameOpen, setGameOpen] = useState(false);
   const [selectedGames, setSelectedGames] = useState<string[]>(
     () => searchParams.get("game")?.split(",").filter(Boolean) ?? [],
   );
@@ -158,107 +157,43 @@ function CalendarGridInner({
   const weeks = buildWeeks(year, month);
   const todayStr = toDateStr(new Date());
 
-  // Filter button label
-  const filterLabel =
-    selectedGames.length === 0
-      ? tFilter("all")
-      : selectedGames.length === 1
-        ? (games.find((g) => g.id === selectedGames[0])?.name ?? "1")
-        : `${selectedGames.length} games`;
-
   return (
     <div>
-      {/* ── Game filter ── */}
-      <div className="flex items-center gap-3 mb-6">
-        <div className="relative">
-          <button
-            onClick={() => setGameOpen((o) => !o)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-700 bg-gray-900 text-gray-300 hover:border-gray-500 transition-colors min-w-44"
-          >
-            {selectedGames.length === 1 && (
+      {/* ── Game filter tags ── */}
+      <div className="flex flex-wrap items-center gap-2 mb-6">
+        <button
+          onClick={clearGames}
+          className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors border ${
+            selectedGames.length === 0
+              ? "bg-white/10 text-white border-white/20"
+              : "bg-transparent text-gray-500 border-gray-700 hover:border-gray-500 hover:text-gray-300"
+          }`}
+        >
+          {tFilter("all")}
+        </button>
+        {games.map((game) => {
+          const selected = selectedGames.includes(game.id);
+          return (
+            <button
+              key={game.id}
+              onClick={() => toggleGame(game.id)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors border"
+              style={{
+                backgroundColor: selected ? `${game.glowColor}20` : "transparent",
+                borderColor: selected ? `${game.glowColor}50` : "rgba(55,65,81,1)",
+                color: selected ? game.glowColor : "#9ca3af",
+              }}
+            >
               <span
                 className="w-2 h-2 rounded-full shrink-0"
                 style={{
-                  backgroundColor: games.find((g) => g.id === selectedGames[0])
-                    ?.glowColor,
+                  backgroundColor: selected ? game.glowColor : `${game.glowColor}50`,
                 }}
               />
-            )}
-            {selectedGames.length > 1 && (
-              <span className="flex gap-0.5 shrink-0">
-                {selectedGames.slice(0, 3).map((id) => (
-                  <span
-                    key={id}
-                    className="w-2 h-2 rounded-full"
-                    style={{
-                      backgroundColor: games.find((g) => g.id === id)
-                        ?.glowColor,
-                    }}
-                  />
-                ))}
-              </span>
-            )}
-            <span className="flex-1 text-left truncate">{filterLabel}</span>
-            <ChevronDown
-              className="w-3.5 h-3.5 text-gray-500 shrink-0 transition-transform duration-150"
-              style={{
-                transform: gameOpen ? "rotate(180deg)" : "rotate(0deg)",
-              }}
-            />
-          </button>
-
-          {gameOpen && (
-            <>
-              <div
-                className="fixed inset-0 z-10"
-                onClick={() => setGameOpen(false)}
-              />
-              <div className="absolute top-full left-0 mt-1 z-20 min-w-56 bg-gray-900 border border-gray-700 rounded-lg shadow-xl overflow-hidden max-h-80 overflow-y-auto">
-                <button
-                  onClick={clearGames}
-                  className="w-full text-left px-3 py-2 text-xs transition-colors hover:bg-gray-800 flex items-center gap-2"
-                  style={{
-                    color: selectedGames.length === 0 ? "#fff" : "#9ca3af",
-                  }}
-                >
-                  <span className="w-4 h-4 flex items-center justify-center">
-                    {selectedGames.length === 0 && (
-                      <Check className="w-3 h-3" />
-                    )}
-                  </span>
-                  {tFilter("all")}
-                </button>
-                <div className="border-t border-gray-800" />
-                {games.map((game) => {
-                  const selected = selectedGames.includes(game.id);
-                  return (
-                    <button
-                      key={game.id}
-                      onClick={() => toggleGame(game.id)}
-                      className="w-full text-left px-3 py-2 text-xs transition-colors hover:bg-gray-800 flex items-center gap-2"
-                      style={{ color: selected ? "#fff" : "#9ca3af" }}
-                    >
-                      <span className="w-4 h-4 flex items-center justify-center shrink-0">
-                        {selected ? (
-                          <Check
-                            className="w-3 h-3"
-                            style={{ color: game.glowColor }}
-                          />
-                        ) : (
-                          <span
-                            className="w-2 h-2 rounded-full"
-                            style={{ backgroundColor: `${game.glowColor}50` }}
-                          />
-                        )}
-                      </span>
-                      {game.name}
-                    </button>
-                  );
-                })}
-              </div>
-            </>
-          )}
-        </div>
+              {game.name}
+            </button>
+          );
+        })}
       </div>
 
       {/* ── Month nav ── */}

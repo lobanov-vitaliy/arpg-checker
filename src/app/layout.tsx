@@ -6,9 +6,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <Analytics />
-      {children}
-    </>
+    <html lang="en" suppressHydrationWarning>
+      <body suppressHydrationWarning>
+        <Analytics />
+        {children}
+      </body>
+    </html>
   );
 }

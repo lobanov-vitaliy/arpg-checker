@@ -163,7 +163,13 @@ function getTableSortedIds(
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
-function GameGridInner({ games, seasons, cards, tableRows, initialParams = {} }: GameGridProps) {
+function GameGridInner({
+  games,
+  seasons,
+  cards,
+  tableRows,
+  initialParams = {},
+}: GameGridProps) {
   const t = useTranslations("sort");
   const tFilter = useTranslations("filter");
   const tTable = useTranslations("table");
@@ -307,7 +313,13 @@ function GameGridInner({ games, seasons, cards, tableRows, initialParams = {} }:
               onClick={() => setFavoritesOnly(true)}
               className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-colors ${favoritesOnly ? "bg-gray-700 text-white" : "text-gray-500 hover:text-gray-300"}`}
             >
-              <Star className="w-3 h-3" style={{ fill: favoritesOnly ? "#facc15" : "transparent", stroke: favoritesOnly ? "#facc15" : "currentColor" }} />
+              <Star
+                className="w-3 h-3"
+                style={{
+                  fill: favoritesOnly ? "#facc15" : "transparent",
+                  stroke: favoritesOnly ? "#facc15" : "currentColor",
+                }}
+              />
               {tFilter("favorites")}
             </button>
           </div>
@@ -319,55 +331,9 @@ function GameGridInner({ games, seasons, cards, tableRows, initialParams = {} }:
               value={query}
               onChange={(e) => handleQuery(e.target.value)}
               placeholder={tFilter("search")}
-              className="pl-8 pr-3 py-1.5 rounded-lg text-xs border border-gray-700 bg-gray-900 text-gray-300 placeholder-gray-600 focus:outline-none focus:border-gray-500 transition-colors w-44"
+              className="pl-8 pr-3 py-1.5 rounded-lg text-xs border border-gray-700 bg-gray-900 text-gray-300 placeholder-gray-600 focus:outline-none focus:border-gray-500 transition-colors w-56"
               suppressHydrationWarning
             />
-          </div>
-          {/* Genre filter */}
-          <div className="relative">
-            <button
-              onClick={() => setGenreOpen((o) => !o)}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-700 bg-gray-900 text-gray-300 hover:border-gray-500 transition-colors min-w-32.5"
-            >
-              <span className="flex-1 text-left">
-                {selectedGenre || tFilter("all")}
-              </span>
-              <ChevronDown
-                className="w-3.5 h-3.5 text-gray-500 shrink-0 transition-transform duration-150"
-                style={{
-                  transform: genreOpen ? "rotate(180deg)" : "rotate(0deg)",
-                }}
-              />
-            </button>
-            {genreOpen && (
-              <>
-                <div
-                  className="fixed inset-0 z-10"
-                  onClick={() => setGenreOpen(false)}
-                />
-                <div className="absolute top-full left-0 mt-1 z-20 min-w-40 bg-gray-900 border border-gray-700 rounded-lg shadow-xl overflow-hidden">
-                  <button
-                    onClick={() => handleGenre("")}
-                    className="w-full text-left px-3 py-2 text-xs transition-colors hover:bg-gray-800"
-                    style={{ color: selectedGenre === "" ? "#fff" : "#9ca3af" }}
-                  >
-                    {tFilter("all")}
-                  </button>
-                  {allGenres.map((genre) => (
-                    <button
-                      key={genre}
-                      onClick={() => handleGenre(genre)}
-                      className="w-full text-left px-3 py-2 text-xs transition-colors hover:bg-gray-800"
-                      style={{
-                        color: selectedGenre === genre ? "#fff" : "#9ca3af",
-                      }}
-                    >
-                      {genre}
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
           </div>
         </div>
       </div>

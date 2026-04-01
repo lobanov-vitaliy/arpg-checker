@@ -195,7 +195,8 @@
     "noData": "Sin datos",
     "noDataSeason": "Sin datos para esta temporada",
     "notEnoughData": "Datos insuficientes",
-    "playersOnline": "jugadores en línea"
+    "playersOnline": "jugadores en línea",
+    "avgSeason": "prom."
   },
   "game": {
     "back": "Panel",
