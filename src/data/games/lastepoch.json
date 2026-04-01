@@ -11,6 +11,12 @@
   "glowColor": "#eab308",
   "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/899770/header.jpg",
   "officialUrl": "https://www.lastepoch.com/news",
+  "socialLinks": {
+    "twitter": "https://x.com/LastEpoch",
+    "discord": "https://discord.com/invite/lastepoch",
+    "reddit": "https://www.reddit.com/r/LastEpoch/",
+    "youtube": "https://www.youtube.com/@LastEpochGame"
+  },
   "popularityScore": 72,
   "steamAppId": 899770,
   "searchHints": [

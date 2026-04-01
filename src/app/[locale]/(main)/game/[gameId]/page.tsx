@@ -14,6 +14,7 @@ import { SteamReviewBadge } from "@/components/dashboard/SteamReviewBadge";
 import { SeasonProgressBar } from "@/components/game/SeasonProgressBar";
 import { PlayerChartFull } from "@/components/game/PlayerChartFull";
 import { SeasonsHistory } from "@/components/game/SeasonsHistory";
+import { SocialLinks } from "@/components/game/SocialLinks";
 import { toIntlLocale } from "@/lib/utils";
 import type { SteamData } from "@/types";
 
@@ -239,27 +240,36 @@ export default async function GamePage({
 
           {/* Actions */}
           <div className="flex items-center gap-2 shrink-0">
+            {game.socialLinks && (
+              <>
+                <SocialLinks
+                  socialLinks={game.socialLinks}
+                  glowColor={game.glowColor}
+                />
+                <div className="bg-white/15 w-[1px] h-4" />
+              </>
+            )}
             <a
               href={`/${locale}/countdown/${game.id}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg"
             >
-              <Timer className="w-3.5 h-3.5" />
+              <Timer className="size-4" />
             </a>
             <a
               href={`/${locale}/calendar?game=${game.id}`}
               className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg"
             >
-              <CalendarDays className="w-3.5 h-3.5" />
+              <CalendarDays className="size-4" />
             </a>
+            <div className="bg-white/15 w-[1px] h-4" />
             <a
               href={game.officialUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg"
             >
-              <ExternalLink className="w-3.5 h-3.5" />
               {t("officialSite")}
             </a>
           </div>
@@ -271,7 +281,12 @@ export default async function GamePage({
         {/* Quick stats strip */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { label: t("totalSeasons"), value: String(allSeasons.filter((s) => s.status !== "upcoming").length) },
+            {
+              label: t("totalSeasons"),
+              value: String(
+                allSeasons.filter((s) => s.status !== "upcoming").length,
+              ),
+            },
             {
               label: t("avgDuration"),
               value: avgDuration ? `${avgDuration} ${t("days")}` : "—",

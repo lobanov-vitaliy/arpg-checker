@@ -22,6 +22,8 @@
     "verify": "Überprüfen",
     "current": "aktuell",
     "coming": "demnächst",
+    "first": "erste",
+    "history": "Verlauf",
     "official": "Offiziell",
     "officialTooltip": "Dieses Datum wurde offiziell vom Entwickler bekannt gegeben.",
     "estimated": "Geschätzt",
@@ -144,9 +146,13 @@
     "sub": "Live-Countdowns für {count} kompetitive Spiele — jede Sekunde aktualisiert."
   },
   "footer": {
-    "disclaimer": "Saisondaten werden per KI abgerufen und stündlich zwischengespeichert. Überprüfe Daten auf offiziellen Seiten.",
     "about": "Über uns",
-    "privacy": "Datenschutz"
+    "privacy": "Datenschutz",
+    "copyright": "© {year} Season Pulse. Alle Rechte vorbehalten.",
+    "popularGames": "Beliebte Spiele",
+    "moreGames": "Mehr Spiele",
+    "aboutTitle": "Über uns",
+    "sitemap": "Sitemap"
   },
   "about": {
     "title": "Über SeasonPulse",

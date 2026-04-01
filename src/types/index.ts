@@ -18,6 +18,14 @@ export interface GameSeasons {
 
 // ─── Game Registry Types ─────────────────────────────────────────────────────
 
+export interface SocialLinks {
+  twitter?: string;  // X / Twitter
+  discord?: string;
+  reddit?: string;
+  youtube?: string;
+  twitch?: string;
+}
+
 export type SeasonType =
   | "season"
   | "ladder"
@@ -39,6 +47,7 @@ export interface GameConfig {
   glowColor: string; // Hex color for decorative glow: "#ef4444"
   coverImage: string; // Image URL for card header
   officialUrl: string;
+  socialLinks?: SocialLinks;
   searchHints: string[]; // Generic search queries (NO hardcoded years or season numbers)
   popularityScore: number; // 0–100 based on community size / Twitch / Steam charts
   steamAppId?: number; // Steam App ID for live player count (omit if not on Steam)

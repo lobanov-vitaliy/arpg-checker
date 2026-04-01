@@ -11,6 +11,11 @@
   "glowColor": "#22d3ee",
   "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/1808500/header.jpg",
   "officialUrl": "https://www.arcraiders.com",
+  "socialLinks": {
+    "twitter": "https://x.com/ARCRaidersGame",
+    "discord": "https://discord.com/invite/arcraiders",
+    "youtube": "https://www.youtube.com/@ARCRaidersGame"
+  },
   "popularityScore": 62,
   "steamAppId": 1808500,
   "searchHints": [

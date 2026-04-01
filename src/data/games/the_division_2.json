@@ -11,6 +11,12 @@
   "glowColor": "#fb923c",
   "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/2221490/header.jpg",
   "officialUrl": "https://www.ubisoft.com/en-gb/game/the-division/the-division-2",
+  "socialLinks": {
+    "twitter": "https://x.com/TheDivisionGame",
+    "discord": "https://discord.gg/TheDivisionGame",
+    "reddit": "https://www.reddit.com/r/thedivision/",
+    "youtube": "https://www.youtube.com/@TheDivisionGame"
+  },
   "popularityScore": 26,
   "steamAppId": 2221490,
   "searchHints": [

@@ -53,6 +53,7 @@ export function SeasonSwitcher({
     nextDateRaw && nextDateRaw.getTime() > now ? nextDateRaw : null;
 
   function dotLabel(s: SeasonData, i: number) {
+    if (s.seasonNumber === 1) return t("first");
     if (s.status === "upcoming") return t("coming");
     if (s.status === "active") return t("current");
     return s.seasonNumber ? `#${s.seasonNumber}` : String(i + 1);
@@ -78,28 +79,26 @@ export function SeasonSwitcher({
           ) : null}
         </p>
 
-        {displaySeasons.length > 1 && (
-          <div className="flex items-center gap-1.5 mt-2">
-            {displaySeasons.slice(0, 5).map((s, i) => (
-              <button
-                key={i}
-                onClick={() => setIdx(i)}
-                className="rounded-full font-medium"
-                style={{
-                  height: i === idx ? "18px" : "16px",
-                  padding: "0 7px",
-                  minWidth: i === idx ? "18px" : "16px",
-                  fontSize: i === idx ? "11px" : "10px",
-                  backgroundColor:
-                    i === idx ? game.glowColor : `${game.glowColor}25`,
-                  color: i === idx ? "#000" : `${game.glowColor}90`,
-                }}
-              >
-                {dotLabel(s, i)}
-              </button>
-            ))}
-          </div>
-        )}
+        <div className="flex items-center gap-1.5 mt-2">
+          {displaySeasons.slice(0, 5).map((s, i) => (
+            <button
+              key={i}
+              onClick={() => setIdx(i)}
+              className="rounded-full font-medium"
+              style={{
+                height: i === idx ? "18px" : "16px",
+                padding: "0 7px",
+                minWidth: i === idx ? "18px" : "16px",
+                fontSize: i === idx ? "11px" : "10px",
+                backgroundColor:
+                  i === idx ? game.glowColor : `${game.glowColor}25`,
+                color: i === idx ? "#000" : `${game.glowColor}90`,
+              }}
+            >
+              {dotLabel(s, i)}
+            </button>
+          ))}
+        </div>
 
         {season.description && (
           <p className="text-gray-500 text-xs leading-relaxed line-clamp-2 mt-2">
@@ -132,56 +131,60 @@ export function SeasonSwitcher({
         )}
       </div>
 
-      {/* Next season row — only for active season, only if next date is in future */}
-      {season.status === "active" &&
-        nextDateRaw &&
-        nextDateRaw.getTime() > now && (
-          <div
-            className="flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs"
-            style={{
-              backgroundColor: `${game.glowColor}15`,
-              border: `1px solid ${game.glowColor}30`,
-            }}
-          >
-            <Clock className="w-3 h-3 shrink-0 text-gray-400" />
-            <span className="text-gray-400">
-              {t("nextSeason", { seasonType: game.seasonType })}:
-            </span>
-            <span className="text-gray-100 font-medium">
-              {formatDate(season.nextSeasonStartDate!, locale)}
-            </span>
-            <span className="ml-auto relative group cursor-default shrink-0">
-              {season.nextSeasonIsEstimated ? (
-                <>
-                  <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-yellow-500/10 text-yellow-500/70">
-                    {t("estimated")}
-                  </span>
-                  {season.avgSeasonDurationDays && (
+      {/* Next season row — always visible for active season */}
+      {season.status === "active" && (
+        <div
+          className="flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs"
+          style={{
+            backgroundColor: `${game.glowColor}15`,
+            border: `1px solid ${game.glowColor}30`,
+          }}
+        >
+          <Clock className="w-3 h-3 shrink-0 text-gray-400" />
+          <span className="text-gray-400">
+            {t("nextSeason", { seasonType: game.seasonType })}:
+          </span>
+          {nextDate ? (
+            <>
+              <span className="text-gray-100 font-medium">
+                {formatDate(season.nextSeasonStartDate!, locale)}
+              </span>
+              <span className="ml-auto relative group cursor-default shrink-0">
+                {season.nextSeasonIsEstimated ? (
+                  <>
+                    <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-yellow-500/10 text-yellow-500/70">
+                      {t("estimated")}
+                    </span>
+                    {season.avgSeasonDurationDays && (
+                      <span className="absolute bottom-full right-0 mb-1.5 w-56 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+                        <span className="block bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-xs text-gray-300 leading-snug shadow-xl">
+                          {tEst("tooltip", {
+                            seasonType: game.seasonType,
+                            days: season.avgSeasonDurationDays,
+                          })}
+                        </span>
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-500/10 text-emerald-500/70">
+                      {t("official")}
+                    </span>
                     <span className="absolute bottom-full right-0 mb-1.5 w-56 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150">
                       <span className="block bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-xs text-gray-300 leading-snug shadow-xl">
-                        {tEst("tooltip", {
-                          seasonType: game.seasonType,
-                          days: season.avgSeasonDurationDays,
-                        })}
+                        {t("officialTooltip")}
                       </span>
                     </span>
-                  )}
-                </>
-              ) : (
-                <>
-                  <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-500/10 text-emerald-500/70">
-                    {t("official")}
-                  </span>
-                  <span className="absolute bottom-full right-0 mb-1.5 w-56 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-                    <span className="block bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-xs text-gray-300 leading-snug shadow-xl">
-                      {t("officialTooltip")}
-                    </span>
-                  </span>
-                </>
-              )}
-            </span>
-          </div>
-        )}
+                  </>
+                )}
+              </span>
+            </>
+          ) : (
+            <span className="ml-auto text-yellow-500/70">{t("dataStale")}</span>
+          )}
+        </div>
+      )}
 
       {/* Timers */}
       {season.status === "upcoming" && startDate ? (
@@ -223,14 +226,7 @@ export function SeasonSwitcher({
             </div>
           )}
         </div>
-      ) : (
-        <div className="bg-black/30 rounded-lg p-3">
-          <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">
-            {t("nextSeasonIn", { seasonType: game.seasonType })}
-          </p>
-          <p className="text-xs text-yellow-500/70">{t("dataStale")}</p>
-        </div>
-      )}
+      ) : null}
 
       {/* Steam sparkline */}
       {season.status !== "upcoming" && game.steamAppId && (

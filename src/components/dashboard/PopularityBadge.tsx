@@ -14,12 +14,12 @@ function getTier(score: number): string {
 
 export function PopularityBadge({ score, glowColor, tooltip }: PopularityBadgeProps) {
   const tier = getTier(score);
-  const filled = Math.round((score / 100) * 10);
+  const filled = Math.round((score / 100) * 5);
 
   return (
     <div className="relative group flex items-center gap-1.5 shrink-0 cursor-default">
       <div className="flex gap-0.5">
-        {Array.from({ length: 10 }, (_, i) => (
+        {Array.from({ length: 5 }, (_, i) => (
           <div
             key={i}
             className="w-1 h-3 rounded-sm"

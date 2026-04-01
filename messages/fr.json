@@ -22,6 +22,8 @@
     "verify": "Vérifier",
     "current": "en cours",
     "coming": "à venir",
+    "first": "premier",
+    "history": "historique",
     "official": "Officielle",
     "officialTooltip": "Cette date a été officiellement annoncée par le développeur.",
     "estimated": "Estimée",
@@ -144,9 +146,13 @@
     "sub": "Comptes à rebours en direct pour {count} jeux compétitifs — mis à jour chaque seconde."
   },
   "footer": {
-    "disclaimer": "Les données de saison sont récupérées par IA et mises en cache toutes les heures. Vérifiez les dates sur les sites officiels.",
     "about": "À propos",
-    "privacy": "Politique de confidentialité"
+    "privacy": "Politique de confidentialité",
+    "copyright": "© {year} Season Pulse. Tous droits réservés.",
+    "popularGames": "Jeux populaires",
+    "moreGames": "Plus de jeux",
+    "aboutTitle": "À propos",
+    "sitemap": "Plan du site"
   },
   "about": {
     "title": "À propos de SeasonPulse",

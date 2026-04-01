@@ -33,32 +33,38 @@ export async function GameCard({ game }: GameCardProps) {
     : null;
 
   return (
-    <Card className="overflow-hidden bg-gray-900/60 backdrop-blur-md border-white/5 flex flex-col hover:shadow-xl hover:shadow-black/60 transition-all duration-300">
+    <Card
+      className="overflow-hidden bg-gray-900/60 backdrop-blur-md border border-white/5 flex flex-col transition-colors duration-300 hover:border-(--gc)"
+      style={{ "--gc": game.glowColor } as React.CSSProperties}
+    >
       {/* ── Game image ── */}
-      <a
-        href={`/${locale}/game/${game.id}`}
-        className="relative h-36 overflow-hidden shrink-0 bg-gray-800 block group"
-      >
-        <GameImage
-          src={game.coverImage}
-          alt={game.name}
-          glowColor={game.glowColor}
-        />
-        <div className="absolute inset-0 bg-linear-to-b from-black/10 via-transparent to-gray-900 group-hover:from-black/20 transition-all" />
-        <div
-          className="absolute top-0 left-0 right-0 h-1"
-          style={{ backgroundColor: game.glowColor }}
-        />
-        {isFirstSeason && (
-          <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-black/60 backdrop-blur-sm border border-white/10 text-white">
-            <Sparkles
-              className="w-2.5 h-2.5"
-              style={{ color: game.glowColor }}
-            />
-            {t("newGame")}
+      <div className="relative h-36 overflow-hidden shrink-0 bg-gray-800">
+        <a
+          href={`/${locale}/game/${game.id}`}
+          className="block w-full h-full group"
+        >
+          <GameImage
+            src={game.coverImage}
+            alt={game.name}
+            glowColor={game.glowColor}
+          />
+        </a>
+
+        <div className="absolute top-2 right-2 flex items-center gap-1.5">
+          {isFirstSeason && (
+            <div className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-black/60 backdrop-blur-sm border border-white/10 text-white">
+              <Sparkles
+                className="w-2.5 h-2.5"
+                style={{ color: game.glowColor }}
+              />
+              {t("newGame")}
+            </div>
+          )}
+          <div className="bg-black/60 backdrop-blur-sm rounded-full">
+            <FavoriteButton gameId={game.id} />
           </div>
-        )}
-      </a>
+        </div>
+      </div>
 
       {/* ── Card body ── */}
       <div className="px-4 pt-3 pb-4 flex flex-col flex-1 gap-3">
@@ -76,14 +82,11 @@ export async function GameCard({ game }: GameCardProps) {
                 {game.name}
               </h2>
             </a>
-            <div className="flex items-center gap-1">
-              <FavoriteButton gameId={game.id} />
-              <PopularityBadge
-                score={game.popularityScore}
-                glowColor={game.glowColor}
-                tooltip={tPop("tooltip")}
-              />
-            </div>
+            <PopularityBadge
+              score={game.popularityScore}
+              glowColor={game.glowColor}
+              tooltip={tPop("tooltip")}
+            />
           </div>
           <SteamReviewBadge rating={steamData?.rating ?? null} />
         </div>
@@ -96,7 +99,9 @@ export async function GameCard({ game }: GameCardProps) {
             playersOnlineLabel={t("playersOnline")}
           />
         )}
-        <div className="flex items-center justify-between gap-2">
+
+        {/* Official site + icons — pinned to bottom */}
+        <div className="flex items-center justify-between gap-2 mt-auto pt-1">
           <a
             href={game.officialUrl}
             target="_blank"
@@ -111,14 +116,14 @@ export async function GameCard({ game }: GameCardProps) {
               href={`/${locale}/countdown/${game.id}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-400 transition-colors"
+              className="text-gray-600 hover:text-gray-400 transition-colors"
               title="Countdown"
             >
               <Timer className="w-3.5 h-3.5" />
             </a>
             <a
               href={`/${locale}/calendar?game=${game.id}`}
-              className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-400 transition-colors"
+              className="text-gray-600 hover:text-gray-400 transition-colors"
               title={t("viewCalendar")}
             >
               <CalendarDays className="w-3.5 h-3.5" />

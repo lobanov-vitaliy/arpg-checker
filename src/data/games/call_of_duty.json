@@ -11,6 +11,12 @@
   "glowColor": "#f87171",
   "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/1938090/header.jpg",
   "officialUrl": "https://www.callofduty.com",
+  "socialLinks": {
+    "twitter": "https://x.com/callofduty",
+    "reddit": "https://www.reddit.com/r/CODWarzone/",
+    "youtube": "https://www.youtube.com/@callofduty",
+    "twitch": "https://www.twitch.tv/callofduty"
+  },
   "popularityScore": 95,
   "steamAppId": 1938090,
   "searchHints": [

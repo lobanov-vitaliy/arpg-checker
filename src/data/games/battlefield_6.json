@@ -11,6 +11,11 @@
   "glowColor": "#a3e635",
   "coverImage": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2807960/c12d12ce3c7d217398d3fcad77427bfc9d57c570/header.jpg",
   "officialUrl": "https://battlefield.com",
+  "socialLinks": {
+    "twitter": "https://x.com/Battlefield",
+    "reddit": "https://www.reddit.com/r/battlefield/",
+    "youtube": "https://www.youtube.com/@Battlefield"
+  },
   "popularityScore": 79,
   "steamAppId": 2807960,
   "searchHints": [

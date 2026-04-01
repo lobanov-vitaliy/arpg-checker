@@ -53,10 +53,9 @@ export function FavoriteButton({ gameId }: FavoriteButtonProps) {
       className="p-1 rounded-md transition-colors hover:bg-white/10"
     >
       <Star
-        className="w-3.5 h-3.5 transition-colors"
+        className={`w-3.5 h-3.5 transition-colors ${isFav ? "stroke-[#facc15]" : "stroke-white/70"}`}
         style={{
           fill: isFav ? "#facc15" : "transparent",
-          stroke: isFav ? "#facc15" : "#4b5563",
         }}
       />
     </button>

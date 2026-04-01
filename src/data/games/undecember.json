@@ -11,6 +11,11 @@
   "glowColor": "#a78bfa",
   "coverImage": "https://undecember.line.games/static/launching/common/images/pc/media/new_undecember_media_01.jpg",
   "officialUrl": "https://undecember.com",
+  "socialLinks": {
+    "twitter": "https://x.com/UNDECEMBER_UD",
+    "discord": "https://discord.com/invite/Q7syAnHfha",
+    "youtube": "https://www.youtube.com/channel/UCgbU81ApUX7VV4m6Ga2fHZg"
+  },
   "popularityScore": 18,
   "steamAppId": 1549250,
   "searchHints": [

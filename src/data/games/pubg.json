@@ -15,6 +15,13 @@
   "glowColor": "#facc15",
   "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg",
   "officialUrl": "https://pubg.com",
+  "socialLinks": {
+    "twitter": "https://x.com/pubg",
+    "discord": "https://discord.com/invite/battlegrounds",
+    "reddit": "https://www.reddit.com/r/PUBATTLEGROUNDS/",
+    "youtube": "https://www.youtube.com/@PUBG",
+    "twitch": "https://www.twitch.tv/battlegroundsgame"
+  },
   "popularityScore": 84,
   "steamAppId": 578080,
   "searchHints": [

@@ -11,6 +11,13 @@
   "glowColor": "#e879f9",
   "coverImage": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2767030/d0fbd193f4a68c7563ae47ab3322d08f184633f9/header.jpg",
   "officialUrl": "https://www.marvelrivals.com",
+  "socialLinks": {
+    "twitter": "https://x.com/MarvelRivals",
+    "discord": "https://discord.com/invite/marvelrivals",
+    "reddit": "https://www.reddit.com/r/MarvelRivals/",
+    "youtube": "https://www.youtube.com/@MarvelRivals",
+    "twitch": "https://www.twitch.tv/marvelrivals"
+  },
   "popularityScore": 88,
   "steamAppId": 2767030,
   "searchHints": [

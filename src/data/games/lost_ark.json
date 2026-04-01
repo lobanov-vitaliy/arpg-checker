@@ -11,6 +11,12 @@
   "glowColor": "#38bdf8",
   "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/1599340/header.jpg",
   "officialUrl": "https://www.playlostark.com",
+  "socialLinks": {
+    "twitter": "https://x.com/playlostark",
+    "discord": "https://discord.com/invite/lostark",
+    "reddit": "https://www.reddit.com/r/lostarkgame/",
+    "youtube": "https://www.youtube.com/@PlayLostArk"
+  },
   "popularityScore": 55,
   "steamAppId": 1599340,
   "searchHints": [

@@ -11,6 +11,13 @@
   "glowColor": "#fb923c",
   "coverImage": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2357570/26446ff05a359d4942e277f82fd347e89b275be3/header.jpg",
   "officialUrl": "https://overwatch.blizzard.com",
+  "socialLinks": {
+    "twitter": "https://x.com/playoverwatch",
+    "discord": "https://discord.com/invite/overwatch",
+    "reddit": "https://www.reddit.com/r/Overwatch/",
+    "youtube": "https://www.youtube.com/@PlayOverwatch",
+    "twitch": "https://www.twitch.tv/playoverwatch"
+  },
   "popularityScore": 86,
   "steamAppId": 2357570,
   "searchHints": [

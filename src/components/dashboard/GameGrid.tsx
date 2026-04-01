@@ -325,7 +325,7 @@ function GameGridInner({
           </div>
           {/* Search */}
           <div className="relative flex items-center">
-            <Search className="absolute left-2.5 w-3.5 h-3.5 text-gray-500 pointer-events-none" />
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500 pointer-events-none z-10" />
             <input
               type="text"
               value={query}

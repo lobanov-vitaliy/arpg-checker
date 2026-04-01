@@ -22,6 +22,8 @@
     "verify": "Sprawdź",
     "current": "bieżący",
     "coming": "nadchodzący",
+    "first": "pierwszy",
+    "history": "historia",
     "official": "Oficjalna",
     "officialTooltip": "Ta data została oficjalnie ogłoszona przez dewelopera.",
     "estimated": "Szacunkowa",
@@ -144,9 +146,13 @@
     "sub": "Odliczanie na żywo dla {count} gier — aktualizowane co sekundę."
   },
   "footer": {
-    "disclaimer": "Dane sezonów są pobierane przez AI i odświeżane co godzinę. Weryfikuj daty na oficjalnych stronach.",
     "about": "O nas",
-    "privacy": "Polityka prywatności"
+    "privacy": "Polityka prywatności",
+    "copyright": "© {year} Season Pulse. Wszelkie prawa zastrzeżone.",
+    "popularGames": "Popularne gry",
+    "moreGames": "Więcej gier",
+    "aboutTitle": "O nas",
+    "sitemap": "Mapa strony"
   },
   "about": {
     "title": "O SeasonPulse",

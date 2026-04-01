@@ -22,6 +22,8 @@
     "verify": "Verificar",
     "current": "actual",
     "coming": "próximo",
+    "first": "primero",
+    "history": "historial",
     "official": "Oficial",
     "officialTooltip": "Esta fecha fue anunciada oficialmente por el desarrollador.",
     "estimated": "Estimada",
@@ -144,9 +146,13 @@
     "sub": "Cuentas regresivas en vivo para {count} juegos competitivos — actualizadas cada segundo."
   },
   "footer": {
-    "disclaimer": "Los datos de temporada se obtienen mediante IA y se almacenan en caché cada hora. Verifica las fechas en los sitios oficiales.",
     "about": "Acerca de",
-    "privacy": "Política de privacidad"
+    "privacy": "Política de privacidad",
+    "copyright": "© {year} Season Pulse. Todos los derechos reservados.",
+    "popularGames": "Juegos populares",
+    "moreGames": "Más juegos",
+    "aboutTitle": "Acerca de",
+    "sitemap": "Mapa del sitio"
   },
   "about": {
     "title": "Acerca de SeasonPulse",

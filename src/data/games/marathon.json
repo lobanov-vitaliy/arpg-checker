@@ -4,16 +4,18 @@
   "shortName": "MTH",
   "developer": "Bungie",
   "seasonType": "season",
-  "genres": [
-    "FPS",
-    "Extraction Shooter"
-  ],
+  "genres": ["FPS", "Extraction Shooter"],
   "accentColor": "text-emerald-400",
   "accentBg": "bg-emerald-400",
   "bgGradient": "from-emerald-950/90 via-slate-900 to-gray-950",
   "glowColor": "#34d399",
   "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/3065800/header.jpg",
   "officialUrl": "https://marathonthegame.com",
+  "socialLinks": {
+    "twitter": "https://x.com/marathonthegame",
+    "discord": "https://discord.gg/marathonthegame",
+    "youtube": "https://www.youtube.com/@MarathonTheGame"
+  },
   "popularityScore": 74,
   "steamAppId": 3065800,
   "searchHints": [

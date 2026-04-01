@@ -11,6 +11,13 @@
   "glowColor": "#38bdf8",
   "coverImage": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/230410/60ce7425b864dd3c0dd855bfc66004c6f9ca4844/header.jpg",
   "officialUrl": "https://www.warframe.com",
+  "socialLinks": {
+    "twitter": "https://x.com/PlayWarframe",
+    "discord": "https://discord.com/invite/playwarframe",
+    "reddit": "https://www.reddit.com/r/Warframe/",
+    "youtube": "https://www.youtube.com/@Warframe",
+    "twitch": "https://www.twitch.tv/warframe"
+  },
   "popularityScore": 33,
   "steamAppId": 230410,
   "searchHints": [

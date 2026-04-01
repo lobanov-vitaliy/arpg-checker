@@ -15,6 +15,12 @@
   "glowColor": "#fb7185",
   "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/1172470/header.jpg",
   "officialUrl": "https://www.ea.com/games/apex-legends",
+  "socialLinks": {
+    "twitter": "https://x.com/PlayApex",
+    "discord": "https://discord.com/invite/apexlegends",
+    "reddit": "https://www.reddit.com/r/apexlegends/",
+    "youtube": "https://www.youtube.com/@playapex"
+  },
   "popularityScore": 91,
   "steamAppId": 1172470,
   "searchHints": [

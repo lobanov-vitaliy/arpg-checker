@@ -15,6 +15,12 @@
   "glowColor": "#f472b6",
   "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/2073850/header.jpg",
   "officialUrl": "https://www.reachthefinals.com",
+  "socialLinks": {
+    "twitter": "https://x.com/reachthefinals",
+    "discord": "https://discord.com/invite/thefinals",
+    "reddit": "https://www.reddit.com/r/thefinals/",
+    "youtube": "https://www.youtube.com/@reachthefinals"
+  },
   "popularityScore": 72,
   "steamAppId": 2073850,
   "searchHints": [

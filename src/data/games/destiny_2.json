@@ -11,6 +11,12 @@
   "glowColor": "#818cf8",
   "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/1085660/header.jpg",
   "officialUrl": "https://www.bungie.net/7/en/destiny",
+  "socialLinks": {
+    "twitter": "https://x.com/DestinyTheGame",
+    "discord": "https://discord.com/invite/destinygame",
+    "reddit": "https://www.reddit.com/r/DestinyTheGame/",
+    "youtube": "https://www.youtube.com/@Destiny2"
+  },
   "popularityScore": 89,
   "steamAppId": 1085660,
   "searchHints": [

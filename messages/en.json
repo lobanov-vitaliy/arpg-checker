@@ -22,6 +22,8 @@
     "verify": "Verify",
     "current": "current",
     "coming": "coming",
+    "first": "first",
+    "history": "history",
     "official": "Official",
     "officialTooltip": "This date was officially announced by the developer.",
     "estimated": "Estimated",
@@ -144,9 +146,13 @@
     "sub": "Live countdowns for {count} competitive games — updated every second."
   },
   "footer": {
-    "disclaimer": "Season data fetched via AI and cached hourly. Verify dates on official sites.",
     "about": "About",
-    "privacy": "Privacy Policy"
+    "privacy": "Privacy Policy",
+    "copyright": "© {year} Season Pulse. All rights reserved.",
+    "popularGames": "Popular Games",
+    "moreGames": "More Games",
+    "aboutTitle": "About",
+    "sitemap": "Sitemap"
   },
   "about": {
     "title": "About SeasonPulse",

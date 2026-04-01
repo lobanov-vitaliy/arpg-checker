@@ -15,6 +15,11 @@
   "glowColor": "#34d399",
   "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/2507950/header.jpg",
   "officialUrl": "https://www.playdeltaforce.com",
+  "socialLinks": {
+    "twitter": "https://x.com/DeltaForce_Game",
+    "discord": "https://discord.com/invite/deltaforcegame",
+    "reddit": "https://www.reddit.com/r/DeltaForceGame/"
+  },
   "popularityScore": 73,
   "steamAppId": 2507950,
   "searchHints": [

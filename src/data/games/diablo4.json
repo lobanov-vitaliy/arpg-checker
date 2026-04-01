@@ -11,6 +11,13 @@
   "glowColor": "#ef4444",
   "coverImage": "https://cdn.akamai.steamstatic.com/steam/apps/2344520/header.jpg",
   "officialUrl": "https://diablo.blizzard.com/en-us/news",
+  "socialLinks": {
+    "twitter": "https://x.com/Diablo",
+    "discord": "https://discord.com/invite/diablo4community",
+    "reddit": "https://www.reddit.com/r/diablo4/",
+    "youtube": "https://www.youtube.com/@Diablo",
+    "twitch": "https://www.twitch.tv/diablo"
+  },
   "popularityScore": 85,
   "steamAppId": 2344520,
   "searchHints": [

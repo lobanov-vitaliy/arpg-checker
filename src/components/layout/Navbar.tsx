@@ -11,7 +11,7 @@ export async function Navbar() {
   ];
 
   return (
-    <header className="backdrop-blur-sm sticky top-0 z-50">
+    <header className="border-b backdrop-blur-sm border-white/5 sticky top-0 z-50">
       <div className="container mx-auto px-4 h-14 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <a
