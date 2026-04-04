@@ -6,7 +6,7 @@ export async function GET(
   { params }: { params: Promise<{ slug: string[] }> },
 ) {
   const { slug } = await params;
-  const target = resolveRedirect(slug);
+  const target = await resolveRedirect(slug);
 
   if (!target) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });

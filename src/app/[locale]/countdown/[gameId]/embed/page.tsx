@@ -12,13 +12,13 @@ export default async function EmbedPage({
   params: Promise<{ locale: string; gameId: string }>;
 }) {
   const { locale, gameId } = await params;
-  const game = getGame(gameId);
+  const game = await getGame(gameId);
   if (!game) notFound();
 
   const tCd = await getTranslations("countdown");
   const t = await getTranslations("countdownPage");
 
-  const seasons = getSeasonsForGame(game.id);
+  const seasons = await getSeasonsForGame(game.id);
   const active = seasons.find((s) => s.status === "active");
   const upcoming = seasons.find((s) => s.status === "upcoming");
 

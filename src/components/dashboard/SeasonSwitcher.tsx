@@ -8,6 +8,7 @@ import { formatDate } from "@/lib/utils";
 import { ExternalLink, Clock } from "lucide-react";
 import type { SeasonData, GameConfig, SteamData } from "@/types";
 import { PlayerSparkline } from "./PlayerSparkline";
+import { track } from "@vercel/analytics";
 
 interface SeasonSwitcherProps {
   seasons: SeasonData[];
@@ -53,7 +54,7 @@ export function SeasonSwitcher({
     nextDateRaw && nextDateRaw.getTime() > now ? nextDateRaw : null;
 
   function dotLabel(s: SeasonData, i: number) {
-    if (s.seasonNumber === 1) return t("first");
+    if (s.seasonNumber === 1 && displaySeasons.length === 1) return t("first");
     if (s.status === "upcoming") return t("coming");
     if (s.status === "active") return t("current");
     return s.seasonNumber ? `#${s.seasonNumber}` : String(i + 1);
@@ -83,7 +84,7 @@ export function SeasonSwitcher({
           {displaySeasons.slice(0, 5).map((s, i) => (
             <button
               key={i}
-              onClick={() => setIdx(i)}
+              onClick={() => { setIdx(i); if (i !== idx) track("season_switch", { gameId: game.id, seasonName: s.seasonName }); }}
               className="rounded-full font-medium"
               style={{
                 height: i === idx ? "18px" : "16px",

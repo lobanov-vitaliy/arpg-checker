@@ -105,6 +105,75 @@ Field rules:
   };
 }
 
+// ─── New Season Detector ─────────────────────────────────────────────────────
+
+export async function detectUpcomingSeasonFromAI(
+  game: GameConfig,
+  currentSeasonName: string
+): Promise<
+  | { announced: false }
+  | {
+      announced: true;
+      seasonName: string;
+      seasonNumber: number | null;
+      startDate: string;
+      endDate: string | null;
+      sourceUrl: string;
+      confidence: "high" | "medium" | "low";
+    }
+> {
+  const today = new Date().toISOString().split("T")[0];
+  const year = today.slice(0, 4);
+
+  const prompt = `Today is ${today}. Game: "${game.name}" by ${game.developer}. Season type: ${game.seasonType}.
+Current known ${game.seasonType}: "${currentSeasonName}".
+
+Search the web for: "${game.name} next ${game.seasonType} official start date ${year}"
+Also check: ${game.officialUrl}
+
+Has the NEXT ${game.seasonType} (after "${currentSeasonName}") been OFFICIALLY announced with a confirmed start date by the developer?
+- Only count official developer announcements, NOT speculation or estimates
+- The next ${game.seasonType} must have a start date AFTER today (${today})
+- Do NOT return the current ${game.seasonType} "${currentSeasonName}"
+
+Return ONLY valid JSON, no markdown:
+If no official announcement found: {"announced": false}
+If found: {"announced": true, "seasonName": "exact name", "seasonNumber": 14, "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD or null", "sourceUrl": "URL", "confidence": "high"}
+
+confidence: "high" = official dev source, "medium" = reliable community source, "low" = uncertain`;
+
+  const response = await openai.responses.create({
+    model: "gpt-4o-mini",
+    tools: [{ type: "web_search_preview" }],
+    input: prompt,
+  });
+
+  const text = response.output_text;
+  if (!text) return { announced: false };
+
+  const jsonMatch = text.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) return { announced: false };
+
+  try {
+    const p = JSON.parse(jsonMatch[0]);
+    if (!p.announced) return { announced: false };
+    if (!p.startDate || new Date(p.startDate) <= new Date(today)) {
+      return { announced: false };
+    }
+    return {
+      announced: true,
+      seasonName: String(p.seasonName ?? "Unknown"),
+      seasonNumber: typeof p.seasonNumber === "number" ? p.seasonNumber : null,
+      startDate: String(p.startDate),
+      endDate: typeof p.endDate === "string" ? p.endDate : null,
+      sourceUrl: typeof p.sourceUrl === "string" ? p.sourceUrl : game.officialUrl,
+      confidence: (p.confidence as "high" | "medium" | "low") ?? "low",
+    };
+  } catch {
+    return { announced: false };
+  }
+}
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function makeErrorSeason(gameId: string, reason: unknown): SeasonData {

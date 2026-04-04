@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { GAMES } from "@/config/games";
+import { getGames } from "@/config/games";
 import { fetchSeasonsFromAI } from "@/lib/ai-fetcher";
 import { getCached, setCached, CACHE_KEYS } from "@/lib/cache";
+import { sendTelegramMessage } from "@/lib/telegram";
 import type { SeasonData } from "@/types";
 
 export const runtime = "nodejs";
@@ -50,6 +51,7 @@ export async function GET(request: Request) {
   // Force-refresh all (ignore smart logic) when ?force=1
   const force = new URL(request.url).searchParams.get("force") === "1";
 
+  const GAMES = await getGames();
   const startedAt = new Date().toISOString();
 
   // Load all cached data in parallel
@@ -73,6 +75,49 @@ export async function GET(request: Request) {
     const fresh = freshSeasons.find((s) => s.gameId === g.id);
     return fresh ?? cached[i];
   });
+
+  const errors = freshSeasons.filter((s) => s.error);
+
+  if (toRefresh.length > 0) {
+    const statusIcon = (s: SeasonData) => {
+      if (s.error) return "⚠️";
+      if (s.status === "active") return "🟢";
+      if (s.status === "upcoming") return "🔜";
+      if (s.status === "ended") return "⚫";
+      return "❓";
+    };
+
+    const lines = freshSeasons.map((s) => {
+      const game = GAMES.find((g) => g.id === s.gameId);
+      const name = game?.name ?? s.gameId;
+      if (s.error) return `${statusIcon(s)} ${name} — ошибка`;
+      const end = s.endDate ? ` до ${s.endDate}` : "";
+      return `${statusIcon(s)} ${name} — ${s.seasonName}${end}`;
+    });
+
+    const msg =
+      `🌐 <b>SeasonPulse</b> — ♻️ Обновление сезонов\n` +
+      `Обновлено: ${toRefresh.length} | Пропущено: ${skipped.length}` +
+      (errors.length ? ` | ❌ Ошибок: ${errors.length}` : "") +
+      `\n\n` +
+      lines.join("\n");
+
+    await sendTelegramMessage(msg);
+
+    // Notify about estimated (fallback) next season dates
+    const fallbacks = freshSeasons.filter((s) => !s.error && s.nextSeasonIsEstimated && s.nextSeasonStartDate);
+    for (const s of fallbacks) {
+      const game = GAMES.find((g) => g.id === s.gameId);
+      const name = game?.name ?? s.gameId;
+      await sendTelegramMessage(
+        `🌐 <b>SeasonPulse</b> — 📅 Fallback-оценка\n\n` +
+        `<b>Игра:</b> ${name}\n` +
+        `<b>Текущий сезон:</b> ${s.seasonName}\n` +
+        `<b>Следующий старт (оценка):</b> ${s.nextSeasonStartDate}\n` +
+        `<i>Официального анонса нет — дата расчётная</i>`
+      );
+    }
+  }
 
   return NextResponse.json({
     startedAt,

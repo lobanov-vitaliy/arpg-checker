@@ -1,18 +1,13 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { getGame, GAMES } from "@/config/games";
+import { getGame } from "@/config/games";
 import { getSeasonsForGame } from "@/lib/seasons";
-import { toIntlLocale } from "@/lib/utils";
 import { CountdownFullscreen } from "./CountdownFullscreen";
 
 export const dynamic = "force-dynamic";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://seasonpulse.fun";
-
-export async function generateStaticParams() {
-  return GAMES.map((g) => ({ gameId: g.id }));
-}
 
 export async function generateMetadata({
   params,
@@ -20,10 +15,10 @@ export async function generateMetadata({
   params: Promise<{ locale: string; gameId: string }>;
 }): Promise<Metadata> {
   const { locale, gameId } = await params;
-  const game = getGame(gameId);
+  const game = await getGame(gameId);
   if (!game) return {};
 
-  const seasons = getSeasonsForGame(game.id);
+  const seasons = await getSeasonsForGame(game.id);
   const active =
     seasons.find((s) => s.status === "active") ??
     seasons.find((s) => s.status === "upcoming");
@@ -55,13 +50,13 @@ export default async function CountdownPage({
   params: Promise<{ locale: string; gameId: string }>;
 }) {
   const { locale, gameId } = await params;
-  const game = getGame(gameId);
+  const game = await getGame(gameId);
   if (!game) notFound();
 
   const t = await getTranslations("countdownPage");
   const tCd = await getTranslations("countdown");
 
-  const seasons = getSeasonsForGame(game.id);
+  const seasons = await getSeasonsForGame(game.id);
   const active = seasons.find((s) => s.status === "active");
   const upcoming = seasons.find((s) => s.status === "upcoming");
 

@@ -1,14 +1,16 @@
-import { ExternalLink, Sparkles, CalendarDays, Timer } from "lucide-react";
+import { Sparkles } from "lucide-react";
+import { GameCardLinks } from "./GameCardLinks";
 import { FavoriteButton } from "./FavoriteButton";
+import { LikeButton } from "./LikeButton";
 import { Card } from "@/components/ui/card";
 import { getTranslations, getLocale } from "next-intl/server";
 import { GameImage } from "./GameImage";
 import { PopularityBadge } from "./PopularityBadge";
 import { SeasonSwitcher } from "./SeasonSwitcher";
-import { getCached } from "@/lib/cache";
-import { STEAM_CACHE_KEY } from "@/lib/steam-fetcher";
+import { getSteamData } from "@/lib/steam-fetcher";
 import { getSeasonsForGame } from "@/lib/seasons";
-import type { GameConfig, SteamData } from "@/types";
+import { getLikesCount } from "@/lib/likes";
+import type { GameConfig } from "@/types";
 import { SteamReviewBadge } from "./SteamReviewBadge";
 
 interface GameCardProps {
@@ -19,17 +21,17 @@ export async function GameCard({ game }: GameCardProps) {
   const t = await getTranslations("dashboard");
   const tPop = await getTranslations("popularity");
 
-  const [locale, allSeasons] = await Promise.all([
+  const [locale, allSeasons, likesCount] = await Promise.all([
     getLocale(),
-    Promise.resolve(getSeasonsForGame(game.id)),
+    getSeasonsForGame(game.id),
+    getLikesCount(game.id),
   ]);
-  const isFirstSeason = allSeasons.some(
-    (s) =>
-      (s.status === "active" || s.status === "upcoming") &&
-      s.seasonNumber === 1,
-  );
+  const isFirstSeason =
+    allSeasons.length === 1 &&
+    allSeasons[0].seasonNumber === 1 &&
+    (allSeasons[0].status === "active" || allSeasons[0].status === "upcoming");
   const steamData = game.steamAppId
-    ? await getCached<SteamData>(STEAM_CACHE_KEY(game.id))
+    ? await getSteamData(game.id)
     : null;
 
   return (
@@ -60,7 +62,8 @@ export async function GameCard({ game }: GameCardProps) {
               {t("newGame")}
             </div>
           )}
-          <div className="bg-black/60 backdrop-blur-sm rounded-full">
+          <div className="flex items-center gap-1 bg-black/60 backdrop-blur-sm rounded-full px-1">
+            <LikeButton gameId={game.id} initialCount={likesCount} />
             <FavoriteButton gameId={game.id} />
           </div>
         </div>
@@ -101,35 +104,16 @@ export async function GameCard({ game }: GameCardProps) {
         )}
 
         {/* Official site + icons — pinned to bottom */}
-        <div className="flex items-center justify-between gap-2 mt-auto pt-1">
-          <a
-            href={game.officialUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 text-xs hover:underline"
-            style={{ color: game.glowColor }}
-          >
-            <ExternalLink className="w-3 h-3" /> {t("checkOfficialSite")}
-          </a>
-          <div className="flex items-center gap-2">
-            <a
-              href={`/${locale}/countdown/${game.id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-600 hover:text-gray-400 transition-colors"
-              title="Countdown"
-            >
-              <Timer className="w-3.5 h-3.5" />
-            </a>
-            <a
-              href={`/${locale}/calendar?game=${game.id}`}
-              className="text-gray-600 hover:text-gray-400 transition-colors"
-              title={t("viewCalendar")}
-            >
-              <CalendarDays className="w-3.5 h-3.5" />
-            </a>
-          </div>
-        </div>
+        <GameCardLinks
+          gameId={game.id}
+          gameName={game.name}
+          officialUrl={game.officialUrl}
+          countdownHref={`/${locale}/countdown/${game.id}`}
+          calendarHref={`/${locale}/calendar?game=${game.id}`}
+          glowColor={game.glowColor}
+          officialLabel={t("checkOfficialSite")}
+          calendarTitle={t("viewCalendar")}
+        />
       </div>
     </Card>
   );

@@ -1,6 +1,7 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { NavLinks } from "./NavLinks";
+import { FeedbackButton } from "@/components/feedback/FeedbackButton";
 
 export async function Navbar() {
   const [t, locale] = await Promise.all([getTranslations("nav"), getLocale()]);
@@ -28,6 +29,7 @@ export async function Navbar() {
           <NavLinks links={links} />
         </div>
         <div className="flex items-center gap-4">
+          <FeedbackButton />
           <LanguageSwitcher />
         </div>
       </div>

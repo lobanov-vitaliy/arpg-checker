@@ -1,8 +1,7 @@
 import { ExternalLink } from "lucide-react";
 import { getTranslations, getLocale } from "next-intl/server";
 import { SeasonBadge } from "./SeasonBadge";
-import { getCached } from "@/lib/cache";
-import { STEAM_CACHE_KEY } from "@/lib/steam-fetcher";
+import { getSteamData } from "@/lib/steam-fetcher";
 import { formatDate } from "@/lib/utils";
 import type { GameConfig, SeasonData, SteamData } from "@/types";
 
@@ -15,7 +14,7 @@ export async function GameTableRow({ game, season }: GameTableRowProps) {
   const [t, locale] = await Promise.all([getTranslations("dashboard"), getLocale()]);
 
   const steamData = game.steamAppId
-    ? await getCached<SteamData>(STEAM_CACHE_KEY(game.id))
+    ? await getSteamData(game.id)
     : null;
 
   const now = Date.now();

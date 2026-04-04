@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
-import { getAllSeasons } from "@/lib/seasons";
-import { GAMES, GAMES_BY_ID } from "@/config/games";
-import { GAME_SEASONS } from "@/data/seasons";
+import { getAllSeasons, getSeasonsForGame } from "@/lib/seasons";
+import { getGames } from "@/config/games";
 import {
   CalendarGrid,
   type CalendarEvent,
@@ -10,13 +9,14 @@ import {
 
 export default async function CalendarPage() {
   const t = await getTranslations("calendar");
-  const seasons = getAllSeasons();
+  const [seasons, allGames] = await Promise.all([getAllSeasons(), getGames()]);
+  const gameById = Object.fromEntries(allGames.map((g) => [g.id, g]));
   const now = Date.now();
 
   const events: CalendarEvent[] = [];
 
   for (const season of seasons) {
-    const game = GAMES_BY_ID[season.gameId];
+    const game = gameById[season.gameId];
     if (!game || !season.startDate) continue;
 
     const base = {
@@ -26,26 +26,23 @@ export default async function CalendarPage() {
       seasonName: season.seasonName,
     };
 
-    // Season start (active and upcoming)
     if (season.status === "active" || season.status === "upcoming") {
       events.push({ ...base, date: season.startDate, type: "starts" });
     }
 
-    // Active season end (only if known and in the future)
     if (season.status === "active" && season.endDate) {
       if (new Date(season.endDate).getTime() > now) {
         events.push({ ...base, date: season.endDate, type: "ends" });
       }
     }
 
-    // Next season start (future, not duplicate of current start)
     if (
       season.nextSeasonStartDate &&
       new Date(season.nextSeasonStartDate).getTime() > now &&
       season.nextSeasonStartDate !== season.startDate
     ) {
-      const gameSeasons = GAME_SEASONS.find((g) => g.gameId === game.id);
-      const nextEntry = gameSeasons?.seasons.find(
+      const gameSeasons = await getSeasonsForGame(game.id);
+      const nextEntry = gameSeasons.find(
         (s) => s.startDate === season.nextSeasonStartDate,
       );
       events.push({
@@ -62,7 +59,7 @@ export default async function CalendarPage() {
     }
   }
 
-  const games: CalendarGame[] = GAMES.map((g) => ({
+  const games: CalendarGame[] = allGames.map((g) => ({
     id: g.id,
     name: g.name,
     glowColor: g.glowColor,

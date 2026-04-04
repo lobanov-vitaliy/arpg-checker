@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { GAMES } from "@/config/games";
+import { getGames } from "@/config/games";
 import { GameGrid } from "@/components/dashboard/GameGrid";
 import { GameCard } from "@/components/dashboard/GameCard";
 import { GameTableRow } from "@/components/dashboard/GameTableRow";
@@ -10,12 +10,13 @@ export default async function DashboardPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const [t, tHero, sp] = await Promise.all([
+  const [t, tHero, sp, games, seasons] = await Promise.all([
     getTranslations("dashboard"),
     getTranslations("hero"),
     searchParams,
+    getGames(),
+    getAllSeasons(),
   ]);
-  const seasons = getAllSeasons();
   const initialParams = Object.fromEntries(
     Object.entries(sp).map(([k, v]) => [
       k,
@@ -25,13 +26,13 @@ export default async function DashboardPage({
 
   const [cards, tableRows] = await Promise.all([
     Promise.all(
-      GAMES.map(async (game) => ({
+      games.map(async (game) => ({
         gameId: game.id,
         node: <GameCard key={game.id} game={game} />,
       })),
     ),
     Promise.all(
-      GAMES.map(async (game) => ({
+      games.map(async (game) => ({
         gameId: game.id,
         node: (
           <GameTableRow
@@ -69,7 +70,7 @@ export default async function DashboardPage({
       </section>
 
       <GameGrid
-        games={GAMES}
+        games={games}
         seasons={seasons}
         cards={cards}
         tableRows={tableRows}

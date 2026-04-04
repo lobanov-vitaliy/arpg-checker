@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { GAMES } from "@/config/games";
+import { getGames } from "@/config/games";
 import { refreshSteamData } from "@/lib/steam-fetcher";
 
 export const runtime = "nodejs";
@@ -14,7 +14,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const steamGames = GAMES.filter((g) => g.steamAppId);
+  const steamGames = (await getGames()).filter((g) => g.steamAppId);
   const startedAt = new Date().toISOString();
 
   const results = await Promise.allSettled(

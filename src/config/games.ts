@@ -1,2 +1,2 @@
-// Re-export from central data loader. Edit src/data/games/*.json to change game data.
-export { GAMES, GAMES_BY_ID, getGame } from "@/data";
+// Re-export async game accessors. Data lives in MongoDB (seeded from src/data/games/*.json).
+export { getGames, getGame } from "@/lib/games-db";

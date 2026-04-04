@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter, usePathname } from "next/navigation";
+import { track } from "@vercel/analytics";
 import {
   LayoutGrid,
   List,
@@ -222,19 +223,23 @@ function GameGridInner({
 
   const handleView = (v: ViewMode) => {
     setView(v);
+    track("filter_view", { view: v });
     pushUrl({ view: v });
   };
   const handleCardSort = (k: CardSortKey) => {
     setCardSort(k);
+    track("filter_sort", { sort: k });
     pushUrl({ sort: k });
   };
   const handleGenre = (g: string) => {
     setSelectedGenre(g);
     setGenreOpen(false);
+    if (g) track("filter_genre", { genre: g });
     pushUrl({ genre: g });
   };
   const handleQuery = (q: string) => {
     setQuery(q);
+    if (q.length > 2) track("filter_search");
     pushUrl({ q });
   };
 
@@ -310,7 +315,7 @@ function GameGridInner({
               {tFilter("all")}
             </button>
             <button
-              onClick={() => setFavoritesOnly(true)}
+              onClick={() => { setFavoritesOnly(true); track("filter_favorites", { enabled: true }); }}
               className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-colors ${favoritesOnly ? "bg-gray-700 text-white" : "text-gray-500 hover:text-gray-300"}`}
             >
               <Star

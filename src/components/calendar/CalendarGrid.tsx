@@ -4,6 +4,7 @@ import { useState, Suspense } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { track } from "@vercel/analytics";
 
 export interface CalendarEvent {
   date: string; // "YYYY-MM-DD"
@@ -131,9 +132,9 @@ function CalendarGridInner({
   };
 
   const toggleGame = (id: string) => {
-    const next = selectedGames.includes(id)
-      ? selectedGames.filter((g) => g !== id)
-      : [...selectedGames, id];
+    const adding = !selectedGames.includes(id);
+    const next = adding ? [...selectedGames, id] : selectedGames.filter((g) => g !== id);
+    if (adding) track("calendar_filter_game", { gameId: id });
     setSelectedGames(next);
     pushGames(next);
   };

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import { GAMES } from "@/config/games";
-import { getCached, setCached } from "@/lib/cache";
-import { STEAM_CACHE_KEY } from "@/lib/steam-fetcher";
+import { getGames } from "@/config/games";
+import { getSteamData, setSteamData } from "@/lib/steam-fetcher";
 import type { SteamData, PlayerSnapshot } from "@/types";
 
 export const runtime = "nodejs";
@@ -11,7 +10,7 @@ const STEAMCHARTS_URL = (appId: number) =>
   `https://steamcharts.com/app/${appId}/chart-data.json`;
 
 const DEDUP_WINDOW_MS = 30 * 60 * 1000;
-const HISTORY_TTL_MS = 365 * 24 * 60 * 60 * 1000;
+
 
 function mergeSnapshots(
   historical: PlayerSnapshot[],
@@ -41,7 +40,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const steamGames = GAMES.filter((g) => g.steamAppId);
+  const steamGames = (await getGames()).filter((g) => g.steamAppId);
   const results: {
     gameId: string;
     appId: number;
@@ -74,18 +73,17 @@ export async function GET(request: Request) {
         p,
       }));
 
-      const existing = await getCached<SteamData>(STEAM_CACHE_KEY(game.id));
+      const existing = await getSteamData(game.id);
       const existingSnaps = existing?.snapshots ?? [];
 
       const merged = mergeSnapshots(historicalSnaps, existingSnaps);
 
       if (existing) {
-        const updated: SteamData = { ...existing, snapshots: merged };
-        await setCached(STEAM_CACHE_KEY(game.id), updated, HISTORY_TTL_MS);
+        await setSteamData(game.id, { ...existing, snapshots: merged });
       } else {
         const now = new Date().toISOString();
         const lastSnap = merged[merged.length - 1];
-        const steamData: SteamData = {
+        await setSteamData(game.id, {
           gameId: game.id,
           steamAppId: game.steamAppId!,
           currentPlayers: lastSnap?.p ?? 0,
@@ -93,8 +91,7 @@ export async function GET(request: Request) {
           snapshots: merged,
           rating: null,
           updatedAt: now,
-        };
-        await setCached(STEAM_CACHE_KEY(game.id), steamData, HISTORY_TTL_MS);
+        });
       }
 
       results.push({

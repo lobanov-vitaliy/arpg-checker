@@ -24,12 +24,7 @@ export const REDIRECTS: Record<string, Redirect> = {
   },
   launch: {
     url: SITE,
-    utm: {
-      source: "x",
-      medium: "social",
-      campaign: "launch",
-      content: "intro",
-    },
+    utm: { source: "x", medium: "social", campaign: "launch", content: "intro" },
   },
   reddit: {
     url: SITE,
@@ -51,39 +46,29 @@ function buildUrl(entry: Redirect): string {
   return url.toString();
 }
 
-export function resolveRedirect(segments: string[]): string | null {
+export async function resolveRedirect(segments: string[]): Promise<string | null> {
   if (segments.length === 1) {
     const [slug] = segments;
 
     const explicit = REDIRECTS[slug];
     if (explicit) return buildUrl(explicit);
 
-    const game = getGame(slug);
+    const game = await getGame(slug);
     if (game) {
       return buildUrl({
         url: `${SITE}/game/${game.id}`,
-        utm: {
-          source: "link",
-          medium: "social",
-          campaign: "seasonpulse",
-          content: game.id,
-        },
+        utm: { source: "link", medium: "social", campaign: "seasonpulse", content: game.id },
       });
     }
   }
 
   if (segments.length === 2) {
     const [source, gameId] = segments;
-    const game = getGame(gameId);
+    const game = await getGame(gameId);
     if (game) {
       return buildUrl({
         url: `${SITE}/game/${game.id}`,
-        utm: {
-          source,
-          medium: "social",
-          campaign: "seasonpulse",
-          content: game.id,
-        },
+        utm: { source, medium: "social", campaign: "seasonpulse", content: game.id },
       });
     }
   }

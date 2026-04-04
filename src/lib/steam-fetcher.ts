@@ -6,14 +6,37 @@ import type {
   SteamRating,
   PlayerSnapshot,
 } from "@/types";
-import { getCached, setCached } from "./cache";
+import { getDb } from "./mongodb";
 
 const STEAM_PLAYERS_API =
   "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1";
 const STEAM_REVIEWS_API = "https://store.steampowered.com/appreviews";
 
 const MAX_SNAPSHOTS = 50_000;
-const STEAM_TTL_MS = 25 * 60 * 60 * 1000; // 25 hours
+
+async function steamCol() {
+  const db = await getDb();
+  const c = db.collection<SteamData & { _gameId: string }>("steam");
+  await c.createIndex({ _gameId: 1 }, { unique: true, background: true });
+  return c;
+}
+
+export async function getSteamData(gameId: string): Promise<SteamData | null> {
+  const c = await steamCol();
+  const doc = await c.findOne({ _gameId: gameId });
+  if (!doc) return null;
+  const { _gameId: _, _id: __, ...data } = doc as Record<string, unknown>;
+  return data as SteamData;
+}
+
+export async function setSteamData(gameId: string, data: SteamData): Promise<void> {
+  const c = await steamCol();
+  await c.updateOne(
+    { _gameId: gameId },
+    { $set: { _gameId: gameId, ...data } },
+    { upsert: true }
+  );
+}
 
 const HOUR_MS = 60 * 60 * 1000;
 const DAY_MS = 24 * HOUR_MS;
@@ -49,7 +72,6 @@ function downsample(snapshots: PlayerSnapshot[]): PlayerSnapshot[] {
   return result;
 }
 
-export const STEAM_CACHE_KEY = (gameId: string) => `steam_${gameId}`;
 
 type SteamPlayersResponse = {
   response?: {
@@ -131,7 +153,7 @@ export async function refreshSteamData(game: GameConfig): Promise<SteamData> {
     throw new Error(`${game.id} has no steamAppId`);
   }
 
-  const existing = await getCached<SteamData>(STEAM_CACHE_KEY(game.id));
+  const existing = await getSteamData(game.id);
   const previousSnapshots: PlayerSnapshot[] = existing?.snapshots ?? [];
 
   const [playersResult, ratingResult] = await Promise.allSettled([
@@ -180,7 +202,7 @@ export async function refreshSteamData(game: GameConfig): Promise<SteamData> {
     updatedAt: now,
   };
 
-  await setCached(STEAM_CACHE_KEY(game.id), steamData, STEAM_TTL_MS);
+  await setSteamData(game.id, steamData);
 
   return steamData;
 }

@@ -2,10 +2,9 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { ExternalLink, CalendarDays, Timer } from "lucide-react";
-import { getGame, GAMES } from "@/config/games";
+import { getGame, getGames } from "@/config/games";
 import { getSeasonsForGame } from "@/lib/seasons";
-import { getCached } from "@/lib/cache";
-import { STEAM_CACHE_KEY } from "@/lib/steam-fetcher";
+import { getSteamData } from "@/lib/steam-fetcher";
 import { GameImage } from "@/components/dashboard/GameImage";
 import { SeasonBadge } from "@/components/dashboard/SeasonBadge";
 import { CountdownTimer } from "@/components/dashboard/CountdownTimer";
@@ -15,8 +14,10 @@ import { SeasonProgressBar } from "@/components/game/SeasonProgressBar";
 import { PlayerChartFull } from "@/components/game/PlayerChartFull";
 import { SeasonsHistory } from "@/components/game/SeasonsHistory";
 import { SocialLinks } from "@/components/game/SocialLinks";
+import { LikeButton } from "@/components/dashboard/LikeButton";
 import { toIntlLocale } from "@/lib/utils";
-import type { SteamData } from "@/types";
+import { getLikesCount } from "@/lib/likes";
+import type { GameConfig, SeasonData } from "@/types";
 
 export const dynamic = "force-dynamic";
 
@@ -28,10 +29,10 @@ export async function generateMetadata({
   params: Promise<{ locale: string; gameId: string }>;
 }): Promise<Metadata> {
   const { locale, gameId } = await params;
-  const game = getGame(gameId);
+  const game = await getGame(gameId);
   if (!game) return {};
 
-  const seasons = getSeasonsForGame(game.id);
+  const seasons = await getSeasonsForGame(game.id);
   const active =
     seasons.find((s) => s.status === "active") ??
     seasons.find((s) => s.status === "upcoming") ??
@@ -47,7 +48,6 @@ export async function generateMetadata({
   };
   const ogLocale = OG_MAP[locale] ?? "en_US";
 
-  // Build title: "Diablo IV — Season of Slaughter #12"
   const titleSuffix = active
     ? active.seasonNumber
       ? `${active.seasonName} #${active.seasonNumber}`
@@ -55,7 +55,6 @@ export async function generateMetadata({
     : game.seasonType;
   const title = `${game.name} — ${titleSuffix}`;
 
-  // Build description with season status + dates
   const parts: string[] = [];
   if (active) {
     const statusMap = {
@@ -64,9 +63,7 @@ export async function generateMetadata({
       ended: "Ended",
       unknown: "Unknown",
     };
-    parts.push(
-      `${statusMap[active.status]} ${game.seasonType}: ${active.seasonName}.`,
-    );
+    parts.push(`${statusMap[active.status]} ${game.seasonType}: ${active.seasonName}.`);
     if (active.startDate) {
       const fmt = (d: string) =>
         new Date(d).toLocaleDateString(toIntlLocale(locale), {
@@ -131,24 +128,24 @@ export default async function GamePage({
   params: Promise<{ locale: string; gameId: string }>;
 }) {
   const { gameId, locale } = await params;
-  const game = getGame(gameId);
+  const game = await getGame(gameId);
   if (!game) notFound();
 
   const t = await getTranslations("game");
 
-  const allSeasons = getSeasonsForGame(game.id);
-  const steamData = game.steamAppId
-    ? await getCached<SteamData>(STEAM_CACHE_KEY(game.id))
-    : null;
+  const [steamData, likesCount, allSeasons, allGames] = await Promise.all([
+    game.steamAppId ? getSteamData(game.id) : Promise.resolve(null),
+    getLikesCount(game.id),
+    getSeasonsForGame(game.id),
+    getGames(),
+  ]);
 
   const activeSeason =
     allSeasons.find((s) => s.status === "active") ??
     allSeasons.find((s) => s.status === "upcoming") ??
     allSeasons[0];
 
-  const startDate = activeSeason?.startDate
-    ? new Date(activeSeason.startDate)
-    : null;
+  const startDate = activeSeason?.startDate ? new Date(activeSeason.startDate) : null;
   const endDate = activeSeason?.endDate ? new Date(activeSeason.endDate) : null;
   const nextDate =
     activeSeason?.nextSeasonStartDate &&
@@ -164,8 +161,7 @@ export default async function GamePage({
       ? Math.round(
           completedSeasons.reduce((sum, s) => {
             const days =
-              (new Date(s.endDate!).getTime() -
-                new Date(s.startDate!).getTime()) /
+              (new Date(s.endDate!).getTime() - new Date(s.startDate!).getTime()) /
               (1000 * 60 * 60 * 24);
             return sum + days;
           }, 0) / completedSeasons.length,
@@ -180,22 +176,24 @@ export default async function GamePage({
         : t("currentSeason", { seasonType: game.seasonType });
 
   // Other games from the same genre (up to 3, excluding current)
-  const relatedGames = GAMES.filter(
-    (g) =>
-      g.id !== game.id && g.genres.some((genre) => game.genres.includes(genre)),
-  )
-    .sort((a, b) => b.popularityScore - a.popularityScore)
-    .slice(0, 3)
-    .map((g) => {
-      const season =
-        getSeasonsForGame(g.id).find((s) => s.status === "active") ??
-        getSeasonsForGame(g.id).find((s) => s.status === "upcoming");
-      return { game: g, season };
-    })
-    .filter((r) => r.season !== undefined) as {
-    game: (typeof GAMES)[0];
-    season: NonNullable<ReturnType<typeof getSeasonsForGame>[0]>;
-  }[];
+  const relatedGames = await Promise.all(
+    allGames
+      .filter(
+        (g) => g.id !== game.id && g.genres.some((genre) => game.genres.includes(genre)),
+      )
+      .sort((a, b) => b.popularityScore - a.popularityScore)
+      .slice(0, 3)
+      .map(async (g) => {
+        const seasons = await getSeasonsForGame(g.id);
+        const season =
+          seasons.find((s) => s.status === "active") ??
+          seasons.find((s) => s.status === "upcoming");
+        return { game: g, season };
+      }),
+  );
+  const filteredRelatedGames = relatedGames.filter(
+    (r): r is { game: GameConfig; season: SeasonData } => r.season !== undefined,
+  );
 
   return (
     <main className="min-h-screen">
@@ -245,6 +243,7 @@ export default async function GamePage({
                 <SocialLinks
                   socialLinks={game.socialLinks}
                   glowColor={game.glowColor}
+                  gameId={game.id}
                 />
                 <div className="bg-white/15 w-[1px] h-4" />
               </>
@@ -264,12 +263,14 @@ export default async function GamePage({
               <CalendarDays className="size-4" />
             </a>
             <div className="bg-white/15 w-[1px] h-4" />
+            <LikeButton gameId={game.id} initialCount={likesCount} className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg" />
             <a
               href={game.officialUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg"
             >
+              <ExternalLink className="size-4" />
               {t("officialSite")}
             </a>
           </div>
@@ -283,9 +284,7 @@ export default async function GamePage({
           {[
             {
               label: t("totalSeasons"),
-              value: String(
-                allSeasons.filter((s) => s.status !== "upcoming").length,
-              ),
+              value: String(allSeasons.filter((s) => s.status !== "upcoming").length),
             },
             {
               label: t("avgDuration"),
@@ -304,9 +303,7 @@ export default async function GamePage({
               key={label}
               className="rounded-lg px-4 py-3 bg-white/3 border border-white/8 backdrop-blur-md"
             >
-              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
-                {label}
-              </p>
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">{label}</p>
               <p className="text-lg font-bold text-white">{value}</p>
             </div>
           ))}
@@ -361,11 +358,7 @@ export default async function GamePage({
                   <p className="text-gray-200 text-sm">
                     {new Date(activeSeason.startDate).toLocaleDateString(
                       toIntlLocale(locale),
-                      {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                      },
+                      { month: "long", day: "numeric", year: "numeric" },
                     )}
                   </p>
                 </div>
@@ -378,11 +371,7 @@ export default async function GamePage({
                   <p className="text-gray-200 text-sm">
                     {new Date(activeSeason.endDate).toLocaleDateString(
                       toIntlLocale(locale),
-                      {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                      },
+                      { month: "long", day: "numeric", year: "numeric" },
                     )}
                   </p>
                 </div>
@@ -433,9 +422,7 @@ export default async function GamePage({
                 glowColor={game.glowColor}
                 seasonStart={activeSeason?.startDate}
                 seasonEnd={activeSeason?.endDate}
-                seasonLabel={t("currentSeason", {
-                  seasonType: game.seasonType,
-                })}
+                seasonLabel={t("currentSeason", { seasonType: game.seasonType })}
               />
             ) : (
               <p className="text-xs text-yellow-500/70">{t("dataStale")}</p>
@@ -444,13 +431,11 @@ export default async function GamePage({
         )}
 
         {/* Other game timers — same genre, up to 3 */}
-        {relatedGames.length > 0 && (
+        {filteredRelatedGames.length > 0 && (
           <div>
-            <h2 className="text-lg font-semibold text-white mb-4">
-              {t("otherTimers")}
-            </h2>
+            <h2 className="text-lg font-semibold text-white mb-4">{t("otherTimers")}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {relatedGames.map(({ game: rg, season: rs }) => {
+              {filteredRelatedGames.map(({ game: rg, season: rs }) => {
                 const rsStart = rs.startDate ? new Date(rs.startDate) : null;
                 const rsEnd = rs.endDate ? new Date(rs.endDate) : null;
                 const rsNext =
@@ -469,32 +454,21 @@ export default async function GamePage({
                       border: `1px solid ${rg.glowColor}25`,
                     }}
                   >
-                    {/* Mini header */}
                     <div className="flex items-center gap-3">
                       <div
                         className="w-10 h-7 rounded overflow-hidden shrink-0"
                         style={{ border: `1px solid ${rg.glowColor}40` }}
                       >
-                        <GameImage
-                          src={rg.coverImage}
-                          alt={rg.name}
-                          glowColor={rg.glowColor}
-                        />
+                        <GameImage src={rg.coverImage} alt={rg.name} glowColor={rg.glowColor} />
                       </div>
                       <div className="min-w-0">
-                        <p
-                          className="text-sm font-semibold truncate"
-                          style={{ color: rg.glowColor }}
-                        >
+                        <p className="text-sm font-semibold truncate" style={{ color: rg.glowColor }}>
                           {rg.name}
                         </p>
-                        <p className="text-xs text-gray-500 truncate">
-                          {rs.seasonName}
-                        </p>
+                        <p className="text-xs text-gray-500 truncate">{rs.seasonName}</p>
                       </div>
                     </div>
 
-                    {/* Timer */}
                     {rs.status === "upcoming" && rsStart ? (
                       <CountdownTimer
                         targetDate={rsStart}
@@ -505,21 +479,12 @@ export default async function GamePage({
                     ) : rs.status === "active" && (rsNext ?? rsEnd) ? (
                       <CountdownTimer
                         targetDate={(rsNext ?? rsEnd)!}
-                        label={
-                          rsNext
-                            ? t("nextSeasonIn", { seasonType: rg.seasonType })
-                            : t("endsIn")
-                        }
+                        label={rsNext ? t("nextSeasonIn", { seasonType: rg.seasonType }) : t("endsIn")}
                         accentColor={rg.accentColor}
-                        isEstimated={
-                          rsNext ? (rs.nextSeasonIsEstimated ?? true) : false
-                        }
+                        isEstimated={rsNext ? (rs.nextSeasonIsEstimated ?? true) : false}
                       />
                     ) : rsStart ? (
-                      <ElapsedTimer
-                        startDate={rsStart}
-                        label={t("runningFor")}
-                      />
+                      <ElapsedTimer startDate={rsStart} label={t("runningFor")} />
                     ) : null}
                   </a>
                 );
@@ -531,9 +496,7 @@ export default async function GamePage({
         {/* Steam widget */}
         {game.steamAppId && (
           <div>
-            <h2 className="text-lg font-semibold text-white mb-4">
-              {t("steamStore")}
-            </h2>
+            <h2 className="text-lg font-semibold text-white mb-4">{t("steamStore")}</h2>
             {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
             <iframe
               src={`https://store.steampowered.com/widget/${game.steamAppId}?utm_source=seasonpulse&utm_content=steam_embed`}

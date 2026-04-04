@@ -231,6 +231,21 @@
     "official": "Oficjalna",
     "steamStore": "Sklep Steam"
   },
+  "feedback": {
+    "trigger": "Pomysł / Opinia",
+    "title": "Podziel się opinią",
+    "typeIdea": "Pomysł / Sugestia",
+    "typeGame": "Zgłoś grę",
+    "placeholder": "Opisz swój pomysł lub grę, którą chciałbyś zobaczyć...",
+    "submit": "Wyślij",
+    "submitting": "Wysyłanie...",
+    "successTitle": "Dziękujemy za opinię!",
+    "successText": "Czytamy każde zgłoszenie i używamy go do ulepszania SeasonPulse.",
+    "close": "Zamknij",
+    "minLength": "Wymagane co najmniej {min} znaków",
+    "errorRateLimit": "Zbyt wiele zgłoszeń. Spróbuj jutro.",
+    "errorGeneral": "Coś poszło nie tak. Spróbuj ponownie."
+  },
   "errors": {
     "notFoundTitle": "Nie znaleziono strony",
     "notFoundText": "Strona, której szukasz, nie istnieje lub została przeniesiona.",

@@ -231,6 +231,21 @@
     "official": "Official",
     "steamStore": "Steam Store"
   },
+  "feedback": {
+    "trigger": "Suggest / Feedback",
+    "title": "Share Feedback",
+    "typeIdea": "Idea / Suggestion",
+    "typeGame": "Request a Game",
+    "placeholder": "Describe your idea or the game you'd like to see added...",
+    "submit": "Send",
+    "submitting": "Sending...",
+    "successTitle": "Thanks for your feedback!",
+    "successText": "We read every submission and use it to improve SeasonPulse.",
+    "close": "Close",
+    "minLength": "At least {min} characters required",
+    "errorRateLimit": "Too many submissions. Please try again tomorrow.",
+    "errorGeneral": "Something went wrong. Please try again."
+  },
   "errors": {
     "notFoundTitle": "Page Not Found",
     "notFoundText": "The page you're looking for doesn't exist or has been moved.",

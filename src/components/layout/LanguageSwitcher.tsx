@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { useState, useRef, useEffect } from "react";
 import { Globe } from "lucide-react";
+import { track } from "@vercel/analytics";
 
 const LOCALE_META: Record<string, string> = {
   en: "English",
@@ -37,6 +38,7 @@ export function LanguageSwitcher() {
     } else {
       segments.splice(1, 0, next);
     }
+    track("language_switch", { locale: next });
     router.push(segments.join("/") || "/");
     setOpen(false);
   }
