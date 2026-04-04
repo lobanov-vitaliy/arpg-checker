@@ -1,49 +1,24 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter, usePathname } from "next/navigation";
 import { track } from "@vercel/analytics";
-import {
-  LayoutGrid,
-  List,
-  ChevronDown,
-  ArrowUpDown,
-  ArrowUp,
-  ArrowDown,
-  Search,
-  Star,
-} from "lucide-react";
+import { ChevronDown, Search, Star } from "lucide-react";
 import { getFavorites } from "./FavoriteButton";
-import type { GameConfig, SeasonData } from "@/types";
+import { GameCardClient } from "./GameCardClient";
+import type { GameConfig, SeasonData, GameFullData } from "@/types";
 import type { ReactNode } from "react";
 
-type CardSortKey = "popularity" | "recentStart" | "nextSeason";
-type TableSortKey =
-  | "name"
-  | "status"
-  | "started"
-  | "ends"
-  | "next"
-  | "popularity";
-type SortDir = "asc" | "desc";
-type ViewMode = "grid" | "table";
+const INITIAL_VISIBLE = 12;
+const LOAD_BATCH = 8;
 
-const STATUS_ORDER = { active: 0, upcoming: 1, unknown: 2, ended: 3 };
-const TABLE_SORT_DEFAULTS: Record<TableSortKey, SortDir> = {
-  name: "asc",
-  status: "asc",
-  started: "desc",
-  ends: "asc",
-  next: "asc",
-  popularity: "desc",
-};
+type CardSortKey = "popularity" | "recentStart" | "nextSeason";
 
 interface GameGridProps {
   games: GameConfig[];
   seasons: SeasonData[];
   cards: { gameId: string; node: ReactNode }[];
-  tableRows: { gameId: string; node: ReactNode }[];
   initialParams?: Record<string, string>;
 }
 
@@ -65,27 +40,12 @@ function getCardSortedIds(
       }
       if (key === "nextSeason") {
         const now = Date.now();
-        const ta = sa?.nextSeasonStartDate
-          ? new Date(sa.nextSeasonStartDate).getTime()
-          : null;
-        const tb = sb?.nextSeasonStartDate
-          ? new Date(sb.nextSeasonStartDate).getTime()
-          : null;
+        const ta = sa?.nextSeasonStartDate ? new Date(sa.nextSeasonStartDate).getTime() : null;
+        const tb = sb?.nextSeasonStartDate ? new Date(sb.nextSeasonStartDate).getTime() : null;
         const fa = ta && ta > now ? ta : Infinity;
         const fb = tb && tb > now ? tb : Infinity;
-        // Official dates first, then estimated, then no date
-        const oa =
-          fa !== Infinity && sa?.nextSeasonIsEstimated === false
-            ? 0
-            : fa !== Infinity
-              ? 1
-              : 2;
-        const ob =
-          fb !== Infinity && sb?.nextSeasonIsEstimated === false
-            ? 0
-            : fb !== Infinity
-              ? 1
-              : 2;
+        const oa = fa !== Infinity && sa?.nextSeasonIsEstimated === false ? 0 : fa !== Infinity ? 1 : 2;
+        const ob = fb !== Infinity && sb?.nextSeasonIsEstimated === false ? 0 : fb !== Infinity ? 1 : 2;
         if (oa !== ob) return oa - ob;
         return fa - fb;
       }
@@ -94,110 +54,45 @@ function getCardSortedIds(
     .map((g) => g.id);
 }
 
-function getTableSortedIds(
-  games: GameConfig[],
-  seasons: SeasonData[],
-  key: TableSortKey,
-  dir: SortDir,
-): string[] {
-  const sm = Object.fromEntries(seasons.map((s) => [s.gameId, s]));
-  const now = Date.now();
-
-  return [...games]
-    .sort((a, b) => {
-      const sa = sm[a.id];
-      const sb = sm[b.id];
-      let cmp = 0;
-
-      switch (key) {
-        case "name":
-          cmp = a.name.localeCompare(b.name);
-          break;
-        case "status":
-          cmp =
-            (STATUS_ORDER[sa?.status ?? "unknown"] ?? 2) -
-            (STATUS_ORDER[sb?.status ?? "unknown"] ?? 2);
-          break;
-        case "started":
-          cmp =
-            (sa?.startDate ? new Date(sa.startDate).getTime() : 0) -
-            (sb?.startDate ? new Date(sb.startDate).getTime() : 0);
-          break;
-        case "ends":
-          cmp =
-            (sa?.endDate ? new Date(sa.endDate).getTime() : Infinity) -
-            (sb?.endDate ? new Date(sb.endDate).getTime() : Infinity);
-          break;
-        case "next": {
-          const na = sa?.nextSeasonStartDate
-            ? new Date(sa.nextSeasonStartDate).getTime()
-            : null;
-          const nb = sb?.nextSeasonStartDate
-            ? new Date(sb.nextSeasonStartDate).getTime()
-            : null;
-          const fa = na && na > now ? na : Infinity;
-          const fb = nb && nb > now ? nb : Infinity;
-          const oa =
-            fa !== Infinity && sa?.nextSeasonIsEstimated === false
-              ? 0
-              : fa !== Infinity
-                ? 1
-                : 2;
-          const ob =
-            fb !== Infinity && sb?.nextSeasonIsEstimated === false
-              ? 0
-              : fb !== Infinity
-                ? 1
-                : 2;
-          cmp = oa !== ob ? oa - ob : fa - fb;
-          break;
-        }
-        case "popularity":
-          cmp = a.popularityScore - b.popularityScore;
-          break;
-      }
-
-      return dir === "asc" ? cmp : -cmp;
-    })
-    .map((g) => g.id);
+function GameCardSkeleton() {
+  return (
+    <div className="overflow-hidden bg-gray-900/60 backdrop-blur-md border border-white/5 rounded-xl flex flex-col animate-pulse">
+      <div className="h-36 bg-gray-800" />
+      <div className="px-4 pt-3 pb-4 flex flex-col gap-3">
+        <div className="space-y-2">
+          <div className="h-3 w-20 bg-gray-800 rounded" />
+          <div className="h-5 w-32 bg-gray-800 rounded" />
+        </div>
+        <div className="space-y-1.5">
+          <div className="h-3 w-full bg-gray-800 rounded" />
+          <div className="h-3 w-3/4 bg-gray-800 rounded" />
+        </div>
+        <div className="h-24 bg-gray-800/50 rounded-md" />
+      </div>
+    </div>
+  );
 }
 
-// ── Component ─────────────────────────────────────────────────────────────────
-
-function GameGridInner({
-  games,
-  seasons,
-  cards,
-  tableRows,
-  initialParams = {},
-}: GameGridProps) {
+function GameGridInner({ games, seasons, cards, initialParams = {} }: GameGridProps) {
   const t = useTranslations("sort");
   const tFilter = useTranslations("filter");
-  const tTable = useTranslations("table");
-
   const router = useRouter();
   const pathname = usePathname();
 
-  const [view, setView] = useState<ViewMode>(
-    (initialParams.view as ViewMode) ?? "grid",
-  );
   const [cardSort, setCardSort] = useState<CardSortKey>(
     (initialParams.sort as CardSortKey) ?? "nextSeason",
   );
-  const [tableSort, setTableSort] = useState<TableSortKey>(
-    (initialParams.tsort as TableSortKey) ?? "started",
-  );
-  const [tableSortDir, setTableSortDir] = useState<SortDir>(
-    (initialParams.tdir as SortDir) ?? "desc",
-  );
-  const [selectedGenre, setSelectedGenre] = useState<string>(
-    initialParams.genre ?? "",
-  );
+  const [selectedGenre, setSelectedGenre] = useState<string>(initialParams.genre ?? "");
   const [genreOpen, setGenreOpen] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
   const [query, setQuery] = useState<string>(initialParams.q ?? "");
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [favorites, setFavoritesState] = useState<string[]>([]);
+
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
+  const [loadedDataMap, setLoadedDataMap] = useState<Record<string, GameFullData>>({});
+  const fetchingRef = useRef<Set<string>>(new Set());
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setFavoritesState(getFavorites());
@@ -206,9 +101,18 @@ function GameGridInner({
     return () => window.removeEventListener("sp_favoritechange", handler);
   }, []);
 
-  const allGenres = [...new Set(games.flatMap((g) => g.genres))].sort();
-  const cardMap = Object.fromEntries(cards.map((c) => [c.gameId, c.node]));
-  const rowMap = Object.fromEntries(tableRows.map((r) => [r.gameId, r.node]));
+  const allGenres = useMemo(
+    () => [...new Set(games.flatMap((g) => g.genres))].sort(),
+    [games],
+  );
+  const cardMap = useMemo(
+    () => Object.fromEntries(cards.map((c) => [c.gameId, c.node])),
+    [cards],
+  );
+  const gameById = useMemo(
+    () => Object.fromEntries(games.map((g) => [g.id, g])),
+    [games],
+  );
 
   const pushUrl = useCallback(
     (updates: Record<string, string>) => {
@@ -221,13 +125,9 @@ function GameGridInner({
     [router, pathname],
   );
 
-  const handleView = (v: ViewMode) => {
-    setView(v);
-    track("filter_view", { view: v });
-    pushUrl({ view: v });
-  };
   const handleCardSort = (k: CardSortKey) => {
     setCardSort(k);
+    setSortOpen(false);
     track("filter_sort", { sort: k });
     pushUrl({ sort: k });
   };
@@ -243,70 +143,79 @@ function GameGridInner({
     pushUrl({ q });
   };
 
-  const handleTableSort = (col: TableSortKey) => {
-    if (col === tableSort) {
-      const newDir: SortDir = tableSortDir === "asc" ? "desc" : "asc";
-      setTableSortDir(newDir);
-      pushUrl({ tsort: col, tdir: newDir });
-    } else {
-      const newDir = TABLE_SORT_DEFAULTS[col];
-      setTableSort(col);
-      setTableSortDir(newDir);
-      pushUrl({ tsort: col, tdir: newDir });
-    }
-  };
+  const filteredIds = useMemo(() => {
+    const sorted = getCardSortedIds(games, seasons, cardSort);
+    return sorted.filter((id) => {
+      const game = gameById[id];
+      if (!game) return false;
+      if (favoritesOnly && !favorites.includes(id)) return false;
+      if (selectedGenre && !game.genres.includes(selectedGenre)) return false;
+      if (query && !game.name.toLowerCase().includes(query.toLowerCase())) return false;
+      return true;
+    });
+  }, [games, seasons, cardSort, gameById, favoritesOnly, favorites, selectedGenre, query]);
 
-  const baseIds =
-    view === "grid"
-      ? getCardSortedIds(games, seasons, cardSort)
-      : getTableSortedIds(games, seasons, tableSort, tableSortDir);
+  useEffect(() => {
+    setVisibleCount(INITIAL_VISIBLE);
+  }, [query, selectedGenre, favoritesOnly, cardSort]);
 
-  const filteredIds = baseIds.filter((id) => {
-    const game = games.find((g) => g.id === id);
-    if (!game) return false;
-    if (favoritesOnly && !favorites.includes(id)) return false;
-    if (selectedGenre && !game.genres.includes(selectedGenre)) return false;
-    if (query && !game.name.toLowerCase().includes(query.toLowerCase()))
-      return false;
-    return true;
-  });
+  const visibleIds = filteredIds.slice(0, visibleCount);
+
+  useEffect(() => {
+    const missing = visibleIds.filter(
+      (id) => !cardMap[id] && !loadedDataMap[id] && !fetchingRef.current.has(id),
+    );
+    if (!missing.length) return;
+    missing.forEach((id) => fetchingRef.current.add(id));
+    fetch(`/api/dashboard/games?ids=${missing.join(",")}`)
+      .then((r) => r.json())
+      .then((data: Record<string, GameFullData>) => {
+        setLoadedDataMap((prev) => ({ ...prev, ...data }));
+        missing.forEach((id) => fetchingRef.current.delete(id));
+      })
+      .catch(() => {
+        missing.forEach((id) => fetchingRef.current.delete(id));
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visibleIds.join(",")]);
+
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && visibleCount < filteredIds.length) {
+          setVisibleCount((prev) => Math.min(prev + LOAD_BATCH, filteredIds.length));
+        }
+      },
+      { rootMargin: "300px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [visibleCount, filteredIds.length]);
 
   const cardSortOptions: { key: CardSortKey; label: string }[] = [
+    { key: "nextSeason", label: t("nextSeason") },
     { key: "popularity", label: t("popularity") },
     { key: "recentStart", label: t("recentStart") },
-    { key: "nextSeason", label: t("nextSeason") },
   ];
 
-  function ColHeader({ col, label }: { col: TableSortKey; label: string }) {
-    const active = tableSort === col;
-    return (
-      <th
-        className="py-2.5 px-4 text-xs text-gray-500 uppercase tracking-wider font-medium whitespace-nowrap cursor-pointer select-none hover:text-gray-300 transition-colors"
-        onClick={() => handleTableSort(col)}
-      >
-        <span className="inline-flex items-center gap-1">
-          {label}
-          {active ? (
-            tableSortDir === "asc" ? (
-              <ArrowUp className="w-3 h-3 text-gray-300" />
-            ) : (
-              <ArrowDown className="w-3 h-3 text-gray-300" />
-            )
-          ) : (
-            <ArrowUpDown className="w-3 h-3 opacity-30" />
-          )}
-        </span>
-      </th>
-    );
+  function renderCard(id: string) {
+    if (cardMap[id]) return <div key={id}>{cardMap[id]}</div>;
+    const data = loadedDataMap[id];
+    const game = gameById[id];
+    if (data && game) {
+      return <GameCardClient key={id} game={game} seasons={data.seasons} likes={data.likes} steam={data.steam} />;
+    }
+    return <GameCardSkeleton key={id} />;
   }
 
   return (
     <div>
       {/* Controls bar */}
       <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
-        {/* Left: Search + Genre filter + Favorites */}
+        {/* Left: Favorites + Search + Genre */}
         <div className="flex items-center gap-2 flex-wrap">
-          {/* All / Favorites toggle */}
           <div className="flex items-center rounded-lg border border-white/5 bg-gray-900/60 backdrop-blur-md overflow-hidden">
             <button
               onClick={() => setFavoritesOnly(false)}
@@ -328,7 +237,7 @@ function GameGridInner({
               {tFilter("favorites")}
             </button>
           </div>
-          {/* Search */}
+
           <div className="relative flex items-center">
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500 pointer-events-none z-10" />
             <input
@@ -340,6 +249,61 @@ function GameGridInner({
               suppressHydrationWarning
             />
           </div>
+
+          {allGenres.length > 0 && (
+            <div className="relative">
+              <button
+                onClick={() => setGenreOpen((o) => !o)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs border border-white/5 bg-gray-900/60 backdrop-blur-md text-gray-400 hover:text-gray-200 transition-colors"
+              >
+                {selectedGenre || tFilter("label")}
+                <ChevronDown className={`w-3 h-3 transition-transform ${genreOpen ? "rotate-180" : ""}`} />
+              </button>
+              {genreOpen && (
+                <div className="absolute top-full left-0 mt-1 z-20 min-w-40 rounded-lg border border-gray-700 bg-gray-900 shadow-xl py-1">
+                  <button
+                    onClick={() => handleGenre("")}
+                    className={`w-full text-left px-3 py-1.5 text-xs transition-colors ${!selectedGenre ? "text-white bg-gray-800" : "text-gray-400 hover:text-gray-200 hover:bg-gray-800/60"}`}
+                  >
+                    {tFilter("all")}
+                  </button>
+                  {allGenres.map((g) => (
+                    <button
+                      key={g}
+                      onClick={() => handleGenre(g)}
+                      className={`w-full text-left px-3 py-1.5 text-xs transition-colors ${selectedGenre === g ? "text-white bg-gray-800" : "text-gray-400 hover:text-gray-200 hover:bg-gray-800/60"}`}
+                    >
+                      {g}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Right: Sort */}
+        <div className="relative">
+          <button
+            onClick={() => setSortOpen((o) => !o)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs border border-white/5 bg-gray-900/60 backdrop-blur-md text-gray-400 hover:text-gray-200 transition-colors"
+          >
+            {cardSortOptions.find((o) => o.key === cardSort)?.label}
+            <ChevronDown className={`w-3 h-3 transition-transform ${sortOpen ? "rotate-180" : ""}`} />
+          </button>
+          {sortOpen && (
+            <div className="absolute top-full right-0 mt-1 z-20 min-w-40 rounded-lg border border-gray-700 bg-gray-900 shadow-xl py-1">
+              {cardSortOptions.map((o) => (
+                <button
+                  key={o.key}
+                  onClick={() => handleCardSort(o.key)}
+                  className={`w-full text-left px-3 py-1.5 text-xs transition-colors ${cardSort === o.key ? "text-white bg-gray-800" : "text-gray-400 hover:text-gray-200 hover:bg-gray-800/60"}`}
+                >
+                  {o.label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -350,41 +314,18 @@ function GameGridInner({
         </div>
       )}
 
-      {/* Grid view */}
-      {view === "grid" && filteredIds.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {filteredIds.map((id) => cardMap[id])}
-        </div>
-      )}
-
-      {/* Table view */}
-      {view === "table" && filteredIds.length > 0 && (
-        <div className="overflow-x-auto rounded-lg border border-gray-800">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b border-white/5 bg-gray-900/60 backdrop-blur-md">
-                <ColHeader col="name" label={tTable("game")} />
-                <th className="py-2.5 px-4 text-xs text-gray-500 uppercase tracking-wider font-medium whitespace-nowrap">
-                  {tTable("genres")}
-                </th>
-                <th className="py-2.5 px-4 text-xs text-gray-500 uppercase tracking-wider font-medium whitespace-nowrap">
-                  {tTable("season")}
-                </th>
-                <ColHeader col="started" label={tTable("started")} />
-                <ColHeader col="ends" label={tTable("ends")} />
-                <ColHeader col="next" label={tTable("nextSeason")} />
-                <th className="py-2.5 px-4 text-xs text-gray-500 uppercase tracking-wider font-medium whitespace-nowrap">
-                  {tTable("players")}
-                </th>
-                <ColHeader col="popularity" label={tTable("popularity")} />
-                <th className="py-2.5 px-4 text-xs text-gray-500 uppercase tracking-wider font-medium" />
-              </tr>
-            </thead>
-            <tbody className="bg-gray-950/30 backdrop-blur-md">
-              {filteredIds.map((id) => rowMap[id])}
-            </tbody>
-          </table>
-        </div>
+      {filteredIds.length > 0 && (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {visibleIds.map((id) => renderCard(id))}
+          </div>
+          <div ref={sentinelRef} className="h-4" />
+          {visibleCount < filteredIds.length && (
+            <p className="text-center text-xs text-gray-600 mt-2">
+              {visibleCount} / {filteredIds.length}
+            </p>
+          )}
+        </>
       )}
     </div>
   );

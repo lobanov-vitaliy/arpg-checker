@@ -416,7 +416,7 @@ export default async function GamePage({
             <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">
               {t("playersOnline")}
             </h2>
-            {steamData && steamData.snapshots.length > 0 ? (
+            {steamData && steamData.snapshots && steamData.snapshots.length > 0 ? (
               <PlayerChartFull
                 steam={steamData}
                 glowColor={game.glowColor}

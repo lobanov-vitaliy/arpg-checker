@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { CountdownTimer } from "./CountdownTimer";
 import { ElapsedTimer } from "./ElapsedTimer";
 import { useTranslations, useLocale } from "next-intl";
 import { formatDate } from "@/lib/utils";
-import { ExternalLink, Clock } from "lucide-react";
+import { Clock } from "lucide-react";
 import type { SeasonData, GameConfig, SteamData } from "@/types";
 import { PlayerSparkline } from "./PlayerSparkline";
 import { track } from "@vercel/analytics";
@@ -38,12 +38,31 @@ export function SeasonSwitcher({
   const liveIdx = displaySeasons.findIndex((s) => s.status === "active");
   const [idx, setIdx] = useState(liveIdx >= 0 ? liveIdx : 0);
   const [now, setNow] = useState(0);
+  const [snapshots, setSnapshots] = useState(steam?.snapshots);
+  const sparklineRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    setNow(Date.now());
-  }, []);
+  useEffect(() => { setNow(Date.now()); }, []);
 
   const season = displaySeasons[idx];
+  const needsSparkline = season.status !== "upcoming" && game.steamAppId;
+
+  useEffect(() => {
+    if (!needsSparkline || snapshots !== undefined || !sparklineRef.current) return;
+    const el = sparklineRef.current;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        fetch(`/api/steam/${game.id}`)
+          .then((r) => r.json() as Promise<SteamData | null>)
+          .then((data) => setSnapshots(data?.snapshots ?? []))
+          .catch(() => setSnapshots([]));
+      },
+      { rootMargin: "100px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [needsSparkline, game.id, snapshots]);
 
   const startDate = season.startDate ? new Date(season.startDate) : null;
   const endDate = season.endDate ? new Date(season.endDate) : null;
@@ -232,24 +251,32 @@ export function SeasonSwitcher({
       {/* Steam sparkline */}
       {season.status !== "upcoming" && game.steamAppId && (
         <div
+          ref={sparklineRef}
           className="rounded-md px-2.5 py-2"
           style={{
             backgroundColor: `${game.glowColor}08`,
             border: `1px solid ${game.glowColor}20`,
+            minHeight: "110px",
           }}
         >
           <p className="text-xs text-gray-500 uppercase tracking-wider mb-1.5">
             {playersOnlineLabel}
           </p>
-          {steam && steam.snapshots.length > 0 ? (
+          {snapshots === undefined ? (
+            <div className="h-10 flex items-center">
+              <div className="w-4 h-4 border border-gray-600 border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : snapshots.length > 0 && steam ? (
             <PlayerSparkline
-              steam={steam}
+              steam={{ ...steam, snapshots }}
               glowColor={game.glowColor}
               seasonStart={season.startDate}
               seasonEnd={season.endDate}
             />
           ) : (
-            <p className="text-xs text-yellow-500/70">{t("dataStale")}</p>
+            <div className="h-10 flex items-center">
+              <p className="text-xs text-yellow-500/70">{t("dataStale")}</p>
+            </div>
           )}
         </div>
       )}

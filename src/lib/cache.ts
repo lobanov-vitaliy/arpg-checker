@@ -1,3 +1,4 @@
+import type { Collection } from "mongodb";
 import { getDb } from "./mongodb";
 
 export const SEASON_TTL_MS = 60 * 60 * 1000; // 1 hour
@@ -15,12 +16,21 @@ interface CacheEntry<T> {
   expiresAt: string;
 }
 
+let _colPromise: Promise<Collection<CacheDoc<unknown>>> | undefined;
+
 async function col() {
-  const db = await getDb();
-  const c = db.collection<CacheDoc<unknown>>("cache");
-  await c.createIndex({ key: 1 }, { unique: true, background: true });
-  await c.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0, background: true });
-  return c;
+  if (!_colPromise) {
+    _colPromise = (async () => {
+      const db = await getDb();
+      const c = db.collection<CacheDoc<unknown>>("cache");
+      await Promise.all([
+        c.createIndex({ key: 1 }, { unique: true }),
+        c.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 }),
+      ]);
+      return c;
+    })();
+  }
+  return _colPromise;
 }
 
 export async function getCached<T>(key: string): Promise<T | null> {

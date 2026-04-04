@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import type { GameConfig, ManualSeasonEntry } from "@/types";
 import type { FeedbackEntry } from "@/lib/feedback";
+import Image from "next/image";
 
 type GameWithSeasons = GameConfig & { seasons: ManualSeasonEntry[] };
 
@@ -48,6 +49,8 @@ export function AdminPanel({ token }: { token: string }) {
   const [view, setView] = useState<"games" | "seasons" | "feedback">("games");
   const [showGameForm, setShowGameForm] = useState(false);
   const [editGame, setEditGame] = useState<GameConfig | null>(null);
+  const [showAiLookup, setShowAiLookup] = useState(false);
+  const [aiPrefill, setAiPrefill] = useState<GameConfig | null>(null);
   const [showSeasonForm, setShowSeasonForm] = useState(false);
   const [editSeason, setEditSeason] = useState<ManualSeasonEntry | null>(null);
   const [msg, setMsg] = useState("");
@@ -133,7 +136,10 @@ export function AdminPanel({ token }: { token: string }) {
         {/* Games list */}
         {view === "games" && (
           <div>
-            <div className="flex justify-end mb-4">
+            <div className="flex justify-end gap-2 mb-4">
+              <button onClick={() => setShowAiLookup(true)} className="px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5">
+                ✦ Add with AI
+              </button>
               <button onClick={() => setShowGameForm(true)} className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-sm font-medium transition-colors">
                 + Add Game
               </button>
@@ -175,8 +181,9 @@ export function AdminPanel({ token }: { token: string }) {
             {showGameForm && (
               <GameForm
                 token={token}
-                onDone={() => { setShowGameForm(false); loadGames(); flash("Game added"); }}
-                onCancel={() => setShowGameForm(false)}
+                initial={aiPrefill ?? undefined}
+                onDone={() => { setShowGameForm(false); setAiPrefill(null); loadGames(); flash("Game added"); }}
+                onCancel={() => { setShowGameForm(false); setAiPrefill(null); }}
               />
             )}
             {editGame && (
@@ -185,6 +192,17 @@ export function AdminPanel({ token }: { token: string }) {
                 initial={editGame}
                 onDone={() => { setEditGame(null); loadGames(); flash("Game updated"); }}
                 onCancel={() => setEditGame(null)}
+              />
+            )}
+            {showAiLookup && (
+              <AiGameLookupModal
+                token={token}
+                onApprove={(game) => {
+                  setShowAiLookup(false);
+                  setAiPrefill(game);
+                  setShowGameForm(true);
+                }}
+                onCancel={() => setShowAiLookup(false)}
               />
             )}
           </div>
@@ -279,6 +297,158 @@ export function AdminPanel({ token }: { token: string }) {
         )}
       </div>
     </main>
+  );
+}
+
+// ── AI Game Lookup Modal ──────────────────────────────────────────────────────
+
+type AiGameResult = GameConfig & { seasons: [] };
+
+function AiGameLookupModal({ token, onApprove, onCancel }: {
+  token: string;
+  onApprove: (game: GameConfig) => void;
+  onCancel: () => void;
+}) {
+  const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<AiGameResult | null>(null);
+  const [err, setErr] = useState("");
+
+  async function search() {
+    if (!query.trim()) return;
+    setLoading(true);
+    setErr("");
+    setResult(null);
+    try {
+      const res = await fetch("/api/admin/ai-game-lookup", {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ gameName: query.trim() }),
+      });
+      if (!res.ok) {
+        let errText = `HTTP ${res.status}`;
+        try {
+          const j = await res.json() as { error?: string };
+          if (j.error) errText = j.error;
+        } catch {
+          errText = (await res.text()) || errText;
+        }
+        setErr(errText);
+      } else {
+        setResult(await res.json() as AiGameResult);
+      }
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Network error");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <Modal title="Add Game with AI" onCancel={onCancel}>
+      <div className="flex flex-col gap-4">
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && search()}
+            placeholder="Enter game name…"
+            className="flex-1 bg-gray-800 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+            autoFocus
+          />
+          <button
+            onClick={search}
+            disabled={loading || !query.trim()}
+            className="px-4 py-2 bg-purple-700 hover:bg-purple-600 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap"
+          >
+            {loading ? "Searching…" : "Search"}
+          </button>
+        </div>
+
+        {err && <p className="text-red-400 text-xs bg-red-400/10 rounded-lg px-3 py-2">{err}</p>}
+
+        {loading && (
+          <div className="flex flex-col items-center gap-3 py-8 text-gray-400">
+            <div className="w-8 h-8 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
+            <p className="text-sm">AI is searching the web…</p>
+          </div>
+        )}
+
+        {result && !loading && (
+          <div className="flex flex-col gap-4">
+            {/* Preview card */}
+            <div
+              className="rounded-xl border border-white/10 overflow-hidden"
+              style={{ "--gc": result.glowColor } as React.CSSProperties}
+            >
+              {/* Cover image */}
+              <div className="relative h-36 bg-gray-800 overflow-hidden">
+                {result.coverImage ? (
+                  <Image
+                    src={result.coverImage}
+                    alt={result.name}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                ) : (
+                  <div className={`absolute inset-0 bg-linear-to-br ${result.bgGradient}`} />
+                )}
+                <div className="absolute inset-0 bg-linear-to-t from-gray-900/80 to-transparent" />
+              </div>
+
+              {/* Card body */}
+              <div className="px-4 py-3 flex flex-col gap-2 bg-gray-900/80">
+                <div>
+                  <p className="text-xs text-gray-500 uppercase tracking-wider">{result.developer}</p>
+                  <h3 className="text-lg font-bold" style={{ color: result.glowColor }}>{result.name}</h3>
+                </div>
+                <div className="flex flex-wrap gap-1.5 text-xs">
+                  {result.genres?.map((g: string) => (
+                    <span key={g} className="px-2 py-0.5 rounded-full bg-white/8 text-gray-300">{g}</span>
+                  ))}
+                  <span className="px-2 py-0.5 rounded-full bg-white/8 text-gray-400 capitalize">{result.seasonType}</span>
+                </div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-gray-400">
+                  {result.steamAppId && <span>Steam ID: <span className="text-gray-200 font-mono">{result.steamAppId}</span></span>}
+                  <span>Popularity: <span className="text-gray-200">{result.popularityScore}/100</span></span>
+                  {result.officialUrl && (
+                    <span className="col-span-2 truncate">
+                      <a href={result.officialUrl} target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:underline truncate">{result.officialUrl}</a>
+                    </span>
+                  )}
+                </div>
+                {result.searchHints?.length > 0 && (
+                  <div className="text-xs text-gray-500">
+                    <p className="mb-0.5 text-gray-400">Search hints:</p>
+                    <ul className="list-disc list-inside space-y-0.5">
+                      {result.searchHints.map((h: string) => <li key={h}>{h}</li>)}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex gap-2 justify-end">
+              <button
+                onClick={search}
+                className="px-4 py-2 rounded-lg bg-white/8 hover:bg-white/15 text-sm transition-colors"
+              >
+                Try Again
+              </button>
+              <button
+                onClick={() => onApprove(result)}
+                className="px-4 py-2 rounded-lg bg-purple-700 hover:bg-purple-600 text-white text-sm font-medium transition-colors"
+              >
+                Approve & Edit →
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </Modal>
   );
 }
 

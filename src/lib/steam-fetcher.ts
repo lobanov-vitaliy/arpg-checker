@@ -6,6 +6,7 @@ import type {
   SteamRating,
   PlayerSnapshot,
 } from "@/types";
+import type { Collection } from "mongodb";
 import { getDb } from "./mongodb";
 
 const STEAM_PLAYERS_API =
@@ -14,11 +15,18 @@ const STEAM_REVIEWS_API = "https://store.steampowered.com/appreviews";
 
 const MAX_SNAPSHOTS = 50_000;
 
+let _steamColPromise: Promise<Collection<SteamData & { _gameId: string }>> | undefined;
+
 async function steamCol() {
-  const db = await getDb();
-  const c = db.collection<SteamData & { _gameId: string }>("steam");
-  await c.createIndex({ _gameId: 1 }, { unique: true, background: true });
-  return c;
+  if (!_steamColPromise) {
+    _steamColPromise = (async () => {
+      const db = await getDb();
+      const c = db.collection<SteamData & { _gameId: string }>("steam");
+      await c.createIndex({ _gameId: 1 }, { unique: true });
+      return c;
+    })();
+  }
+  return _steamColPromise;
 }
 
 export async function getSteamData(gameId: string): Promise<SteamData | null> {
@@ -27,6 +35,30 @@ export async function getSteamData(gameId: string): Promise<SteamData | null> {
   if (!doc) return null;
   const { _gameId: _, _id: __, ...data } = doc as Record<string, unknown>;
   return data as SteamData;
+}
+
+export async function getSteamDataForIds(gameIds: string[]): Promise<Record<string, SteamData>> {
+  const c = await steamCol();
+  const docs = await c.find({ _gameId: { $in: gameIds } }, { projection: { snapshots: 0 } }).toArray();
+  return Object.fromEntries(
+    docs.map((doc) => {
+      const { _gameId, _id, ...data } = doc as Record<string, unknown>;
+      return [_gameId as string, data as SteamData];
+    })
+  );
+}
+
+export async function getAllSteamData(): Promise<Record<string, SteamData>> {
+  const t = performance.now();
+  const c = await steamCol();
+  const docs = await c.find({}, { projection: { snapshots: 0 } }).toArray();
+  console.log(`[db] getAllSteamData: ${(performance.now() - t).toFixed(0)}ms (${docs.length} games)`);
+  return Object.fromEntries(
+    docs.map((doc) => {
+      const { _gameId, _id, ...data } = doc as Record<string, unknown>;
+      return [_gameId as string, data as SteamData];
+    })
+  );
 }
 
 export async function setSteamData(gameId: string, data: SteamData): Promise<void> {

@@ -84,7 +84,7 @@ export function PlayerChartFull({
   const t = useTranslations("players");
   const locale = useLocale();
   const { data, hasSeasonFilter } = getSeasonData(
-    steam.snapshots,
+    steam.snapshots ?? [],
     seasonStart,
     seasonEnd,
   );

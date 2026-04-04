@@ -75,7 +75,7 @@ export type SteamData = {
   steamAppId: number;
   currentPlayers: number;
   peakPlayers7d: number;
-  snapshots: PlayerSnapshot[];
+  snapshots?: PlayerSnapshot[];
   rating: SteamRating | null;
   updatedAt: string;
 };
@@ -114,6 +114,14 @@ export interface NewsArticle {
   source: string;
   tags: string[];
 }
+
+// ─── Dashboard Card Data ──────────────────────────────────────────────────────
+
+export type GameFullData = {
+  seasons: SeasonData[];
+  likes: number;
+  steam: SteamData | null;
+};
 
 // ─── API Response Types ───────────────────────────────────────────────────────
 

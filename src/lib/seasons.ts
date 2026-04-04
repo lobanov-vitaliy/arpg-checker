@@ -1,4 +1,4 @@
-import { getGameSeasons, getAllGameSeasons } from "./games-db";
+import { getGameSeasons, getAllGameSeasons, getAllGameSeasonsForIds } from "./games-db";
 import type { ManualSeasonEntry, SeasonData } from "@/types";
 
 function computeStatus(startDate: string, endDate: string | null): SeasonData["status"] {
@@ -78,10 +78,15 @@ export async function getAllSeasons(): Promise<SeasonData[]> {
     .filter(Boolean) as SeasonData[];
 }
 
-export async function getSeasonsForGame(gameId: string): Promise<SeasonData[]> {
-  const merged = await getGameSeasons(gameId);
+export async function getAllSeasonsPerGame(): Promise<Record<string, SeasonData[]>> {
+  const all = await getAllGameSeasons();
+  return Object.fromEntries(
+    all.map(({ gameId, seasons }) => [gameId, _computeSeasonsForGame(gameId, seasons)])
+  );
+}
 
-  const sorted = [...merged].sort((a, b) => {
+function _computeSeasonsForGame(gameId: string, entries: ManualSeasonEntry[]): SeasonData[] {
+  const sorted = [...entries].sort((a, b) => {
     const sa = computeStatus(a.startDate, a.endDate ?? null);
     const sb = computeStatus(b.startDate, b.endDate ?? null);
     const pa = STATUS_PRIORITY[sa] ?? 3;
@@ -91,4 +96,16 @@ export async function getSeasonsForGame(gameId: string): Promise<SeasonData[]> {
   });
   const avgDays = computeAvgDuration(sorted);
   return sorted.map((entry) => toSeasonData(gameId, entry, sorted, avgDays));
+}
+
+export async function getSeasonsForGame(gameId: string): Promise<SeasonData[]> {
+  const merged = await getGameSeasons(gameId);
+  return _computeSeasonsForGame(gameId, merged);
+}
+
+export async function getSeasonsPerGameForIds(gameIds: string[]): Promise<Record<string, SeasonData[]>> {
+  const all = await getAllGameSeasonsForIds(gameIds);
+  return Object.fromEntries(
+    all.map(({ gameId, seasons }) => [gameId, _computeSeasonsForGame(gameId, seasons)])
+  );
 }

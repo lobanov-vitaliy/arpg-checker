@@ -5,36 +5,40 @@ export interface GameDoc extends GameConfig {
   seasons: ManualSeasonEntry[];
 }
 
-async function col() {
-  const db = await getDb();
-  const c = db.collection<GameDoc>("games");
-  await c.createIndex({ id: 1 }, { unique: true, background: true });
-  return c;
-}
+import type { Collection } from "mongodb";
 
-async function seedIfEmpty(c: Awaited<ReturnType<typeof col>>) {
-  const count = await c.countDocuments();
-  if (count > 0) return;
-  // Lazy import to avoid circular dependency
-  const { GAMES, GAME_SEASONS } = await import("@/data");
-  const docs: GameDoc[] = GAMES.map((game) => {
-    const gs = GAME_SEASONS.find((g) => g.gameId === game.id);
-    return { ...game, seasons: gs?.seasons ?? [] };
-  });
-  if (docs.length > 0) {
-    await c.insertMany(docs);
+let _colPromise: Promise<Collection<GameDoc>> | undefined;
+
+async function getCol(): Promise<Collection<GameDoc>> {
+  if (!_colPromise) {
+    _colPromise = (async () => {
+      const db = await getDb();
+      const c = db.collection<GameDoc>("games");
+      await Promise.all([
+        c.createIndex({ id: 1 }, { unique: true }),
+        c.createIndex({ genres: 1 }),
+        c.createIndex({ name: "text" }),
+      ]);
+      const count = await c.countDocuments();
+      if (count === 0) {
+        const { GAMES, GAME_SEASONS } = await import("@/data");
+        const docs: GameDoc[] = GAMES.map((game) => {
+          const gs = GAME_SEASONS.find((g) => g.gameId === game.id);
+          return { ...game, seasons: gs?.seasons ?? [] };
+        });
+        if (docs.length > 0) await c.insertMany(docs);
+      }
+      return c;
+    })();
   }
-}
-
-async function getCol() {
-  const c = await col();
-  await seedIfEmpty(c);
-  return c;
+  return _colPromise;
 }
 
 export async function getGames(): Promise<GameConfig[]> {
+  const t = performance.now();
   const c = await getCol();
   const docs = await c.find({}, { projection: { seasons: 0, _id: 0 } }).toArray();
+  console.log(`[db] getGames: ${(performance.now() - t).toFixed(0)}ms (${docs.length} games)`);
   return docs as unknown as GameConfig[];
 }
 
@@ -51,8 +55,16 @@ export async function getGameSeasons(gameId: string): Promise<ManualSeasonEntry[
 }
 
 export async function getAllGameSeasons(): Promise<{ gameId: string; seasons: ManualSeasonEntry[] }[]> {
+  const t = performance.now();
   const c = await getCol();
   const docs = await c.find({}, { projection: { id: 1, seasons: 1, _id: 0 } }).toArray();
+  console.log(`[db] getAllGameSeasons: ${(performance.now() - t).toFixed(0)}ms`);
+  return docs.map((d) => ({ gameId: d.id, seasons: d.seasons ?? [] }));
+}
+
+export async function getAllGameSeasonsForIds(gameIds: string[]): Promise<{ gameId: string; seasons: ManualSeasonEntry[] }[]> {
+  const c = await getCol();
+  const docs = await c.find({ id: { $in: gameIds } }, { projection: { id: 1, seasons: 1, _id: 0 } }).toArray();
   return docs.map((d) => ({ gameId: d.id, seasons: d.seasons ?? [] }));
 }
 

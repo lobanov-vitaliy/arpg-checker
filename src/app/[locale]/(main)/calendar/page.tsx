@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { getAllSeasons, getSeasonsForGame } from "@/lib/seasons";
+import { getAllSeasons, getAllSeasonsPerGame } from "@/lib/seasons";
 import { getGames } from "@/config/games";
 import {
   CalendarGrid,
@@ -9,7 +9,11 @@ import {
 
 export default async function CalendarPage() {
   const t = await getTranslations("calendar");
-  const [seasons, allGames] = await Promise.all([getAllSeasons(), getGames()]);
+  const [seasons, allGames, seasonsPerGameMap] = await Promise.all([
+    getAllSeasons(),
+    getGames(),
+    getAllSeasonsPerGame(),
+  ]);
   const gameById = Object.fromEntries(allGames.map((g) => [g.id, g]));
   const now = Date.now();
 
@@ -41,7 +45,7 @@ export default async function CalendarPage() {
       new Date(season.nextSeasonStartDate).getTime() > now &&
       season.nextSeasonStartDate !== season.startDate
     ) {
-      const gameSeasons = await getSeasonsForGame(game.id);
+      const gameSeasons = seasonsPerGameMap[game.id] ?? [];
       const nextEntry = gameSeasons.find(
         (s) => s.startDate === season.nextSeasonStartDate,
       );

@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import type { Collection } from "mongodb";
 import { getDb } from "./mongodb";
 
 const SALT = process.env.LIKES_SALT ?? "seasonpulse-likes";
@@ -17,16 +18,37 @@ function hashIp(ip: string): string {
     .slice(0, 32);
 }
 
+let _colPromise: Promise<Collection<LikesDoc>> | undefined;
+
 async function col() {
-  const db = await getDb();
-  const c = db.collection<LikesDoc>("likes");
-  await c.createIndex({ gameId: 1 }, { unique: true, background: true });
-  return c;
+  if (!_colPromise) {
+    _colPromise = (async () => {
+      const db = await getDb();
+      const c = db.collection<LikesDoc>("likes");
+      await c.createIndex({ gameId: 1 }, { unique: true });
+      return c;
+    })();
+  }
+  return _colPromise;
+}
+
+export async function getAllLikesCounts(): Promise<Record<string, number>> {
+  const t = performance.now();
+  const c = await col();
+  const docs = await c.find({}, { projection: { gameId: 1, count: 1, _id: 0 } }).toArray();
+  console.log(`[db] getAllLikesCounts: ${(performance.now() - t).toFixed(0)}ms`);
+  return Object.fromEntries(docs.map((d) => [d.gameId, d.count ?? 0]));
+}
+
+export async function getLikesCountsForIds(gameIds: string[]): Promise<Record<string, number>> {
+  const c = await col();
+  const docs = await c.find({ gameId: { $in: gameIds } }, { projection: { gameId: 1, count: 1, _id: 0 } }).toArray();
+  return Object.fromEntries(docs.map((d) => [d.gameId, d.count ?? 0]));
 }
 
 export async function getLikesCount(gameId: string): Promise<number> {
   const c = await col();
-  const doc = await c.findOne({ gameId });
+  const doc = await c.findOne({ gameId }, { projection: { count: 1, _id: 0 } });
   return doc?.count ?? 0;
 }
 
