@@ -229,7 +229,18 @@
     "dataStale": "Awaiting refresh",
     "estimated": "Estimated",
     "official": "Official",
-    "steamStore": "Steam Store"
+    "steamStore": "Steam Store",
+    "confidenceHigh": "Confirmed",
+    "confidenceMedium": "Estimated",
+    "confidenceLow": "Inferred",
+    "lastUpdated": "Updated",
+    "sourceLink": "Source",
+    "faqTitle": "Frequently Asked Questions",
+    "faqCurrentEnd": "When does the current {seasonType} end?",
+    "faqNextStart": "When does the next {seasonType} start?",
+    "faqConfirmed": "Is the next {seasonType} date confirmed?",
+    "faqDuration": "How long do {game} {seasonType}s usually last?",
+    "browseAll": "Browse all games"
   },
   "feedback": {
     "trigger": "Suggest / Feedback",

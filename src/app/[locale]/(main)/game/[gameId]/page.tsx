@@ -7,6 +7,9 @@ import { getSeasonsForGame } from "@/lib/seasons";
 import { getSteamData } from "@/lib/steam-fetcher";
 import { GameImage } from "@/components/dashboard/GameImage";
 import { SeasonBadge } from "@/components/dashboard/SeasonBadge";
+import { ConfidenceBadge } from "@/components/game/ConfidenceBadge";
+import { TrustMeta } from "@/components/game/TrustMeta";
+import { GameFAQ } from "@/components/game/GameFAQ";
 import { CountdownTimer } from "@/components/dashboard/CountdownTimer";
 import { ElapsedTimer } from "@/components/dashboard/ElapsedTimer";
 import { SteamReviewBadge } from "@/components/dashboard/SteamReviewBadge";
@@ -23,6 +26,15 @@ export const dynamic = "force-dynamic";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://seasonpulse.fun";
 
+const OG_MAP: Record<string, string> = {
+  en: "en_US",
+  ua: "uk_UA",
+  es: "es_ES",
+  pl: "pl_PL",
+  de: "de_DE",
+  fr: "fr_FR",
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -38,51 +50,36 @@ export async function generateMetadata({
     seasons.find((s) => s.status === "upcoming") ??
     seasons[0];
 
-  const OG_MAP: Record<string, string> = {
-    en: "en_US",
-    ua: "uk_UA",
-    es: "es_ES",
-    pl: "pl_PL",
-    de: "de_DE",
-    fr: "fr_FR",
-  };
   const ogLocale = OG_MAP[locale] ?? "en_US";
 
-  const titleSuffix = active
-    ? active.seasonNumber
-      ? `${active.seasonName} #${active.seasonNumber}`
-      : active.seasonName
-    : game.seasonType;
-  const title = `${game.name} — ${titleSuffix}`;
-
-  const parts: string[] = [];
-  if (active) {
-    const statusMap = {
-      active: "Active",
-      upcoming: "Upcoming",
-      ended: "Ended",
-      unknown: "Unknown",
-    };
-    parts.push(`${statusMap[active.status]} ${game.seasonType}: ${active.seasonName}.`);
-    if (active.startDate) {
-      const fmt = (d: string) =>
-        new Date(d).toLocaleDateString(toIntlLocale(locale), {
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-        });
-      if (active.status === "upcoming") {
-        parts.push(`Starts ${fmt(active.startDate)}.`);
-      } else {
-        parts.push(`Started ${fmt(active.startDate)}.`);
-      }
-      if (active.endDate) parts.push(`Ends ${fmt(active.endDate)}.`);
-    }
-    if (active.description) parts.push(active.description);
+  // SEO-optimised title patterns
+  let title: string;
+  if (active?.status === "active" && active.endDate) {
+    title = `When Does ${game.name} ${capitalise(active.seasonName ?? game.seasonType)} End? | Season Pulse`;
+  } else if (active?.status === "upcoming" || active?.nextSeasonStartDate) {
+    title = `${game.name} Season Countdown – Next ${capitalise(game.seasonType)} Date | Season Pulse`;
+  } else {
+    title = `${game.name} Season Tracker – Current ${capitalise(game.seasonType)} and Dates | Season Pulse`;
   }
-  parts.push(
-    `Track all ${game.name} ${game.seasonType}s, countdowns, and player stats on SeasonPulse.`,
-  );
+
+  // SEO description
+  const parts: string[] = [];
+  parts.push(`Track the current and next ${game.name} ${game.seasonType}, countdowns, start and end dates.`);
+  if (active) {
+    const fmt = (d: string) =>
+      new Date(d).toLocaleDateString(toIntlLocale(locale), {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      });
+    if (active.endDate) parts.push(`Current ${game.seasonType} ends ${fmt(active.endDate)}.`);
+    if (active.nextSeasonStartDate) {
+      const label = active.nextSeasonIsEstimated ? "Next estimated" : "Next";
+      parts.push(`${label} ${game.seasonType} starts ${fmt(active.nextSeasonStartDate)}.`);
+    }
+    const confidenceLabel = active.confidence === "high" ? "Dates are officially confirmed." : "Some dates are estimated.";
+    parts.push(confidenceLabel);
+  }
   const description = parts.join(" ");
 
   const pageUrl = `${SITE_URL}/${locale}/game/${gameId}`;
@@ -95,7 +92,10 @@ export async function generateMetadata({
       languages: {
         en: `${SITE_URL}/en/game/${gameId}`,
         uk: `${SITE_URL}/ua/game/${gameId}`,
-        ru: `${SITE_URL}/ru/game/${gameId}`,
+        es: `${SITE_URL}/es/game/${gameId}`,
+        pl: `${SITE_URL}/pl/game/${gameId}`,
+        de: `${SITE_URL}/de/game/${gameId}`,
+        fr: `${SITE_URL}/fr/game/${gameId}`,
       },
     },
     openGraph: {
@@ -175,6 +175,9 @@ export default async function GamePage({
         ? t("endedSeason", { seasonType: game.seasonType })
         : t("currentSeason", { seasonType: game.seasonType });
 
+  // SEO H2 text based on available data
+  const seoHeadline = buildSeoHeadline(game.name, game.seasonType, activeSeason ?? null);
+
   // Other games from the same genre (up to 3, excluding current)
   const relatedGames = await Promise.all(
     allGames
@@ -197,6 +200,9 @@ export default async function GamePage({
 
   return (
     <main className="min-h-screen">
+      {/* JSON-LD: BreadcrumbList + Event */}
+      <JsonLd game={{ name: game.name, developer: game.developer, officialUrl: game.officialUrl }} activeSeason={activeSeason ?? null} locale={locale} gameId={gameId} />
+
       {/* ── Compact header ── */}
       <div className="max-w-6xl mx-auto px-4 pt-6 pb-2">
         <div className="flex items-start gap-5">
@@ -223,6 +229,9 @@ export default async function GamePage({
             >
               {game.name}
             </h1>
+            {seoHeadline && (
+              <p className="text-sm text-gray-400 mt-0.5">{seoHeadline}</p>
+            )}
             <div className="flex items-center gap-2 mt-1.5 flex-wrap">
               {game.genres.map((g) => (
                 <span
@@ -245,7 +254,7 @@ export default async function GamePage({
                   glowColor={game.glowColor}
                   gameId={game.id}
                 />
-                <div className="bg-white/15 w-[1px] h-4" />
+                <div className="bg-white/15 w-px h-4" />
               </>
             )}
             <a
@@ -262,7 +271,7 @@ export default async function GamePage({
             >
               <CalendarDays className="size-4" />
             </a>
-            <div className="bg-white/15 w-[1px] h-4" />
+            <div className="bg-white/15 w-px h-4" />
             <LikeButton gameId={game.id} initialCount={likesCount} className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg" />
             <a
               href={game.officialUrl}
@@ -332,7 +341,10 @@ export default async function GamePage({
                   )}
                 </h2>
               </div>
-              <SeasonBadge status={activeSeason.status} />
+              <div className="flex items-center gap-2 shrink-0">
+                <ConfidenceBadge confidence={activeSeason.confidence} />
+                <SeasonBadge status={activeSeason.status} />
+              </div>
             </div>
 
             {activeSeason.description && (
@@ -407,6 +419,8 @@ export default async function GamePage({
                 ) : null}
               </div>
             ) : null}
+
+            <TrustMeta fetchedAt={activeSeason.fetchedAt} sourceUrl={activeSeason.sourceUrl} />
           </div>
         )}
 
@@ -429,6 +443,14 @@ export default async function GamePage({
             )}
           </div>
         )}
+
+        {/* FAQ */}
+        <GameFAQ
+          gameName={game.name}
+          seasonType={game.seasonType}
+          activeSeason={activeSeason ?? null}
+          locale={locale}
+        />
 
         {/* Other game timers — same genre, up to 3 */}
         {filteredRelatedGames.length > 0 && (
@@ -490,6 +512,14 @@ export default async function GamePage({
                 );
               })}
             </div>
+            <div className="mt-3 text-right">
+              <a
+                href={`/${locale}`}
+                className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
+              >
+                {t("browseAll")} →
+              </a>
+            </div>
           </div>
         )}
 
@@ -525,8 +555,86 @@ export default async function GamePage({
   );
 }
 
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
 function formatCount(n: number): string {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
   if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
   return String(n);
+}
+
+function capitalise(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+function buildSeoHeadline(
+  gameName: string,
+  seasonType: string,
+  activeSeason: SeasonData | null,
+): string | null {
+  if (!activeSeason) return null;
+  if (activeSeason.status === "active" && activeSeason.endDate) {
+    return `When does the current ${gameName} ${seasonType} end?`;
+  }
+  if (activeSeason.status === "upcoming") {
+    return `When does the next ${gameName} ${seasonType} start?`;
+  }
+  if (activeSeason.nextSeasonStartDate) {
+    return `${gameName} ${seasonType} countdown — current and next dates`;
+  }
+  return null;
+}
+
+// Inline JSON-LD component (server-only)
+function JsonLd({
+  game,
+  activeSeason,
+  locale,
+  gameId,
+}: {
+  game: { name: string; developer: string; officialUrl: string };
+  activeSeason: SeasonData | null;
+  locale: string;
+  gameId: string;
+}) {
+  const pageUrl = `${SITE_URL}/${locale}/game/${gameId}`;
+
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Season Pulse", item: `${SITE_URL}/${locale}` },
+      { "@type": "ListItem", position: 2, name: game.name, item: pageUrl },
+    ],
+  };
+
+  const event =
+    activeSeason?.startDate
+      ? {
+          "@context": "https://schema.org",
+          "@type": "Event",
+          name: `${game.name} – ${activeSeason.seasonName}`,
+          startDate: activeSeason.startDate,
+          ...(activeSeason.endDate ? { endDate: activeSeason.endDate } : {}),
+          eventStatus: "https://schema.org/EventScheduled",
+          eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+          location: { "@type": "VirtualLocation", url: game.officialUrl },
+          organizer: { "@type": "Organization", name: game.developer, url: game.officialUrl },
+        }
+      : null;
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      {event && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(event) }}
+        />
+      )}
+    </>
+  );
 }
