@@ -24,7 +24,7 @@ import type { GameConfig, SeasonData } from "@/types";
 
 export const dynamic = "force-dynamic";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://seasonpulse.fun";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.seasonpulse.fun";
 
 const OG_MAP: Record<string, string> = {
   en: "en_US",
@@ -52,14 +52,14 @@ export async function generateMetadata({
 
   const ogLocale = OG_MAP[locale] ?? "en_US";
 
-  // SEO-optimised title patterns
+  // SEO-optimised title patterns (layout template appends "| SeasonPulse")
   let title: string;
   if (active?.status === "active" && active.endDate) {
-    title = `When Does ${game.name} ${capitalise(active.seasonName ?? game.seasonType)} End? | Season Pulse`;
+    title = `When Does ${game.name} ${capitalise(active.seasonName ?? game.seasonType)} End?`;
   } else if (active?.status === "upcoming" || active?.nextSeasonStartDate) {
-    title = `${game.name} Season Countdown – Next ${capitalise(game.seasonType)} Date | Season Pulse`;
+    title = `${game.name} Season Countdown – Next ${capitalise(game.seasonType)} Date`;
   } else {
-    title = `${game.name} Season Tracker – Current ${capitalise(game.seasonType)} and Dates | Season Pulse`;
+    title = `${game.name} Season Tracker – Current ${capitalise(game.seasonType)} Dates`;
   }
 
   // SEO description
@@ -90,6 +90,7 @@ export async function generateMetadata({
     alternates: {
       canonical: pageUrl,
       languages: {
+        "x-default": `${SITE_URL}/en/game/${gameId}`,
         en: `${SITE_URL}/en/game/${gameId}`,
         uk: `${SITE_URL}/ua/game/${gameId}`,
         es: `${SITE_URL}/es/game/${gameId}`,

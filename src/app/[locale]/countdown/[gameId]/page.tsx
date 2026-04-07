@@ -7,7 +7,7 @@ import { CountdownFullscreen } from "./CountdownFullscreen";
 
 export const dynamic = "force-dynamic";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://seasonpulse.fun";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.seasonpulse.fun";
 
 export async function generateMetadata({
   params,
@@ -33,7 +33,18 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: { canonical: pageUrl },
+    alternates: {
+      canonical: pageUrl,
+      languages: {
+        "x-default": `${SITE_URL}/en/countdown/${gameId}`,
+        en: `${SITE_URL}/en/countdown/${gameId}`,
+        uk: `${SITE_URL}/ua/countdown/${gameId}`,
+        es: `${SITE_URL}/es/countdown/${gameId}`,
+        pl: `${SITE_URL}/pl/countdown/${gameId}`,
+        de: `${SITE_URL}/de/countdown/${gameId}`,
+        fr: `${SITE_URL}/fr/countdown/${gameId}`,
+      },
+    },
     openGraph: {
       type: "website",
       title,

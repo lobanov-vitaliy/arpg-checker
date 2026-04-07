@@ -1,6 +1,6 @@
 import { getGame } from "@/config/games";
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://seasonpulse.fun";
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.seasonpulse.fun";
 
 interface Redirect {
   url: string;

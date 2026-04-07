@@ -16,7 +16,7 @@ export const runtime = "nodejs";
 export const maxDuration = 120;
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://seasonpulse.fun";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.seasonpulse.fun";
 
 function shouldCheck(
   seasons: SeasonData[],

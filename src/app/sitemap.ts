@@ -1,7 +1,7 @@
 import { getGames } from "@/config/games";
 import type { MetadataRoute } from "next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://seasonpulse.fun";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.seasonpulse.fun";
 const LOCALES = ["en", "ua", "es", "pl", "de", "fr"] as const;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -16,12 +16,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "hourly" as const,
       priority: path === "" ? 1.0 : 0.8,
       alternates: {
-        languages: Object.fromEntries(
-          LOCALES.map((l) => [
-            l === "ua" ? "uk" : l,
-            `${SITE_URL}/${l}${path}`,
-          ]),
-        ),
+        languages: {
+          "x-default": `${SITE_URL}/en${path}`,
+          ...Object.fromEntries(
+            LOCALES.map((l) => [
+              l === "ua" ? "uk" : l,
+              `${SITE_URL}/${l}${path}`,
+            ]),
+          ),
+        },
       },
     })),
   );
@@ -37,12 +40,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "daily" as const,
         priority: 0.9,
         alternates: {
-          languages: Object.fromEntries(
-            LOCALES.map((l) => [
-              l === "ua" ? "uk" : l,
-              `${SITE_URL}/${l}/game/${game.id}`,
-            ]),
-          ),
+          languages: {
+            "x-default": `${SITE_URL}/en/game/${game.id}`,
+            ...Object.fromEntries(
+              LOCALES.map((l) => [
+                l === "ua" ? "uk" : l,
+                `${SITE_URL}/${l}/game/${game.id}`,
+              ]),
+            ),
+          },
         },
       })),
     );

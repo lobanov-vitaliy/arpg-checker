@@ -4,7 +4,7 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://seasonpulse.fun";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.seasonpulse.fun";
 const SITE_NAME = "SeasonPulse";
 
 const OG_LOCALE_MAP: Record<string, string> = {
@@ -88,6 +88,7 @@ export async function generateMetadata({
     alternates: {
       canonical: `${SITE_URL}/${locale}`,
       languages: {
+        "x-default": `${SITE_URL}/en`,
         en: `${SITE_URL}/en`,
         uk: `${SITE_URL}/ua`,
         es: `${SITE_URL}/es`,
