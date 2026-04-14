@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Heart } from "lucide-react";
-import { track } from "@vercel/analytics";
-
 const LS_KEY = "sp_likes";
 
 function getLikedGames(): string[] {
@@ -40,7 +38,6 @@ export function LikeButton({ gameId, initialCount, className }: LikeButtonProps)
       const data = (await res.json()) as { count: number; liked: boolean };
       setCount(data.count);
       setLiked(data.liked);
-      track(data.liked ? "like_add" : "like_remove", { gameId });
       const current = getLikedGames();
       if (data.liked) {
         if (!current.includes(gameId)) {

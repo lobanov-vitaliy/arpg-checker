@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { track } from "@vercel/analytics";
-
 const LS_KEY = "sp_favorites";
 
 export function getFavorites(): string[] {
@@ -41,8 +39,7 @@ export function FavoriteButton({ gameId }: FavoriteButtonProps) {
     e.stopPropagation();
     const current = getFavorites();
     const adding = !current.includes(gameId);
-    track(adding ? "favorite_add" : "favorite_remove", { gameId });
-    setFavorites(adding ? [...current, gameId] : current.filter((id) => id !== gameId));
+setFavorites(adding ? [...current, gameId] : current.filter((id) => id !== gameId));
   }
 
   return (

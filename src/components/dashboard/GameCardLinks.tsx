@@ -1,8 +1,6 @@
 "use client";
 
 import { ExternalLink, Timer, CalendarDays } from "lucide-react";
-import { track } from "@vercel/analytics";
-
 interface Props {
   gameId: string;
   gameName: string;
@@ -15,8 +13,6 @@ interface Props {
 }
 
 export function GameCardLinks({
-  gameId,
-  gameName,
   officialUrl,
   countdownHref,
   calendarHref,
@@ -32,7 +28,6 @@ export function GameCardLinks({
         rel="noopener noreferrer"
         className="flex items-center gap-1 text-xs hover:underline"
         style={{ color: glowColor }}
-        onClick={() => track("game_official_site_click", { gameId })}
       >
         <ExternalLink className="w-3 h-3" /> {officialLabel}
       </a>
@@ -43,7 +38,6 @@ export function GameCardLinks({
           rel="noopener noreferrer"
           className="text-gray-600 hover:text-gray-400 transition-colors"
           title="Countdown"
-          onClick={() => track("game_countdown_click", { gameId, gameName })}
         >
           <Timer className="w-3.5 h-3.5" />
         </a>
@@ -51,7 +45,6 @@ export function GameCardLinks({
           href={calendarHref}
           className="text-gray-600 hover:text-gray-400 transition-colors"
           title={calendarTitle}
-          onClick={() => track("game_calendar_click", { gameId })}
         >
           <CalendarDays className="w-3.5 h-3.5" />
         </a>

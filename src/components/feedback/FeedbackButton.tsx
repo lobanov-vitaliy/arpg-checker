@@ -4,8 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { MessageSquarePlus, X } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { track } from "@vercel/analytics";
-
 type FeedbackType = "idea" | "game";
 
 const MIN = 10;
@@ -48,8 +46,7 @@ export function FeedbackButton() {
       });
       const data = (await res.json()) as { ok?: boolean; error?: string };
       if (data.ok) {
-        track("feedback_submit", { type });
-        setStatus("success");
+setStatus("success");
       } else if (data.error === "rate_limit") {
         setStatus("rate_limit");
       } else {
@@ -66,7 +63,7 @@ export function FeedbackButton() {
   return (
     <>
       <button
-        onClick={() => { setOpen(true); track("feedback_open"); }}
+        onClick={() => setOpen(true)}
         className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-200 transition-colors"
       >
         <MessageSquarePlus className="w-3.5 h-3.5 shrink-0" />

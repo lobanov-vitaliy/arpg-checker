@@ -8,8 +8,6 @@ import { formatDate } from "@/lib/utils";
 import { Clock } from "lucide-react";
 import type { SeasonData, GameConfig, SteamData } from "@/types";
 import { PlayerSparkline } from "./PlayerSparkline";
-import { track } from "@vercel/analytics";
-
 interface SeasonSwitcherProps {
   seasons: SeasonData[];
   game: GameConfig;
@@ -103,7 +101,7 @@ export function SeasonSwitcher({
           {displaySeasons.slice(0, 5).map((s, i) => (
             <button
               key={i}
-              onClick={() => { setIdx(i); if (i !== idx) track("season_switch", { gameId: game.id, seasonName: s.seasonName }); }}
+              onClick={() => setIdx(i)}
               className="rounded-full font-medium"
               style={{
                 height: i === idx ? "18px" : "16px",

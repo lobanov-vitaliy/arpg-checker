@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { ArrowLeft, Link2, Share2, Code, Check, X } from "lucide-react";
-import { track } from "@vercel/analytics";
 
 interface TimeLeft {
   days: number;
@@ -82,7 +81,6 @@ export function CountdownFullscreen({
   const copyToClipboard = useCallback(
     async (text: string, type: "link" | "embed") => {
       await navigator.clipboard.writeText(text);
-      if (type === "link") track("countdown_copy_link", { gameId });
       setCopied(type);
       setTimeout(() => setCopied(null), 2000);
     },
@@ -90,7 +88,6 @@ export function CountdownFullscreen({
   );
 
   const handleShare = useCallback(async () => {
-    track("countdown_share", { gameId });
     if (navigator.share) {
       await navigator.share({
         title: `${gameName} — ${seasonName}`,

@@ -1,5 +1,5 @@
 import { Manrope, Geist_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
+import { AmplitudeProvider } from "@/components/AmplitudeProvider";
 import "@/app/globals.css";
 
 const mainFont = Manrope({
@@ -25,7 +25,7 @@ export default function RootLayout({
     >
       <meta name="apple-mobile-web-app-title" content="SeasonPulse" />
       <body className="has-bg min-h-full flex flex-col bg-gray-950 text-gray-100">
-        <Analytics />
+        <AmplitudeProvider />
         {children}
       </body>
     </html>
