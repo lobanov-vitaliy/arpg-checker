@@ -1,5 +1,37 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Info, Search, Cpu, Heart, Mail } from "lucide-react";
+import { buildAlternates, toOgLocale, SITE_NAME, SITE_URL } from "@/lib/seo";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "about" });
+  const title = t("title");
+  const description = t("intro");
+  const url = `${SITE_URL}/${locale}/about`;
+  return {
+    title,
+    description,
+    alternates: buildAlternates(locale, "/about"),
+    openGraph: {
+      type: "website",
+      siteName: SITE_NAME,
+      title,
+      description,
+      url,
+      locale: toOgLocale(locale),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
 
 export default async function AboutPage() {
   const t = await getTranslations("about");

@@ -1,5 +1,41 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Shield, Database, HardDrive, Globe, RefreshCw } from "lucide-react";
+import { buildAlternates, toOgLocale, SITE_NAME, SITE_URL } from "@/lib/seo";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "privacy" });
+  const title = t("title");
+  const description = t("intro");
+  const url = `${SITE_URL}/${locale}/privacy`;
+  return {
+    title,
+    description,
+    alternates: buildAlternates(locale, "/privacy"),
+    openGraph: {
+      type: "website",
+      siteName: SITE_NAME,
+      title,
+      description,
+      url,
+      locale: toOgLocale(locale),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 export default async function PrivacyPage() {
   const t = await getTranslations("privacy");

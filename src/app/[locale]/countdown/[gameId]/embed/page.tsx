@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { getGame } from "@/config/games";
@@ -5,6 +6,10 @@ import { getSeasonsForGame } from "@/lib/seasons";
 import { CountdownEmbed } from "./CountdownEmbed";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
+};
 
 export default async function EmbedPage({
   params,

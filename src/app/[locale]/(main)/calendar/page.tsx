@@ -1,11 +1,43 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getAllSeasons, getAllSeasonsPerGame } from "@/lib/seasons";
 import { getGames } from "@/config/games";
+import { buildAlternates, toOgLocale, SITE_NAME, SITE_URL } from "@/lib/seo";
 import {
   CalendarGrid,
   type CalendarEvent,
   type CalendarGame,
 } from "@/components/calendar/CalendarGrid";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "calendar" });
+  const title = t("title");
+  const description = t("subtitle");
+  const url = `${SITE_URL}/${locale}/calendar`;
+  return {
+    title,
+    description,
+    alternates: buildAlternates(locale, "/calendar"),
+    openGraph: {
+      type: "website",
+      siteName: SITE_NAME,
+      title,
+      description,
+      url,
+      locale: toOgLocale(locale),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
 
 export default async function CalendarPage() {
   const t = await getTranslations("calendar");

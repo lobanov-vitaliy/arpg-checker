@@ -20,21 +20,18 @@ import { SocialLinks } from "@/components/game/SocialLinks";
 import { LikeButton } from "@/components/dashboard/LikeButton";
 import { FormattedDate } from "@/components/FormattedDate";
 import { toIntlLocale } from "@/lib/utils";
+import {
+  buildAlternates,
+  toOgLocale,
+  truncateTitle,
+  clampDescription,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/seo";
 import { getLikesCount } from "@/lib/likes";
-import type { GameConfig, SeasonData } from "@/types";
+import type { GameConfig, SeasonData, SteamRating } from "@/types";
 
 export const dynamic = "force-dynamic";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.seasonpulse.fun";
-
-const OG_MAP: Record<string, string> = {
-  en: "en_US",
-  ua: "uk_UA",
-  es: "es_ES",
-  pl: "pl_PL",
-  de: "de_DE",
-  fr: "fr_FR",
-};
 
 export async function generateMetadata({
   params,
@@ -51,9 +48,13 @@ export async function generateMetadata({
     seasons.find((s) => s.status === "upcoming") ??
     seasons[0];
 
-  const ogLocale = OG_MAP[locale] ?? "en_US";
+  // Steam-card-sized cover (460x215) is below Facebook's OG recommendation
+  // (1200x630). Twitter renders it fine as a small card — use "summary" to
+  // avoid social previews that stretch the cover.
+  const twitterCard = "summary";
 
-  // SEO-optimised title patterns (layout template appends "| SeasonPulse")
+  // SEO-optimised title patterns — the layout template appends "| SeasonPulse",
+  // so we cap the dynamic part so the whole SERP title stays ≤60 chars.
   let title: string;
   if (active?.status === "active" && active.endDate) {
     title = `When Does ${game.name} ${capitalise(active.seasonName ?? game.seasonType)} End?`;
@@ -62,10 +63,12 @@ export async function generateMetadata({
   } else {
     title = `${game.name} Season Tracker – Current ${capitalise(game.seasonType)} Dates`;
   }
+  title = truncateTitle(title);
 
-  // SEO description
   const parts: string[] = [];
-  parts.push(`Track the current and next ${game.name} ${game.seasonType}, countdowns, start and end dates.`);
+  parts.push(
+    `Track the current and next ${game.name} ${game.seasonType}, countdowns, start and end dates.`,
+  );
   if (active) {
     const fmt = (d: string) =>
       new Date(d).toLocaleDateString(toIntlLocale(locale), {
@@ -78,34 +81,27 @@ export async function generateMetadata({
       const label = active.nextSeasonIsEstimated ? "Next estimated" : "Next";
       parts.push(`${label} ${game.seasonType} starts ${fmt(active.nextSeasonStartDate)}.`);
     }
-    const confidenceLabel = active.confidence === "high" ? "Dates are officially confirmed." : "Some dates are estimated.";
-    parts.push(confidenceLabel);
+    parts.push(
+      active.confidence === "high"
+        ? "Dates are officially confirmed."
+        : "Some dates are estimated.",
+    );
   }
-  const description = parts.join(" ");
+  const description = clampDescription(parts.join(" "));
 
   const pageUrl = `${SITE_URL}/${locale}/game/${gameId}`;
 
   return {
     title,
     description,
-    alternates: {
-      canonical: pageUrl,
-      languages: {
-        "x-default": `${SITE_URL}/en/game/${gameId}`,
-        en: `${SITE_URL}/en/game/${gameId}`,
-        uk: `${SITE_URL}/ua/game/${gameId}`,
-        es: `${SITE_URL}/es/game/${gameId}`,
-        pl: `${SITE_URL}/pl/game/${gameId}`,
-        de: `${SITE_URL}/de/game/${gameId}`,
-        fr: `${SITE_URL}/fr/game/${gameId}`,
-      },
-    },
+    alternates: buildAlternates(locale, `/game/${gameId}`),
     openGraph: {
       type: "website",
+      siteName: SITE_NAME,
       title,
       description,
       url: pageUrl,
-      locale: ogLocale,
+      locale: toOgLocale(locale),
       images: [
         {
           url: game.coverImage,
@@ -116,7 +112,7 @@ export async function generateMetadata({
       ],
     },
     twitter: {
-      card: "summary_large_image",
+      card: twitterCard,
       title,
       description,
       images: [game.coverImage],
@@ -202,11 +198,45 @@ export default async function GamePage({
 
   return (
     <main className="min-h-screen">
-      {/* JSON-LD: BreadcrumbList + Event */}
-      <JsonLd game={{ name: game.name, developer: game.developer, officialUrl: game.officialUrl }} activeSeason={activeSeason ?? null} locale={locale} gameId={gameId} />
+      {/* JSON-LD: BreadcrumbList + Event(s) + VideoGame + FAQPage */}
+      <JsonLd
+        game={{
+          name: game.name,
+          developer: game.developer,
+          officialUrl: game.officialUrl,
+          genres: game.genres,
+        }}
+        activeSeason={activeSeason ?? null}
+        seasons={allSeasons}
+        steamRating={steamData?.rating ?? null}
+        coverImage={game.coverImage}
+        locale={locale}
+        gameId={gameId}
+      />
+
+      {/* Visible breadcrumb — mirrors the BreadcrumbList JSON-LD above. */}
+      <nav
+        aria-label="Breadcrumb"
+        className="max-w-6xl mx-auto px-4 pt-4 text-xs text-gray-500"
+      >
+        <ol className="flex items-center gap-1.5">
+          <li>
+            <a
+              href={`/${locale}`}
+              className="hover:text-gray-300 transition-colors"
+            >
+              {SITE_NAME}
+            </a>
+          </li>
+          <li aria-hidden="true">/</li>
+          <li className="text-gray-400" aria-current="page">
+            {game.name}
+          </li>
+        </ol>
+      </nav>
 
       {/* ── Compact header ── */}
-      <div className="max-w-6xl mx-auto px-4 pt-6 pb-2 flex flex-col gap-3">
+      <div className="max-w-6xl mx-auto px-4 pt-4 pb-2 flex flex-col gap-3">
         <div className="flex items-start gap-3 sm:gap-5">
           {/* Avatar */}
           <div
@@ -217,6 +247,7 @@ export default async function GamePage({
               src={game.coverImage}
               alt={game.name}
               glowColor={game.glowColor}
+              priority
             />
           </div>
 
@@ -543,12 +574,14 @@ export default async function GamePage({
         {game.steamAppId && (
           <div>
             <h2 className="text-lg font-semibold text-white mb-4">{t("steamStore")}</h2>
-            {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
             <iframe
+              title={`${game.name} on Steam`}
               src={`https://store.steampowered.com/widget/${game.steamAppId}?utm_source=seasonpulse&utm_content=steam_embed`}
               width="100%"
               height="190"
               className="w-full"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
         )}
@@ -605,11 +638,17 @@ function buildSeoHeadline(
 function JsonLd({
   game,
   activeSeason,
+  seasons,
+  steamRating,
+  coverImage,
   locale,
   gameId,
 }: {
-  game: { name: string; developer: string; officialUrl: string };
+  game: { name: string; developer: string; officialUrl: string; genres: string[] };
   activeSeason: SeasonData | null;
+  seasons: SeasonData[];
+  steamRating: SteamRating | null | undefined;
+  coverImage: string;
   locale: string;
   gameId: string;
 }) {
@@ -619,12 +658,19 @@ function JsonLd({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Season Pulse", item: `${SITE_URL}/${locale}` },
+      { "@type": "ListItem", position: 1, name: SITE_NAME, item: `${SITE_URL}/${locale}` },
       { "@type": "ListItem", position: 2, name: game.name, item: pageUrl },
     ],
   };
 
-  const event =
+  const organizer = {
+    "@type": "Organization",
+    name: game.developer,
+    url: game.officialUrl,
+  };
+  const location = { "@type": "VirtualLocation", url: game.officialUrl };
+
+  const activeEvent =
     activeSeason?.startDate
       ? {
           "@context": "https://schema.org",
@@ -634,23 +680,138 @@ function JsonLd({
           ...(activeSeason.endDate ? { endDate: activeSeason.endDate } : {}),
           eventStatus: "https://schema.org/EventScheduled",
           eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
-          location: { "@type": "VirtualLocation", url: game.officialUrl },
-          organizer: { "@type": "Organization", name: game.developer, url: game.officialUrl },
+          location,
+          organizer,
         }
       : null;
 
+  // Upcoming / next-season Event: only emit when we have an officially-announced
+  // start date (not an estimate) that's distinct from the active season.
+  const nextSeasonEvent =
+    activeSeason?.nextSeasonStartDate &&
+    !activeSeason.nextSeasonIsEstimated &&
+    activeSeason.nextSeasonStartDate !== activeSeason.startDate
+      ? {
+          "@context": "https://schema.org",
+          "@type": "Event",
+          name: `${game.name} – Next ${activeSeason.seasonName ?? "Season"}`,
+          startDate: activeSeason.nextSeasonStartDate,
+          eventStatus: "https://schema.org/EventScheduled",
+          eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+          location,
+          organizer,
+        }
+      : null;
+
+  const aggregateRating =
+    steamRating && steamRating.percent != null && steamRating.totalReviews > 0
+      ? {
+          "@type": "AggregateRating",
+          ratingValue: (steamRating.percent / 20).toFixed(1),
+          bestRating: 5,
+          worstRating: 1,
+          ratingCount: steamRating.totalReviews,
+        }
+      : null;
+
+  const videoGame: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    name: game.name,
+    url: pageUrl,
+    image: coverImage,
+    publisher: organizer,
+    genre: game.genres,
+    applicationCategory: "Game",
+    operatingSystem: "Windows, macOS, Linux, PlayStation, Xbox",
+  };
+  if (aggregateRating) videoGame.aggregateRating = aggregateRating;
+
+  // Short FAQ mirrors the component in GameFAQ so Google can surface it even
+  // before the client FAQ hydrates.
+  const faqEntries = buildFaqJsonLd(game.name, activeSeason, seasons);
+  const faqPage =
+    faqEntries.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqEntries,
+        }
+      : null;
+
+  const blocks = [breadcrumb, activeEvent, nextSeasonEvent, videoGame, faqPage].filter(
+    (b): b is NonNullable<typeof b> => b !== null,
+  );
+
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
-      />
-      {event && (
+      {blocks.map((block, i) => (
         <script
+          key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(event) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(block) }}
         />
-      )}
+      ))}
     </>
   );
+}
+
+function buildFaqJsonLd(
+  gameName: string,
+  active: SeasonData | null,
+  all: SeasonData[],
+): Array<{ "@type": "Question"; name: string; acceptedAnswer: { "@type": "Answer"; text: string } }> {
+  const qs: Array<{ q: string; a: string }> = [];
+  if (active?.seasonName) {
+    qs.push({
+      q: `What is the current ${gameName} season?`,
+      a: `The current ${gameName} season is ${active.seasonName}${
+        active.seasonNumber ? ` (#${active.seasonNumber})` : ""
+      }.`,
+    });
+  }
+  if (active?.endDate) {
+    const d = new Date(active.endDate).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+    qs.push({
+      q: `When does the current ${gameName} season end?`,
+      a: `The current ${gameName} season ends on ${d}.`,
+    });
+  }
+  if (active?.nextSeasonStartDate) {
+    const d = new Date(active.nextSeasonStartDate).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+    const prefix = active.nextSeasonIsEstimated ? "is estimated to start" : "starts";
+    qs.push({
+      q: `When does the next ${gameName} season start?`,
+      a: `The next ${gameName} season ${prefix} on ${d}.`,
+    });
+  }
+  const completed = all.filter((s) => s.status === "ended" && s.startDate && s.endDate);
+  if (completed.length > 0) {
+    const avg = Math.round(
+      completed.reduce(
+        (sum, s) =>
+          sum +
+          (new Date(s.endDate!).getTime() - new Date(s.startDate!).getTime()) /
+            (1000 * 60 * 60 * 24),
+        0,
+      ) / completed.length,
+    );
+    qs.push({
+      q: `How long does a ${gameName} season last?`,
+      a: `Recent ${gameName} seasons have lasted about ${avg} days on average.`,
+    });
+  }
+  return qs.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  }));
 }

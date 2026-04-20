@@ -5,18 +5,24 @@ import { GameCard } from "@/components/dashboard/GameCard";
 import { getAllSeasons, getAllSeasonsPerGame } from "@/lib/seasons";
 import { getAllLikesCounts } from "@/lib/likes";
 import { getAllSteamData } from "@/lib/steam-fetcher";
+import { SITE_NAME, SITE_URL } from "@/lib/seo";
 
 const INITIAL_BATCH = 8;
 
-export default async function DashboardPage({
-  searchParams,
-}: {
+interface DashboardPageProps {
+  params: Promise<{ locale: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) {
+}
+
+export default async function DashboardPage({
+  params,
+  searchParams,
+}: DashboardPageProps) {
   const t0 = performance.now();
-  const [tHero, sp, games] = await Promise.all([
+  const [tHero, sp, { locale }, games] = await Promise.all([
     getTranslations("hero"),
     searchParams,
+    params,
     getGames(),
   ]);
 
@@ -49,8 +55,41 @@ export default async function DashboardPage({
     })),
   );
 
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    url: `${SITE_URL}/${locale}`,
+    inLanguage: locale === "ua" ? "uk" : locale,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${SITE_URL}/${locale}?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.png`,
+    sameAs: ["https://twitter.com/seasonpulse"],
+  };
+
   return (
     <main className="container mx-auto p-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
       <section className="relative px-6 py-6 sm:px-10 sm:py-8">
         <div className="text-center flex flex-col items-center">
           <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan-400/80 mb-6">
