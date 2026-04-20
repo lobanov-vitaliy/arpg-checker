@@ -323,18 +323,18 @@ export default async function GamePage({
         {/* Current season card */}
         {activeSeason && (
           <div
-            className="rounded-xl p-5 flex flex-col gap-4 backdrop-blur-md"
+            className="rounded-xl p-4 sm:p-5 flex flex-col gap-4 backdrop-blur-md"
             style={{
               backgroundColor: `${game.glowColor}08`,
               border: `1px solid ${game.glowColor}30`,
             }}
           >
-            <div className="flex items-start justify-between gap-3">
-              <div>
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+              <div className="min-w-0">
                 <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
                   {seasonLabel}
                 </p>
-                <h2 className="text-xl font-bold text-white">
+                <h2 className="text-lg sm:text-xl font-bold text-white break-words">
                   {activeSeason.seasonName}
                   {activeSeason.seasonNumber && (
                     <span className="text-gray-400 font-normal ml-2 text-base">
@@ -343,7 +343,7 @@ export default async function GamePage({
                   )}
                 </h2>
               </div>
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex items-center gap-2 shrink-0 flex-wrap">
                 <ConfidenceBadge confidence={activeSeason.confidence} />
                 <SeasonBadge status={activeSeason.status} />
               </div>
@@ -363,7 +363,7 @@ export default async function GamePage({
               />
             )}
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {activeSeason.startDate && (
                 <div>
                   <p className="text-xs text-gray-500 uppercase tracking-wider mb-0.5">
@@ -402,7 +402,7 @@ export default async function GamePage({
                 isEstimated={false}
               />
             ) : activeSeason.status === "active" ? (
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {startDate && (
                   <ElapsedTimer startDate={startDate} label={t("runningFor")} />
                 )}
