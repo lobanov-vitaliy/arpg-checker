@@ -92,8 +92,20 @@ export async function deleteGame(id: string): Promise<void> {
 
 export async function addSeason(gameId: string, entry: ManualSeasonEntry): Promise<void> {
   const c = await getCol();
-  const existing = await c.findOne({ id: gameId }, { projection: { "seasons.startDate": 1 } });
+  const existing = await c.findOne({ id: gameId }, { projection: { seasons: 1 } });
   if (existing?.seasons?.some((s) => s.startDate === entry.startDate)) return;
+
+  const newStart = new Date(entry.startDate).getTime();
+  const openPrior = existing?.seasons?.find(
+    (s) => (s.endDate ?? null) === null && new Date(s.startDate).getTime() < newStart
+  );
+  if (openPrior) {
+    await c.updateOne(
+      { id: gameId, "seasons.startDate": openPrior.startDate },
+      { $set: { "seasons.$.endDate": entry.startDate } }
+    );
+  }
+
   await c.updateOne(
     { id: gameId },
     { $push: { seasons: { $each: [entry], $position: 0 } } }

@@ -8,6 +8,22 @@ function computeStatus(startDate: string, endDate: string | null): SeasonData["s
   return "active";
 }
 
+// If a season has no endDate but a newer one has already started, it must have ended
+// at the newer season's startDate. Guards against stale DB entries left open.
+function closeOpenSeasonsByNext(entries: ManualSeasonEntry[]): ManualSeasonEntry[] {
+  const byStartDesc = [...entries].sort(
+    (a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+  );
+  return entries.map((e) => {
+    if (e.endDate) return e;
+    const newer = byStartDesc.find(
+      (o) => new Date(o.startDate).getTime() > new Date(e.startDate).getTime()
+    );
+    if (!newer) return e;
+    return { ...e, endDate: newer.startDate };
+  });
+}
+
 function computeAvgDuration(entries: ManualSeasonEntry[]): number | null {
   const completed = entries
     .filter((e) => e.endDate !== null)
@@ -65,7 +81,8 @@ export async function getAllSeasons(): Promise<SeasonData[]> {
   return allGameSeasons
     .map(({ gameId, seasons }) => {
       if (!seasons.length) return null;
-      const sorted = [...seasons].sort(
+      const normalized = closeOpenSeasonsByNext(seasons);
+      const sorted = [...normalized].sort(
         (a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
       );
       const avgDays = computeAvgDuration(sorted);
@@ -86,7 +103,8 @@ export async function getAllSeasonsPerGame(): Promise<Record<string, SeasonData[
 }
 
 function _computeSeasonsForGame(gameId: string, entries: ManualSeasonEntry[]): SeasonData[] {
-  const sorted = [...entries].sort((a, b) => {
+  const normalized = closeOpenSeasonsByNext(entries);
+  const sorted = [...normalized].sort((a, b) => {
     const sa = computeStatus(a.startDate, a.endDate ?? null);
     const sb = computeStatus(b.startDate, b.endDate ?? null);
     const pa = STATUS_PRIORITY[sa] ?? 3;
