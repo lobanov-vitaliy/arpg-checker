@@ -206,11 +206,11 @@ export default async function GamePage({
       <JsonLd game={{ name: game.name, developer: game.developer, officialUrl: game.officialUrl }} activeSeason={activeSeason ?? null} locale={locale} gameId={gameId} />
 
       {/* ── Compact header ── */}
-      <div className="max-w-6xl mx-auto px-4 pt-6 pb-2">
-        <div className="flex items-start gap-5">
+      <div className="max-w-6xl mx-auto px-4 pt-6 pb-2 flex flex-col gap-3">
+        <div className="flex items-start gap-3 sm:gap-5">
           {/* Avatar */}
           <div
-            className="w-24 h-16 sm:w-48 sm:h-20 rounded-lg overflow-hidden shrink-0 border"
+            className="w-20 h-14 sm:w-48 sm:h-20 rounded-lg overflow-hidden shrink-0 border"
             style={{ borderColor: `${game.glowColor}40` }}
           >
             <GameImage
@@ -226,13 +226,15 @@ export default async function GamePage({
               {game.developer}
             </p>
             <h1
-              className="text-2xl font-bold"
+              className="text-xl sm:text-2xl font-bold break-words"
               style={{ color: game.glowColor }}
             >
               {game.name}
             </h1>
             {seoHeadline && (
-              <p className="text-sm text-gray-400 mt-0.5">{seoHeadline}</p>
+              <p className="hidden sm:block text-sm text-gray-400 mt-0.5">
+                {seoHeadline}
+              </p>
             )}
             <div className="flex items-center gap-2 mt-1.5 flex-wrap">
               {game.genres.map((g) => (
@@ -246,45 +248,55 @@ export default async function GamePage({
               <SteamReviewBadge rating={steamData?.rating ?? null} />
             </div>
           </div>
+        </div>
 
-          {/* Actions */}
-          <div className="flex items-center gap-2 shrink-0">
-            {game.socialLinks && (
-              <>
-                <SocialLinks
-                  socialLinks={game.socialLinks}
-                  glowColor={game.glowColor}
-                  gameId={game.id}
-                />
-                <div className="bg-white/15 w-px h-4" />
-              </>
-            )}
-            <a
-              href={`/${locale}/countdown/${game.id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg"
-            >
-              <Timer className="size-4" />
-            </a>
-            <a
-              href={`/${locale}/calendar?game=${game.id}`}
-              className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg"
-            >
-              <CalendarDays className="size-4" />
-            </a>
-            <div className="bg-white/15 w-px h-4" />
-            <LikeButton gameId={game.id} initialCount={likesCount} className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg" />
-            <a
-              href={game.officialUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg"
-            >
-              <ExternalLink className="size-4" />
-              {t("officialSite")}
-            </a>
-          </div>
+        {seoHeadline && (
+          <p className="sm:hidden text-sm text-gray-400">{seoHeadline}</p>
+        )}
+
+        {/* Actions — wraps onto its own row on mobile */}
+        <div className="flex items-center gap-2 flex-wrap sm:justify-end">
+          {game.socialLinks && (
+            <>
+              <SocialLinks
+                socialLinks={game.socialLinks}
+                glowColor={game.glowColor}
+                gameId={game.id}
+              />
+              <div className="bg-white/15 w-px h-4" />
+            </>
+          )}
+          <a
+            href={`/${locale}/countdown/${game.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Countdown"
+            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg"
+          >
+            <Timer className="size-4" />
+          </a>
+          <a
+            href={`/${locale}/calendar?game=${game.id}`}
+            aria-label="Calendar"
+            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg"
+          >
+            <CalendarDays className="size-4" />
+          </a>
+          <div className="bg-white/15 w-px h-4" />
+          <LikeButton
+            gameId={game.id}
+            initialCount={likesCount}
+            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg"
+          />
+          <a
+            href={game.officialUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg"
+          >
+            <ExternalLink className="size-4" />
+            <span className="hidden sm:inline">{t("officialSite")}</span>
+          </a>
         </div>
       </div>
 
