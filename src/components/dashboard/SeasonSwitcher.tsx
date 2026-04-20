@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { CountdownTimer } from "./CountdownTimer";
 import { ElapsedTimer } from "./ElapsedTimer";
 import { useTranslations, useLocale } from "next-intl";
-import { formatDate } from "@/lib/utils";
+import { FormattedDate } from "@/components/FormattedDate";
 import { Clock } from "lucide-react";
 import type { SeasonData, GameConfig, SteamData } from "@/types";
 import { PlayerSparkline } from "./PlayerSparkline";
@@ -133,7 +133,7 @@ export function SeasonSwitcher({
               {season.status === "upcoming" ? t("starts") : t("started")}
             </p>
             <p className="text-gray-200 text-xs">
-              {formatDate(season.startDate, locale)}
+              <FormattedDate iso={season.startDate} locale={locale} showTime />
             </p>
           </div>
         )}
@@ -143,7 +143,7 @@ export function SeasonSwitcher({
               {t("ends")}
             </p>
             <p className="text-gray-200 text-xs">
-              {formatDate(season.endDate, locale)}
+              <FormattedDate iso={season.endDate} locale={locale} showTime />
             </p>
           </div>
         )}
@@ -165,7 +165,11 @@ export function SeasonSwitcher({
           {nextDate ? (
             <>
               <span className="text-gray-100 font-medium">
-                {formatDate(season.nextSeasonStartDate!, locale)}
+                <FormattedDate
+                  iso={season.nextSeasonStartDate!}
+                  locale={locale}
+                  showTime
+                />
               </span>
               <span className="ml-auto relative group cursor-default shrink-0">
                 {season.nextSeasonIsEstimated ? (

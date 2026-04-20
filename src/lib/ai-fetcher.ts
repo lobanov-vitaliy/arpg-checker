@@ -54,9 +54,9 @@ Return ONLY this JSON (no markdown, no extra text):
   "seasonName": "exact official name",
   "seasonNumber": 5,
   "status": "active",
-  "startDate": "YYYY-MM-DD",
-  "endDate": "YYYY-MM-DD or null",
-  "nextSeasonStartDate": "YYYY-MM-DD or null",
+  "startDate": "YYYY-MM-DDTHH:mm:ssZ",
+  "endDate": "YYYY-MM-DDTHH:mm:ssZ or null",
+  "nextSeasonStartDate": "YYYY-MM-DDTHH:mm:ssZ or null",
   "nextSeasonIsEstimated": true,
   "avgSeasonDurationDays": 91,
   "description": "1-2 sentences about this season's theme or content",
@@ -68,7 +68,10 @@ Field rules:
 - status: "active" | "upcoming" | "ended" | "unknown"
 - confidence: "high" = official source, "medium" = community wiki/reddit, "low" = uncertain
 - nextSeasonIsEstimated: false only if officially announced, true if you calculated it
-- All dates: YYYY-MM-DD or null — no other format
+- Dates: prefer full ISO 8601 in UTC ("YYYY-MM-DDTHH:mm:ssZ") when the exact
+  start/end time is published (convert from the source's local timezone to UTC).
+  If only the calendar date is known, return "YYYY-MM-DD". Use null if unknown.
+  Never invent a time — only include HH:mm:ss if it comes from the source.
 - seasonNumber: integer or null`;
 
   const response = await openai.responses.create({
@@ -138,8 +141,13 @@ Has the NEXT ${game.seasonType} (after "${currentSeasonName}") been OFFICIALLY a
 
 Return ONLY valid JSON, no markdown:
 If no official announcement found: {"announced": false}
-If found: {"announced": true, "seasonName": "exact name", "seasonNumber": 14, "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD or null", "sourceUrl": "URL", "confidence": "high"}
+If found: {"announced": true, "seasonName": "exact name", "seasonNumber": 14, "startDate": "YYYY-MM-DDTHH:mm:ssZ", "endDate": "YYYY-MM-DDTHH:mm:ssZ or null", "sourceUrl": "URL", "confidence": "high"}
 
+Date rules:
+- Prefer full ISO 8601 in UTC ("YYYY-MM-DDTHH:mm:ssZ") when the start/end time is
+  officially announced — convert the source's local time to UTC.
+- Fall back to date-only "YYYY-MM-DD" when only the calendar date is known.
+- Never invent a time — only include HH:mm:ss if published by the developer.
 confidence: "high" = official dev source, "medium" = reliable community source, "low" = uncertain`;
 
   const response = await openai.responses.create({

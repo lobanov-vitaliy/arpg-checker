@@ -18,6 +18,7 @@ import { PlayerChartFull } from "@/components/game/PlayerChartFull";
 import { SeasonsHistory } from "@/components/game/SeasonsHistory";
 import { SocialLinks } from "@/components/game/SocialLinks";
 import { LikeButton } from "@/components/dashboard/LikeButton";
+import { FormattedDate } from "@/components/FormattedDate";
 import { toIntlLocale } from "@/lib/utils";
 import { getLikesCount } from "@/lib/likes";
 import type { GameConfig, SeasonData } from "@/types";
@@ -369,10 +370,11 @@ export default async function GamePage({
                     {t("started")}
                   </p>
                   <p className="text-gray-200 text-sm">
-                    {new Date(activeSeason.startDate).toLocaleDateString(
-                      toIntlLocale(locale),
-                      { month: "long", day: "numeric", year: "numeric" },
-                    )}
+                    <FormattedDate
+                      iso={activeSeason.startDate}
+                      locale={locale}
+                      showTime
+                    />
                   </p>
                 </div>
               )}
@@ -382,10 +384,11 @@ export default async function GamePage({
                     {t("ends")}
                   </p>
                   <p className="text-gray-200 text-sm">
-                    {new Date(activeSeason.endDate).toLocaleDateString(
-                      toIntlLocale(locale),
-                      { month: "long", day: "numeric", year: "numeric" },
-                    )}
+                    <FormattedDate
+                      iso={activeSeason.endDate}
+                      locale={locale}
+                      showTime
+                    />
                   </p>
                 </div>
               )}

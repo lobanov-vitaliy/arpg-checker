@@ -3,9 +3,12 @@
 export interface ManualSeasonEntry {
   seasonName: string;
   seasonNumber?: number;
-  startDate: string; // YYYY-MM-DD
-  endDate: string | null; // YYYY-MM-DD or null
-  nextSeasonStartDate?: string; // YYYY-MM-DD — only if officially announced
+  // ISO 8601. Either date-only ("2026-03-20") or full UTC timestamp
+  // ("2026-03-20T18:00:00Z") when the exact start time is known.
+  startDate: string;
+  endDate: string | null;
+  // Only if officially announced; same format rules as startDate/endDate.
+  nextSeasonStartDate?: string;
   description?: string;
   sourceUrl?: string;
   confidence: "high" | "medium" | "low";
