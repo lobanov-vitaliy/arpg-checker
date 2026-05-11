@@ -20,8 +20,8 @@
     "unavailable": "Datos de temporada no disponibles",
     "checkOfficialSite": "Ver sitio oficial",
     "verify": "Verificar",
-    "current": "actual",
-    "coming": "próximo",
+    "current": "Ahora",
+    "coming": "Próximo",
     "first": "primero",
     "history": "historial",
     "official": "Oficial",
@@ -52,12 +52,12 @@
     "unknown": "Desconocido"
   },
   "news": {
-    "title": "Noticias ARPG",
-    "subtitle": "Últimas noticias de la comunidad ARPG — obtenidas mediante IA y almacenadas en caché cada hora.",
+    "title": "Noticias de juegos",
+    "subtitle": "Últimos anuncios oficiales de Steam de los juegos que seguimos. Se actualiza cada hora.",
     "readMore": "Leer más",
     "recently": "Recientemente",
     "empty": "No hay noticias disponibles",
-    "emptySubtitle": "Las noticias se obtienen mediante IA y se almacenan en caché durante 1 hora. Intenta actualizar."
+    "emptySubtitle": "Las noticias se obtienen de Steam y se almacenan en caché durante 1 hora. Vuelve a intentarlo más tarde."
   },
   "estimate": {
     "avgLabel": "~{days}d prom",
@@ -240,7 +240,9 @@
     "faqNextStart": "When does the next {seasonType} start?",
     "faqConfirmed": "Is the next {seasonType} date confirmed?",
     "faqDuration": "How long do {game} {seasonType}s usually last?",
-    "browseAll": "Browse all games"
+    "browseAll": "Browse all games",
+    "latestNews": "Últimas noticias",
+    "allNews": "Todas las noticias"
   },
   "feedback": {
     "trigger": "Idea / Sugerencia",

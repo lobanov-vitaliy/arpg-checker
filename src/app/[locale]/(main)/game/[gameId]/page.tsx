@@ -5,6 +5,8 @@ import { ExternalLink, CalendarDays, Timer } from "lucide-react";
 import { getGame, getGames } from "@/config/games";
 import { getSeasonsForGame } from "@/lib/seasons";
 import { getSteamData } from "@/lib/steam-fetcher";
+import { getGameNews } from "@/lib/steam-news";
+import { NewsCard } from "@/components/news/NewsCard";
 import { GameImage } from "@/components/dashboard/GameImage";
 import { SeasonBadge } from "@/components/dashboard/SeasonBadge";
 import { ConfidenceBadge } from "@/components/game/ConfidenceBadge";
@@ -131,11 +133,12 @@ export default async function GamePage({
 
   const t = await getTranslations("game");
 
-  const [steamData, likesCount, allSeasons, allGames] = await Promise.all([
+  const [steamData, likesCount, allSeasons, allGames, news] = await Promise.all([
     game.steamAppId ? getSteamData(game.id) : Promise.resolve(null),
     getLikesCount(game.id),
     getSeasonsForGame(game.id),
     getGames(),
+    getGameNews(game, 3),
   ]);
 
   const activeSeason =
@@ -491,6 +494,31 @@ export default async function GamePage({
           </div>
         )}
 
+        {/* Latest news */}
+        {news.length > 0 && (
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-white">{t("latestNews")}</h2>
+              <a
+                href={`/${locale}/news`}
+                className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
+              >
+                {t("allNews")} →
+              </a>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {news.map((n) => (
+                <NewsCard
+                  key={n.id}
+                  item={n}
+                  locale={locale}
+                  glowColor={game.glowColor}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* FAQ */}
         <GameFAQ
           gameName={game.name}
@@ -567,22 +595,6 @@ export default async function GamePage({
                 {t("browseAll")} →
               </a>
             </div>
-          </div>
-        )}
-
-        {/* Steam widget */}
-        {game.steamAppId && (
-          <div>
-            <h2 className="text-lg font-semibold text-white mb-4">{t("steamStore")}</h2>
-            <iframe
-              title={`${game.name} on Steam`}
-              src={`https://store.steampowered.com/widget/${game.steamAppId}?utm_source=seasonpulse&utm_content=steam_embed`}
-              width="100%"
-              height="190"
-              className="w-full"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
           </div>
         )}
 

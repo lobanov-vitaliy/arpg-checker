@@ -20,8 +20,8 @@
     "unavailable": "Saisondaten nicht verfügbar",
     "checkOfficialSite": "Offizielle Seite prüfen",
     "verify": "Überprüfen",
-    "current": "aktuell",
-    "coming": "demnächst",
+    "current": "Jetzt",
+    "coming": "Nächste",
     "first": "erste",
     "history": "Verlauf",
     "official": "Offiziell",
@@ -52,12 +52,12 @@
     "unknown": "Unbekannt"
   },
   "news": {
-    "title": "ARPG-Nachrichten",
-    "subtitle": "Neueste Nachrichten aus der ARPG-Community — per KI abgerufen und stündlich zwischengespeichert.",
+    "title": "Spiele-News",
+    "subtitle": "Aktuelle offizielle Steam-Ankündigungen zu den von uns verfolgten Spielen. Stündlich aktualisiert.",
     "readMore": "Weiterlesen",
     "recently": "Kürzlich",
     "empty": "Keine Nachrichten verfügbar",
-    "emptySubtitle": "Nachrichten werden per KI abgerufen und 1 Stunde zwischengespeichert. Versuche zu aktualisieren."
+    "emptySubtitle": "Nachrichten werden von Steam abgerufen und 1 Stunde zwischengespeichert. Versuche es später erneut."
   },
   "estimate": {
     "avgLabel": "~{days}T Ø",
@@ -240,7 +240,9 @@
     "faqNextStart": "When does the next {seasonType} start?",
     "faqConfirmed": "Is the next {seasonType} date confirmed?",
     "faqDuration": "How long do {game} {seasonType}s usually last?",
-    "browseAll": "Browse all games"
+    "browseAll": "Browse all games",
+    "latestNews": "Aktuelle News",
+    "allNews": "Alle News"
   },
   "feedback": {
     "trigger": "Idee / Feedback",

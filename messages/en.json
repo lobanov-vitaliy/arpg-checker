@@ -20,8 +20,8 @@
     "unavailable": "Season data unavailable",
     "checkOfficialSite": "Check official site",
     "verify": "Verify",
-    "current": "current",
-    "coming": "coming",
+    "current": "Now",
+    "coming": "Next",
     "first": "first",
     "history": "history",
     "official": "Official",
@@ -52,12 +52,12 @@
     "unknown": "Unknown"
   },
   "news": {
-    "title": "ARPG News",
-    "subtitle": "Latest news from the ARPG community — fetched via AI and cached hourly.",
+    "title": "Game News",
+    "subtitle": "Latest official announcements from Steam across the games we track. Updated hourly.",
     "readMore": "Read more",
     "recently": "Recently",
     "empty": "No news available",
-    "emptySubtitle": "News is fetched via AI and cached for 1 hour. Try refreshing."
+    "emptySubtitle": "News is pulled from Steam and cached for 1 hour. Try again later."
   },
   "estimate": {
     "avgLabel": "~{days}d avg",
@@ -240,7 +240,9 @@
     "faqNextStart": "When does the next {seasonType} start?",
     "faqConfirmed": "Is the next {seasonType} date confirmed?",
     "faqDuration": "How long do {game} {seasonType}s usually last?",
-    "browseAll": "Browse all games"
+    "browseAll": "Browse all games",
+    "latestNews": "Latest News",
+    "allNews": "All news"
   },
   "feedback": {
     "trigger": "Suggest / Feedback",

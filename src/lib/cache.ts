@@ -74,5 +74,5 @@ export async function getCachedWithMeta<T>(
 
 export const CACHE_KEYS = {
   season: (gameId: string) => `season_${gameId}`,
-  news: () => "news_latest",
+  detect: (gameId: string) => `detect_${gameId}`,
 };

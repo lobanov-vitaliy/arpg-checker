@@ -104,20 +104,6 @@ export interface SeasonData {
   error?: string;
 }
 
-// ─── News Types ───────────────────────────────────────────────────────────────
-
-export interface NewsArticle {
-  id: string;
-  title: string;
-  summary: string;
-  url: string;
-  publishedAt: string | null;
-  gameId?: string;
-  gameName?: string;
-  source: string;
-  tags: string[];
-}
-
 // ─── Dashboard Card Data ──────────────────────────────────────────────────────
 
 export type GameFullData = {
@@ -130,12 +116,6 @@ export type GameFullData = {
 
 export interface SeasonsApiResponse {
   seasons: SeasonData[];
-  cachedAt: string;
-  nextRefresh: string;
-}
-
-export interface NewsApiResponse {
-  articles: NewsArticle[];
   cachedAt: string;
   nextRefresh: string;
 }

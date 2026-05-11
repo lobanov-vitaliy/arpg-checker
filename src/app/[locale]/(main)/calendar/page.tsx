@@ -104,17 +104,15 @@ export default async function CalendarPage() {
   const today = new Date();
 
   return (
-    <main className="px-4 py-8">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl font-bold text-white mb-1">{t("title")}</h1>
-        <p className="text-gray-500 text-sm mb-8">{t("subtitle")}</p>
-        <CalendarGrid
-          events={events}
-          games={games}
-          initialYear={today.getFullYear()}
-          initialMonth={today.getMonth()}
-        />
-      </div>
+    <main className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold text-white mb-1">{t("title")}</h1>
+      <p className="text-gray-500 text-sm mb-8">{t("subtitle")}</p>
+      <CalendarGrid
+        events={events}
+        games={games}
+        initialYear={today.getFullYear()}
+        initialMonth={today.getMonth()}
+      />
     </main>
   );
 }

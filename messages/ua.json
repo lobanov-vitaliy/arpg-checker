@@ -20,8 +20,8 @@
     "unavailable": "Дані про сезон недоступні",
     "checkOfficialSite": "Перевірити офіційний сайт",
     "verify": "Перевірити",
-    "current": "поточний",
-    "coming": "скоро",
+    "current": "Зараз",
+    "coming": "Далі",
     "first": "перший",
     "history": "історія",
     "official": "Офіційна",
@@ -52,12 +52,12 @@
     "unknown": "Невідомо"
   },
   "news": {
-    "title": "ARPG Новини",
-    "subtitle": "Останні новини ARPG-спільноти — отримуються через ШІ та кешуються щогодини.",
+    "title": "Ігрові новини",
+    "subtitle": "Останні офіційні анонси зі Steam по іграх, які ми відстежуємо. Оновлюється щогодини.",
     "readMore": "Читати далі",
     "recently": "Нещодавно",
     "empty": "Новини відсутні",
-    "emptySubtitle": "Новини отримуються через ШІ та кешуються на 1 годину. Спробуйте оновити."
+    "emptySubtitle": "Новини беруться зі Steam і кешуються на 1 годину. Спробуйте пізніше."
   },
   "estimate": {
     "avgLabel": "~{days}д сер",
@@ -240,7 +240,9 @@
     "faqNextStart": "When does the next {seasonType} start?",
     "faqConfirmed": "Is the next {seasonType} date confirmed?",
     "faqDuration": "How long do {game} {seasonType}s usually last?",
-    "browseAll": "Browse all games"
+    "browseAll": "Browse all games",
+    "latestNews": "Останні новини",
+    "allNews": "Усі новини"
   },
   "feedback": {
     "trigger": "Ідея / Відгук",

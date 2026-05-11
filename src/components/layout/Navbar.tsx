@@ -9,6 +9,7 @@ export async function Navbar() {
   const links = [
     { href: `/${locale}`, label: t("dashboard") },
     { href: `/${locale}/calendar`, label: t("calendar") },
+    { href: `/${locale}/news`, label: t("news") },
   ];
 
   return (
