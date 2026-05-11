@@ -1,20 +1,32 @@
 import { getDb } from "./mongodb";
 import { addSeason } from "./games-db";
 import type { ManualSeasonEntry } from "@/types";
+import type { RejectedCandidate } from "./ai-fetcher";
+
+// Pending detections auto-expire after this window so a missed Telegram approval
+// does not block re-detection of the same game forever.
+export const PENDING_TTL_DAYS = 7;
+// Entries older than this trigger a "stale" warning in the cron summary, before
+// they're actually dropped by the TTL index.
+export const PENDING_STALE_DAYS = 3;
 
 export interface PendingEntry {
   uuid: string;
   gameId: string;
   gameName: string;
   season: ManualSeasonEntry;
-  detectedAt: string;
+  detectedAt: Date;
+  expiresAt: Date;
 }
 
 async function pendingCol() {
   const db = await getDb();
   const c = db.collection<PendingEntry>("pending_seasons");
-  await c.createIndex({ uuid: 1 }, { unique: true, background: true });
-  await c.createIndex({ gameId: 1 }, { background: true });
+  await Promise.all([
+    c.createIndex({ uuid: 1 }, { unique: true, background: true }),
+    c.createIndex({ gameId: 1 }, { background: true }),
+    c.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0, background: true }),
+  ]);
   return c;
 }
 
@@ -54,4 +66,41 @@ export async function getPendingSeason(
 export async function deletePendingSeason(uuid: string): Promise<void> {
   const c = await pendingCol();
   await c.deleteOne({ uuid });
+}
+
+// ─── Flagged seasons ─────────────────────────────────────────────────────────
+// Captures detections the model claimed but our validators rejected (e.g. source
+// not on whitelist, confidence too low). Kept for ~2 weeks so an operator can
+// spot anything we missed.
+export const FLAGGED_TTL_DAYS = 14;
+
+export interface FlaggedEntry {
+  uuid: string;
+  gameId: string;
+  gameName: string;
+  candidate: RejectedCandidate;
+  rejectReason: string;
+  detectedAt: Date;
+  expiresAt: Date;
+}
+
+async function flaggedCol() {
+  const db = await getDb();
+  const c = db.collection<FlaggedEntry>("flagged_seasons");
+  await Promise.all([
+    c.createIndex({ uuid: 1 }, { unique: true, background: true }),
+    c.createIndex({ gameId: 1 }, { background: true }),
+    c.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0, background: true }),
+  ]);
+  return c;
+}
+
+export async function saveFlaggedSeason(entry: FlaggedEntry): Promise<void> {
+  const c = await flaggedCol();
+  await c.insertOne(entry);
+}
+
+export async function getAllFlagged(): Promise<FlaggedEntry[]> {
+  const c = await flaggedCol();
+  return c.find({}, { sort: { detectedAt: -1 } }).toArray();
 }
