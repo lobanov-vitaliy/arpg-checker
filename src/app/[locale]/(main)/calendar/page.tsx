@@ -49,6 +49,10 @@ export default async function CalendarPage() {
   const gameById = Object.fromEntries(allGames.map((g) => [g.id, g]));
   const now = Date.now();
 
+  // Calendar cells key by YYYY-MM-DD; strip any time component so seasons stored
+  // with UTC timestamps still land on the correct day.
+  const toDateKey = (iso: string) => iso.slice(0, 10);
+
   const events: CalendarEvent[] = [];
 
   for (const season of seasons) {
@@ -63,12 +67,12 @@ export default async function CalendarPage() {
     };
 
     if (season.status === "active" || season.status === "upcoming") {
-      events.push({ ...base, date: season.startDate, type: "starts" });
+      events.push({ ...base, date: toDateKey(season.startDate), type: "starts" });
     }
 
     if (season.status === "active" && season.endDate) {
       if (new Date(season.endDate).getTime() > now) {
-        events.push({ ...base, date: season.endDate, type: "ends" });
+        events.push({ ...base, date: toDateKey(season.endDate), type: "ends" });
       }
     }
 
@@ -83,7 +87,7 @@ export default async function CalendarPage() {
       );
       events.push({
         ...base,
-        date: season.nextSeasonStartDate,
+        date: toDateKey(season.nextSeasonStartDate),
         seasonName: nextEntry?.seasonName ?? `${t("next")} ${game.seasonType}`,
         type: "starts",
         isEstimated: season.nextSeasonIsEstimated ?? false,
