@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Geist_Mono } from "next/font/google";
-import { AmplitudeProvider } from "@/components/AmplitudeProvider";
+import { Analytics } from "@vercel/analytics/next";
 import "@/app/globals.css";
 
 const mainFont = Manrope({
@@ -49,8 +49,8 @@ export default function RootLayout({
       className={`${mainFont.variable} ${geistMono.variable} dark h-full antialiased`}
     >
       <body className="has-bg min-h-full flex flex-col bg-gray-950 text-gray-100">
-        <AmplitudeProvider />
         {children}
+        {process.env.VERCEL === "1" && <Analytics />}
       </body>
     </html>
   );
