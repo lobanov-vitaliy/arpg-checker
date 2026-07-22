@@ -27,6 +27,10 @@ import apex_legends from "./games/apex_legends.json";
 import destiny_2 from "./games/destiny_2.json";
 import pubg from "./games/pubg.json";
 import the_finals from "./games/the_finals.json";
+import hero_siege from "./games/hero_siege.json";
+import the_bazaar from "./games/the_bazaar.json";
+import sea_of_thieves from "./games/sea_of_thieves.json";
+import rainbow_six_siege from "./games/rainbow_six_siege.json";
 
 type GameFileEntry = GameConfig & { seasons: ManualSeasonEntry[] };
 
@@ -53,6 +57,10 @@ const ALL_GAMES = [
   marathon,
   arc_raiders,
   warframe,
+  hero_siege,
+  the_bazaar,
+  sea_of_thieves,
+  rainbow_six_siege,
 ] as unknown as GameFileEntry[];
 
 export const GAMES: GameConfig[] = ALL_GAMES.map(

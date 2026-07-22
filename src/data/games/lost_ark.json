@@ -4,7 +4,10 @@
   "shortName": "LA",
   "developer": "Smilegate RPG",
   "seasonType": "season",
-  "genres": ["MMORPG", "Free to Play"],
+  "genres": [
+    "MMORPG",
+    "Free to Play"
+  ],
   "accentColor": "text-sky-400",
   "accentBg": "bg-sky-400",
   "bgGradient": "from-sky-950/90 via-gray-900 to-gray-950",

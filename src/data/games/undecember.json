@@ -4,7 +4,11 @@
   "shortName": "UD",
   "developer": "LINE Games",
   "seasonType": "season",
-  "genres": ["ARPG", "Mobile", "Free to Play"],
+  "genres": [
+    "ARPG",
+    "Mobile",
+    "Free to Play"
+  ],
   "accentColor": "text-violet-400",
   "accentBg": "bg-violet-400",
   "bgGradient": "from-violet-950/90 via-gray-900 to-gray-950",
@@ -25,10 +29,19 @@
   ],
   "seasons": [
     {
+      "seasonName": "Season 11: The Forge",
+      "seasonNumber": 6,
+      "startDate": "2026-05-14T13:00:00Z",
+      "endDate": null,
+      "description": "Undecember Season 11: The Forge launches following the conclusion of Season 10, bringing a leaderboard reset and new seasonal content with a fresh economy and ladder race.",
+      "sourceUrl": "https://ud.floor.line.games/us/bbs/notice/update_us/1",
+      "confidence": "high"
+    },
+    {
       "seasonName": "New Age",
       "seasonNumber": 5,
       "startDate": "2026-01-15",
-      "endDate": null,
+      "endDate": "2026-05-14T13:00:00Z",
       "description": "The current Undecember season focuses on a large-scale skill overhaul, Season Mode progression through Abyss Gate New Age, and season-specific rewards and passes.",
       "sourceUrl": "https://ud.floor.line.games/us/bbsCmn/detail/1766123994211003441",
       "confidence": "high"

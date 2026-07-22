@@ -4,7 +4,10 @@
   "shortName": "TD2",
   "developer": "Massive Entertainment",
   "seasonType": "season",
-  "genres": ["TPS", "Loot Shooter"],
+  "genres": [
+    "TPS",
+    "Loot Shooter"
+  ],
   "accentColor": "text-orange-400",
   "accentBg": "bg-orange-400",
   "bgGradient": "from-orange-950/90 via-gray-900 to-gray-950",
@@ -26,10 +29,19 @@
   ],
   "seasons": [
     {
+      "seasonName": "Rise Up",
+      "seasonNumber": 9,
+      "startDate": "2026-04-02T12:30:00Z",
+      "endDate": null,
+      "description": "Rise Up kicks off Year 8 with Patch 2.24, adding Prototype Gear, Escalation Mode, Black Tusk Retaliations, the Recombinant system, the return of Classified Assignments, and new Exotics. Agents face an elite Black Tusk kill squad striking across the city.",
+      "sourceUrl": "https://www.ubisoft.com/en-us/game/the-division/the-division-2/news-updates/66V3C2syuDtwNoYQmnVHbW/play-the-division-2-rise-up-today",
+      "confidence": "high"
+    },
+    {
       "seasonName": "Anniversary Season",
       "seasonNumber": 8,
       "startDate": "2026-03-03",
-      "endDate": null,
+      "endDate": "2026-04-02T12:30:00Z",
       "description": "A special anniversary season celebrating 10 years of The Division with Realism Mode, returning Global Events, a themed Event Pass, special rewards, and visual improvements.",
       "sourceUrl": "https://www.ubisoft.com/en-us/game/the-division/the-division-2/news-updates/1myuMJ5wGJFqIy2ic0mYnp/celebrating-10-years-of-the-division",
       "confidence": "high"

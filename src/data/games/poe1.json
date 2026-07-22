@@ -4,7 +4,10 @@
   "shortName": "PoE",
   "developer": "Grinding Gear Games",
   "seasonType": "league",
-  "genres": ["ARPG", "Free to Play"],
+  "genres": [
+    "ARPG",
+    "Free to Play"
+  ],
   "accentColor": "text-emerald-400",
   "accentBg": "bg-emerald-400",
   "bgGradient": "from-emerald-950/90 via-gray-900 to-gray-950",
@@ -26,10 +29,19 @@
   ],
   "seasons": [
     {
+      "seasonName": "Curse of the Allflame",
+      "seasonNumber": 6,
+      "startDate": "2026-07-24T20:00:00Z",
+      "endDate": null,
+      "description": "Path of Exile 3.29 Curse of the Allflame centers on the Voyages mechanic: chart underwater areas with lanterns, then embark on sea voyages to gather loot while escaping the creatures of the deep, with crafting tied to Deadman Sulfur. Adds the Scion's Luminary ascendancy and permanent Mercenaries of Trarthus allies, an Abyss overhaul with new pinnacle boss Zorath, reworked Legion rewards, Atlas Anomalies, and over 100 spell rebalances. Launches July 24, 2026 at 1 PM PDT.",
+      "sourceUrl": "https://www.pathofexile.com/forum/view-thread/3955013",
+      "confidence": "high"
+    },
+    {
       "seasonName": "Mirage",
       "seasonNumber": 5,
       "startDate": "2026-03-06",
-      "endDate": null,
+      "endDate": "2026-07-24T20:00:00Z",
       "description": "The current Mirage challenge league features Djinn encounters, astral hazards, Afarud enemies, and league content centered around entering and clearing mirrored battle spaces.",
       "sourceUrl": "https://www.pathofexile.com/mirage",
       "confidence": "high"

@@ -4,7 +4,9 @@
   "shortName": "D4",
   "developer": "Blizzard Entertainment",
   "seasonType": "season",
-  "genres": ["ARPG"],
+  "genres": [
+    "ARPG"
+  ],
   "accentColor": "text-red-400",
   "accentBg": "bg-red-400",
   "bgGradient": "from-red-950/90 via-gray-900 to-gray-950",
@@ -27,10 +29,19 @@
   ],
   "seasons": [
     {
-      "seasonName": "Lord of Hatred",
-      "seasonNumber": 13,
-      "startDate": "2026-04-28",
+      "seasonName": "Season of Death Awakening",
+      "seasonNumber": 14,
+      "startDate": "2026-06-30T17:00:00.000Z",
       "endDate": null,
+      "description": "Death Awakening, players will face the growing influence of the Death Cult spreading across Sanctuary. Hunt down cult leaders, uncover dark rituals, and challenge the new seasonal boss, the Corrupted Reaper, in a battle against the forces of death itself.",
+      "sourceUrl": "https://news.blizzard.com/en-us/diablo4",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season of Reckoning",
+      "seasonNumber": 13,
+      "startDate": "2026-04-27T23:30:00.000Z",
+      "endDate": "2026-06-30T17:00:00.000Z",
       "description": "Season 13 marks the return of Mephisto, Lord of Hatred. New seasonal mechanics, story content, and rewards centered around the Prime Evil's influence on Sanctuary.",
       "sourceUrl": "https://news.blizzard.com/en-us/diablo4",
       "confidence": "high"
@@ -39,7 +50,7 @@
       "seasonName": "Season of Slaughter",
       "seasonNumber": 12,
       "startDate": "2026-03-11",
-      "endDate": "2026-04-28",
+      "endDate": "2026-04-27T23:30:00.000Z",
       "description": "Season 12 adds Butcher transformation mechanics, Killstreak progression, Bloodied Items, and Slaughterhouse activities.",
       "sourceUrl": "https://news.blizzard.com/en-us/article/24244648/become-the-butcher-in-season-of-slaughter",
       "confidence": "high"

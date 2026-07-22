@@ -1,0 +1,85 @@
+{
+  "id": "hero_siege",
+  "name": "Hero Siege",
+  "shortName": "HS",
+  "developer": "Panic Art Studios Ltd",
+  "seasonType": "season",
+  "genres": [
+    "ARPG",
+    "Hack and Slash",
+    "Free to Play"
+  ],
+  "accentColor": "text-red-400",
+  "accentBg": "bg-red-400",
+  "bgGradient": "from-red-950/90 via-zinc-900 to-gray-950",
+  "glowColor": "#f87171",
+  "coverImage": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/269210/header.jpg",
+  "officialUrl": "https://playherosiege.com/en",
+  "socialLinks": {
+    "twitter": "https://x.com/panicartstudios",
+    "discord": "https://discord.com/invite/herosiegeofficial",
+    "youtube": "https://www.youtube.com/panicartstudios"
+  },
+  "popularityScore": 28,
+  "steamAppId": 269210,
+  "searchHints": [
+    "\"Hero Siege\" current active season name number start end date",
+    "\"Hero Siege\" season launch date latest announcement",
+    "site:playherosiege.com/en \"Hero Siege\" season"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Season 10",
+      "seasonNumber": 10,
+      "startDate": "2026-07-14",
+      "endDate": null,
+      "sourceUrl": "https://store.steampowered.com/news/app/269210/view/2496632202925823418",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Incarnation",
+      "seasonNumber": 9,
+      "startDate": "2026-04-03",
+      "endDate": "2026-07-14",
+      "description": "Season 9 introduced the Incarnation Tree with a large new progression system and launched on Steam and PlayStation 5.",
+      "sourceUrl": "https://x.com/panicartstudios/status/2034943287887270022",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 8",
+      "seasonNumber": 8,
+      "startDate": "2025-09-12",
+      "endDate": "2026-04-03",
+      "description": "Season 8 added Unholy Siege and other progression and itemization updates.",
+      "sourceUrl": "https://store.steampowered.com/news/app/269210/view/516346761000779996",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 7",
+      "seasonNumber": 7,
+      "startDate": "2025-06-06",
+      "endDate": "2025-09-12",
+      "description": "Season 7 launched with Chaos Pillars, new bosses, items, season mechanics, balance changes and quality-of-life updates.",
+      "sourceUrl": "https://store.steampowered.com/news/app/269210/view/500574650502218472",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 6",
+      "seasonNumber": 6,
+      "startDate": "2025-03-14",
+      "endDate": "2025-06-06",
+      "description": "Season 6 launched in mid-March 2025 with a new season reset and fresh patch content.",
+      "sourceUrl": "https://store.steampowered.com/news/app/269210/view/520833241446352133",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 5",
+      "seasonNumber": 5,
+      "startDate": "2024-12-13",
+      "endDate": "2025-03-14",
+      "description": "Season 5 released in December 2024 as the next major seasonal reset and content update for Hero Siege.",
+      "sourceUrl": "https://store.steampowered.com/news/app/269210/view/4464851965270033307",
+      "confidence": "high"
+    }
+  ]
+}

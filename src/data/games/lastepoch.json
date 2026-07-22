@@ -4,7 +4,9 @@
   "shortName": "LE",
   "developer": "Eleventh Hour Games",
   "seasonType": "cycle",
-  "genres": ["ARPG"],
+  "genres": [
+    "ARPG"
+  ],
   "accentColor": "text-yellow-400",
   "accentBg": "bg-yellow-400",
   "bgGradient": "from-yellow-950/90 via-gray-900 to-gray-950",

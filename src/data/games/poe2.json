@@ -4,7 +4,10 @@
   "shortName": "PoE2",
   "developer": "Grinding Gear Games",
   "seasonType": "league",
-  "genres": ["ARPG", "Free to Play"],
+  "genres": [
+    "ARPG",
+    "Free to Play"
+  ],
   "accentColor": "text-teal-400",
   "accentBg": "bg-teal-400",
   "bgGradient": "from-teal-950/90 via-gray-900 to-gray-950",
@@ -26,10 +29,19 @@
   ],
   "seasons": [
     {
+      "seasonName": "Return of the Ancients",
+      "seasonNumber": 4,
+      "startDate": "2026-05-29T20:00:00Z",
+      "endDate": null,
+      "description": "Patch 0.5.0 \"Return of the Ancients\" is the final Early Access league before the 1.0 release, bringing a revamped endgame, major new content, and a fresh economy reset.",
+      "sourceUrl": "https://www.pathofexile.com/forum/view-thread/3912492",
+      "confidence": "high"
+    },
+    {
       "seasonName": "The Last of the Druids",
       "seasonNumber": 3,
       "startDate": "2025-12-12",
-      "endDate": null,
+      "endDate": "2026-05-29T20:00:00Z",
       "description": "The current Path of Exile 2 league, introduced in The Last of the Druids update, focused on Atziri, Vaal content, and new progression systems.",
       "sourceUrl": "https://pathofexile2.com/druids",
       "confidence": "high"

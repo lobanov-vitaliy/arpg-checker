@@ -31,10 +31,24 @@
   ],
   "seasons": [
     {
+      "seasonName": "Season 42",
+      "seasonNumber": 42,
+      "startDate": "2026-06-10",
+      "endDate": null,
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 41",
+      "seasonNumber": 41,
+      "startDate": "2026-04-08",
+      "endDate": "2026-06-10",
+      "confidence": "high"
+    },
+    {
       "seasonName": "Ranked Season 40",
       "seasonNumber": 40,
       "startDate": "2026-02-04",
-      "endDate": null,
+      "endDate": "2026-04-08",
       "description": "The current PUBG ranked season launched with Update 40.1, adding a new ranked leaderboard reset, season rewards, and season-based ranked map service updates.",
       "sourceUrl": "https://pubg.com/en/news/9690",
       "confidence": "high"

@@ -4,7 +4,11 @@
   "shortName": "COD",
   "developer": "Activision",
   "seasonType": "season",
-  "genres": ["FPS", "Military Shooter", "Battle Royale"],
+  "genres": [
+    "FPS",
+    "Military Shooter",
+    "Battle Royale"
+  ],
   "accentColor": "text-red-400",
   "accentBg": "bg-red-400",
   "bgGradient": "from-red-950/90 via-slate-900 to-gray-950",
@@ -26,10 +30,18 @@
   ],
   "seasons": [
     {
+      "seasonName": "Season 04",
+      "seasonNumber": 4,
+      "startDate": "2026-06-14T16:00:00Z",
+      "endDate": null,
+      "sourceUrl": "https://news.blizzard.com/en-us/blizzard/23964693/fight-across-new-battlegrounds-in-season-04-of-call-of-duty-modern-warfare-ii-and-call-of-duty-warzone-launching-june-14",
+      "confidence": "high"
+    },
+    {
       "seasonName": "Season 03",
       "seasonNumber": 3,
       "startDate": "2026-04-02",
-      "endDate": null,
+      "endDate": "2026-06-14T16:00:00Z",
       "description": "The current Call of Duty seasonal cycle for Black Ops 7 and Warzone adds new maps, modes, weapons, events, Battle Pass content, and a new Launch Pad POI in Verdansk.",
       "sourceUrl": "https://www.callofduty.com/blog/2026/03/call-of-duty-black-ops-7-warzone-season-03-announcement",
       "confidence": "high"

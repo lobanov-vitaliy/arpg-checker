@@ -4,7 +4,11 @@
   "shortName": "MR",
   "developer": "NetEase Games",
   "seasonType": "season",
-  "genres": ["Hero Shooter", "TPS", "PvP"],
+  "genres": [
+    "Hero Shooter",
+    "TPS",
+    "PvP"
+  ],
   "accentColor": "text-fuchsia-400",
   "accentBg": "bg-fuchsia-400",
   "bgGradient": "from-fuchsia-950/90 via-slate-900 to-gray-950",
@@ -27,10 +31,27 @@
   ],
   "seasons": [
     {
+      "seasonName": "Season 8",
+      "seasonNumber": 9,
+      "startDate": "2026-05-15T09:00:00Z",
+      "endDate": null,
+      "description": "Season 8 launches with a new Battle Pass, two new heroes (widely rumored to be Cyclops and Devil Dinosaur), and a fresh ranked split. Servers go down for roughly 2–3 hours during the transition.",
+      "sourceUrl": "https://marvelrivals.gg/season-8/",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 7.5: The Vault Unleashed",
+      "seasonNumber": 8,
+      "startDate": "2026-04-17",
+      "endDate": "2026-05-15T09:00:00Z",
+      "sourceUrl": "https://www.marvelrivals.com/devdiaries/20260414/40954_1296064.html",
+      "confidence": "high"
+    },
+    {
       "seasonName": "Season 7: The Hunt Is On",
       "seasonNumber": 7,
       "startDate": "2026-03-20",
-      "endDate": null,
+      "endDate": "2026-04-17",
       "description": "The current season adds the Season 7 update, integrated esports features, Marvel Rivals Championship Season 7 support, new events, and ongoing hero balance and content updates.",
       "sourceUrl": "https://www.marvelrivals.com/gameupdate/20260318/41548_1291772.html",
       "confidence": "high"

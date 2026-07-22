@@ -4,7 +4,10 @@
   "shortName": "MTH",
   "developer": "Bungie",
   "seasonType": "season",
-  "genres": ["FPS", "Extraction Shooter"],
+  "genres": [
+    "FPS",
+    "Extraction Shooter"
+  ],
   "accentColor": "text-emerald-400",
   "accentBg": "bg-emerald-400",
   "bgGradient": "from-emerald-950/90 via-slate-900 to-gray-950",
@@ -25,10 +28,17 @@
   ],
   "seasons": [
     {
+      "seasonName": "Season 2",
+      "seasonNumber": 2,
+      "startDate": "2026-06-02",
+      "endDate": null,
+      "confidence": "high"
+    },
+    {
       "seasonName": "Season 1",
       "seasonNumber": 1,
       "startDate": "2026-03-05",
-      "endDate": null,
+      "endDate": "2026-06-02",
       "description": "The launch season introduced Marathon's first full seasonal cycle with faction and contract progression, all six launch Runner shells, three launch zones, and the first wave of post-launch progression and rewards.",
       "sourceUrl": "https://www.bungie.net/7/en/News/Article/introducing_seasons_marathon",
       "confidence": "high"

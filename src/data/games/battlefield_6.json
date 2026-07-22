@@ -4,7 +4,10 @@
   "shortName": "BF6",
   "developer": "Battlefield Studios",
   "seasonType": "season",
-  "genres": ["FPS", "Military Shooter"],
+  "genres": [
+    "FPS",
+    "Military Shooter"
+  ],
   "accentColor": "text-lime-400",
   "accentBg": "bg-lime-400",
   "bgGradient": "from-lime-950/90 via-slate-900 to-gray-950",
@@ -25,10 +28,19 @@
   ],
   "seasons": [
     {
+      "seasonName": "Season 3",
+      "seasonNumber": 3,
+      "startDate": "2026-05-12T12:00:00Z",
+      "endDate": null,
+      "description": "Season 3 brings the massive new Railway to Golmud map — the biggest in Battlefield 6 — alongside three BF3/BF4-era weapons (M16A4, RPK-74M, L115) and Ranked Play for REDSEC Battle Royale Quads with a full competitive ladder from Rookie to Elite.",
+      "sourceUrl": "https://www.ea.com/en/games/battlefield/battlefield-6/news/season-3-roadmap-everything-you-need-to-know",
+      "confidence": "high"
+    },
+    {
       "seasonName": "Season 2: Nightfall",
       "seasonNumber": 2,
       "startDate": "2026-02-17",
-      "endDate": null,
+      "endDate": "2026-05-12T12:00:00Z",
       "description": "The current Battlefield 6 season adds Nightfall content across Battlefield 6 and REDSEC, introducing new map content, modes, weapons, vehicles, and seasonal progression themed around fighting through darkness.",
       "sourceUrl": "https://battlefield.com",
       "confidence": "high"

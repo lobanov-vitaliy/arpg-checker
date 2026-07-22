@@ -4,7 +4,9 @@
   "shortName": "D2R",
   "developer": "Blizzard Entertainment",
   "seasonType": "ladder",
-  "genres": ["ARPG"],
+  "genres": [
+    "ARPG"
+  ],
   "accentColor": "text-amber-400",
   "accentBg": "bg-amber-400",
   "bgGradient": "from-amber-950/90 via-gray-900 to-gray-950",
@@ -25,10 +27,19 @@
   ],
   "seasons": [
     {
+      "seasonName": "Ladder Season 14",
+      "seasonNumber": 14,
+      "startDate": "2026-05-23T00:00:00Z",
+      "endDate": null,
+      "description": "Ladder Season 14 launches alongside Patch 3.2 \"Reign of the Warlock\", bringing balance changes for the Warlock class, Terror Zone adjustments, and endgame tuning. Ladder rankings reset for another race to Level 99.",
+      "sourceUrl": "https://news.blizzard.com/en-us/article/24266710/diablo-ii-resurrected-ptr-3-2-coming-soon",
+      "confidence": "high"
+    },
+    {
       "seasonName": "Ladder Season 13",
       "seasonNumber": 13,
       "startDate": "2026-02-20",
-      "endDate": null,
+      "endDate": "2026-05-23T00:00:00Z",
       "description": "The current Ladder season gives players a fresh reset to race to Level 99 again, with all standard Diablo II: Resurrected Ladder modes available.",
       "sourceUrl": "https://news.blizzard.com/en-us/article/24246296/diablo-ii-resurrected-ladder-season-13-now-live",
       "confidence": "high"

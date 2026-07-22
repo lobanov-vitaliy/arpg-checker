@@ -4,7 +4,11 @@
   "shortName": "TLI",
   "developer": "XD Entertainment",
   "seasonType": "season",
-  "genres": ["ARPG", "Mobile", "Free to Play"],
+  "genres": [
+    "ARPG",
+    "Mobile",
+    "Free to Play"
+  ],
   "accentColor": "text-lime-400",
   "accentBg": "bg-lime-400",
   "bgGradient": "from-lime-950/90 via-gray-900 to-gray-950",

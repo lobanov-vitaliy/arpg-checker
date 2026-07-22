@@ -29,10 +29,19 @@
   ],
   "seasons": [
     {
+      "seasonName": "Echo",
+      "seasonNumber": 9,
+      "startDate": "2026-04-21",
+      "endDate": null,
+      "description": "Season Echo brings the reworked Zero Dam map, the brand-new Akh Canal Warfare map, new Recon Operator Morse, new weapons (AR57, M82 sniper), expanded sandbox features, and a Tomb Raider collaboration with Lara Croft launching April 30.",
+      "sourceUrl": "https://store.steampowered.com/news/app/2507950/view/523121185690487972",
+      "confidence": "high"
+    },
+    {
       "seasonName": "Morphosis",
       "seasonNumber": 8,
       "startDate": "2026-02-03",
-      "endDate": null,
+      "endDate": "2026-04-21",
       "description": "The current Delta Force season adds the Morphosis content update with a new Operator, seasonal events and rewards, fresh store content, and balance changes across the game's modes.",
       "sourceUrl": "https://www.playdeltaforce.com/en/detail/news-version-update-new-season-morphosis-coming-soon.html",
       "confidence": "high"

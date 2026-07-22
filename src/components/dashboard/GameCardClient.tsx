@@ -59,10 +59,11 @@ export function GameCardClient({ game, seasons, likes, steam }: Props) {
           <p className="text-xs text-gray-500 uppercase tracking-wider mb-0.5">
             {game.developer}
           </p>
-          <div className="flex items-center justify-between gap-2">
-            <a href={`/${locale}/game/${game.id}`}>
+          <div className="flex items-start justify-between gap-2">
+            <a href={`/${locale}/game/${game.id}`} className="min-w-0 flex-1">
+              {/* Reserve 2 lines so long titles that wrap don't make the card taller */}
               <h2
-                className="text-lg font-bold leading-tight hover:underline"
+                className="text-lg font-bold leading-tight hover:underline line-clamp-2 min-h-[2.8125rem]"
                 style={{ color: game.glowColor }}
               >
                 {game.name}

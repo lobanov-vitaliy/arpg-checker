@@ -4,7 +4,11 @@
   "shortName": "OW2",
   "developer": "Blizzard Entertainment",
   "seasonType": "season",
-  "genres": ["FPS", "Hero Shooter", "Team-Based"],
+  "genres": [
+    "FPS",
+    "Hero Shooter",
+    "Team-Based"
+  ],
   "accentColor": "text-orange-400",
   "accentBg": "bg-orange-400",
   "bgGradient": "from-orange-950/90 via-slate-900 to-gray-950",
@@ -27,10 +31,26 @@
   ],
   "seasons": [
     {
+      "seasonName": "Season 3",
+      "seasonNumber": 3,
+      "startDate": "2026-06-16",
+      "endDate": null,
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 2: Summit",
+      "seasonNumber": 2,
+      "startDate": "2026-04-14T18:00:00Z",
+      "endDate": "2026-06-16",
+      "description": "Reign of Talon — Season 2: Summit adds new Damage hero Sierra (with her drone Dorothy), the Operation: Grand Mesa limited-time event (runs through May 4), and Mythic rewards including Volted Overdrive Soldier: 76 and the Sumi-ichimonji Genji weapon skin.",
+      "sourceUrl": "https://overwatch.blizzard.com/en-us/news/24266793/reach-heroic-heights-in-reign-of-talon-season-2-summit/",
+      "confidence": "high"
+    },
+    {
       "seasonName": "Season 1",
       "seasonNumber": 1,
       "startDate": "2026-02-10",
-      "endDate": null,
+      "endDate": "2026-04-14T18:00:00Z",
       "description": "The current Overwatch seasonal cycle begins the 2026 Reign of Talon story arc, adds five new heroes across the season roadmap, refreshes core systems, and starts a new competitive year.",
       "sourceUrl": "https://overwatch.blizzard.com/en-us/news/24246206/overwatch-spotlight-the-reign-of-talon-begins/",
       "confidence": "high"

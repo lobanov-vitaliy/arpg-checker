@@ -1,0 +1,167 @@
+{
+  "id": "the_bazaar",
+  "name": "The Bazaar",
+  "shortName": "Bazaar",
+  "developer": "Tempo",
+  "seasonType": "season",
+  "genres": [
+    "Strategy",
+    "Auto Battler",
+    "Deckbuilding"
+  ],
+  "accentColor": "text-cyan-400",
+  "accentBg": "bg-cyan-400",
+  "bgGradient": "from-cyan-950/90 via-slate-900 to-gray-950",
+  "glowColor": "#22d3ee",
+  "coverImage": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1617400/header.jpg",
+  "officialUrl": "https://playthebazaar.com/",
+  "socialLinks": {
+    "twitter": "https://x.com/PlayTheBazaar",
+    "discord": "https://discord.com/invite/playthebazaar",
+    "youtube": "https://www.youtube.com/c/PlayTheBazaar"
+  },
+  "popularityScore": 42,
+  "steamAppId": 1617400,
+  "searchHints": [
+    "\"The Bazaar\" current active season name number start end date",
+    "\"The Bazaar\" season launch date latest announcement",
+    "site:playthebazaar.com \"The Bazaar\" season"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Monster Madness",
+      "seasonNumber": 14,
+      "startDate": "2026-05-06T16:22:06Z",
+      "endDate": null,
+      "description": "Season 14 \"Monster Madness\" introduces 11 new monsters, the new medium weapon The Boss, the Mystery Box high-stakes encounter, and balance reworks for Karnok, Vanessa and Jules.",
+      "sourceUrl": "https://playthebazaar.com/",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "The Journey Begins",
+      "seasonNumber": 0,
+      "startDate": "2024-10-23",
+      "endDate": "2025-04-02",
+      "description": "Beta Season that marked the beginning of The Bazaar seasonal cycle.",
+      "sourceUrl": "",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Enter the Alchemist",
+      "seasonNumber": 1,
+      "startDate": "2025-04-02",
+      "endDate": "2025-05-07",
+      "description": "Season 1 introduced the Alchemist-themed seasonal update.",
+      "sourceUrl": "",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "The Bazaar Blooms",
+      "seasonNumber": 2,
+      "startDate": "2025-05-07",
+      "endDate": "2025-06-04",
+      "description": "Season 2 continued the live seasonal model with The Bazaar Blooms update.",
+      "sourceUrl": "",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Secrets of the Greenheart",
+      "seasonNumber": 3,
+      "startDate": "2025-06-04",
+      "endDate": "2025-07-02",
+      "description": "Season 3 launched with Secrets of the Greenheart as its featured title.",
+      "sourceUrl": "",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Seagate Summer",
+      "seasonNumber": 4,
+      "startDate": "2025-07-02",
+      "endDate": "2025-08-13",
+      "description": "Season 4 featured the Seagate Summer seasonal update.",
+      "sourceUrl": "",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Enter the Engineer",
+      "seasonNumber": 5,
+      "startDate": "2025-08-13",
+      "endDate": "2025-09-10",
+      "description": "Season 5 introduced the Engineer-themed seasonal content.",
+      "sourceUrl": "",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Enter the Engineer",
+      "seasonNumber": 6,
+      "startDate": "2025-09-10",
+      "endDate": "2025-10-08",
+      "description": "Season 6 continued the Engineer-focused seasonal cycle.",
+      "sourceUrl": "",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Enter the Engineer",
+      "seasonNumber": 7,
+      "startDate": "2025-10-08",
+      "endDate": "2025-11-06",
+      "description": "Season 7 remained part of the Engineer content arc.",
+      "sourceUrl": "",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Season 8",
+      "seasonNumber": 8,
+      "startDate": "2025-11-06",
+      "endDate": "2025-12-17",
+      "description": "Season 8 seasonal update. Title was listed as TBD in the source data.",
+      "sourceUrl": "",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Enter the Chef",
+      "seasonNumber": 9,
+      "startDate": "2025-12-17",
+      "endDate": "2026-01-07",
+      "description": "Season 9 introduced the Chef-themed seasonal content.",
+      "sourceUrl": "",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Enter the Chef",
+      "seasonNumber": 10,
+      "startDate": "2026-01-07",
+      "endDate": "2026-02-04",
+      "description": "Season 10 continued the Chef content arc.",
+      "sourceUrl": "",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "The Crash Landing",
+      "seasonNumber": 11,
+      "startDate": "2026-02-04",
+      "endDate": "2026-03-04",
+      "description": "Season 11 launched under The Crash Landing title.",
+      "sourceUrl": "",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Enter the Hunter",
+      "seasonNumber": 12,
+      "startDate": "2026-03-04",
+      "endDate": "2026-04-01",
+      "description": "Season 12 introduced the Hunter-themed seasonal content.",
+      "sourceUrl": "",
+      "confidence": "medium"
+    },
+    {
+      "seasonName": "Happy Birthday Bazaar",
+      "seasonNumber": 13,
+      "startDate": "2026-04-01",
+      "endDate": "2026-05-06T16:22:06Z",
+      "description": "Current active season celebrating Bazaar anniversary content.",
+      "sourceUrl": "",
+      "confidence": "medium"
+    }
+  ]
+}

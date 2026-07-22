@@ -8,7 +8,8 @@
     "start": "next start",
     "cache:clear": "node -e \"require('fs').rmSync('.cache', { recursive: true, force: true }); console.log('Cache cleared');\"",
     "refresh": "node scripts/refresh-seasons.mjs",
-    "detect": "node scripts/detect-new-seasons.mjs"
+    "detect": "node scripts/detect-new-seasons.mjs",
+    "audit": "node scripts/audit-seasons.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",

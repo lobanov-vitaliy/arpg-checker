@@ -30,10 +30,26 @@
   ],
   "seasons": [
     {
+      "seasonName": "Season 30",
+      "seasonNumber": 30,
+      "startDate": "2026-08-04",
+      "endDate": "2026-11-03",
+      "sourceUrl": "https://www.ea.com/games/apex-legends/apex-legends/news/overclocked-game-updates",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Overclocked",
+      "seasonNumber": 29,
+      "startDate": "2026-05-06T08:00:00Z",
+      "endDate": "2026-08-04",
+      "sourceUrl": "https://www.ea.com/games/apex-legends",
+      "confidence": "low"
+    },
+    {
       "seasonName": "Breach",
       "seasonNumber": 28,
       "startDate": "2026-02-10",
-      "endDate": null,
+      "endDate": "2026-05-06T08:00:00Z",
       "description": "The current Apex Legends season introduces Breach, adding Hardlight windows, Bot Royale Evolved, and notable updates to Fuse, Catalyst, and Bloodhound.",
       "sourceUrl": "https://help.ea.com/en/articles/apex-legends/seasons-and-updates/",
       "confidence": "high"

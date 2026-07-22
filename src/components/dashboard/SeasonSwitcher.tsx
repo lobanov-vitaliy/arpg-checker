@@ -118,11 +118,10 @@ export function SeasonSwitcher({
           ))}
         </div>
 
-        {season.description && (
-          <p className="text-gray-500 text-xs leading-relaxed line-clamp-2 mt-2">
-            {season.description}
-          </p>
-        )}
+        {/* Always reserve 2 lines so cards stay uniform height whether or not a description exists */}
+        <p className="text-gray-500 text-xs leading-relaxed line-clamp-2 mt-2 min-h-[2.4375rem]">
+          {season.description}
+        </p>
       </div>
 
       {/* Start / End dates */}
@@ -152,7 +151,7 @@ export function SeasonSwitcher({
       {/* Next season row — always visible for active season */}
       {season.status === "active" && (
         <div
-          className="flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs"
+          className="flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs min-h-[2.875rem]"
           style={{
             backgroundColor: `${game.glowColor}15`,
             border: `1px solid ${game.glowColor}30`,

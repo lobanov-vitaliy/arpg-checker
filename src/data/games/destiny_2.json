@@ -4,7 +4,11 @@
   "shortName": "D2",
   "developer": "Bungie",
   "seasonType": "season",
-  "genres": ["FPS", "Looter Shooter", "Sci-Fi"],
+  "genres": [
+    "FPS",
+    "Looter Shooter",
+    "Sci-Fi"
+  ],
   "accentColor": "text-indigo-400",
   "accentBg": "bg-indigo-400",
   "bgGradient": "from-indigo-950/90 via-slate-900 to-gray-950",
@@ -26,8 +30,16 @@
   ],
   "seasons": [
     {
+      "seasonName": "Shadow & Order",
+      "seasonNumber": 15,
+      "startDate": "2026-06-09",
+      "endDate": null,
+      "sourceUrl": "https://www.bungie.net/en/Forums/Post/265184805?page=0&sort=0",
+      "confidence": "high"
+    },
+    {
       "seasonName": "Lawless",
-      "seasonNumber": 3,
+      "seasonNumber": 14,
       "startDate": "2025-12-02",
       "endDate": null,
       "description": "The current Year 8 season launched alongside Renegades and covers the next six months of content with the Lawless Frontier mode, new characters, a new social hub, and ongoing major updates.",
@@ -36,7 +48,7 @@
     },
     {
       "seasonName": "Reclamation",
-      "seasonNumber": 2,
+      "seasonNumber": 13,
       "startDate": "2025-07-15",
       "endDate": "2025-12-02",
       "description": "The first Year 8 season began with The Edge of Fate and the Year of Prophecy, starting Destiny 2's new long-form seasonal structure with major updates like Ash & Iron.",
@@ -45,7 +57,7 @@
     },
     {
       "seasonName": "Heresy",
-      "seasonNumber": 1,
+      "seasonNumber": 12,
       "startDate": "2025-02-04",
       "endDate": "2025-07-15",
       "description": "The final Year 7 episode launched before Year 8 and added new story content aboard the Dreadnaught, the Nether activity, the Sundered Doctrine dungeon, and wide sandbox updates.",

@@ -1,0 +1,85 @@
+{
+  "id": "sea_of_thieves",
+  "name": "Sea of Thieves",
+  "shortName": "SoT",
+  "developer": "Rare Ltd",
+  "seasonType": "season",
+  "genres": [
+    "Action",
+    "Adventure",
+    "Pirates"
+  ],
+  "accentColor": "text-emerald-400",
+  "accentBg": "bg-emerald-400",
+  "bgGradient": "from-emerald-950/90 via-teal-900 to-slate-950",
+  "glowColor": "#34d399",
+  "coverImage": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1172620/header.jpg",
+  "officialUrl": "https://www.seaofthieves.com/",
+  "socialLinks": {
+    "twitter": "https://x.com/SeaOfThieves",
+    "discord": "https://discord.gg/SeaOfThieves",
+    "youtube": "https://www.youtube.com/seaofthieves"
+  },
+  "popularityScore": 72,
+  "steamAppId": 1172620,
+  "searchHints": [
+    "\"Sea of Thieves\" current active season name number start end date",
+    "\"Sea of Thieves\" season release date latest announcement",
+    "site:seaofthieves.com \"Sea of Thieves\" season"
+  ],
+  "seasons": [
+    {
+      "seasonName": "Season 20",
+      "seasonNumber": 20,
+      "startDate": "2026-06-25",
+      "endDate": null,
+      "sourceUrl": "https://www.seaofthieves.com/news/community-direct-march2026",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 19",
+      "seasonNumber": 19,
+      "startDate": "2026-03-19",
+      "endDate": "2026-06-25",
+      "description": "Season 19 focuses on explosive combat, major Faction Battles improvements, new live Events and three Acts of seasonal content.",
+      "sourceUrl": "https://www.seaofthieves.com/season-19",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 18",
+      "seasonNumber": 18,
+      "startDate": "2025-12-11",
+      "endDate": "2026-03-19",
+      "description": "Season 18 centers on the Eternal Guard, Sanctuaries, Ashen Garrisons and ancient threats awakened in The Devil’s Roar.",
+      "sourceUrl": "https://www.seaofthieves.com/season-18",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 17",
+      "seasonNumber": 17,
+      "startDate": "2025-08-14",
+      "endDate": "2025-12-11",
+      "description": "Season 17 introduces The Smugglers’ League, hidden Hideouts, contraband runs and a shadowy new smuggling sandbox.",
+      "sourceUrl": "https://www.seaofthieves.com/season-17",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 16",
+      "seasonNumber": 16,
+      "startDate": "2025-05-22",
+      "endDate": "2025-08-14",
+      "description": "Season 16 expands The Reaper’s Bones with their first Voyages, the Order of Bone and Blade and the portable Cannon of Rage.",
+      "sourceUrl": "https://www.seaofthieves.com/season-16",
+      "confidence": "high"
+    },
+    {
+      "seasonName": "Season 15",
+      "seasonNumber": 15,
+      "startDate": "2025-02-20",
+      "endDate": "2025-05-22",
+      "description": "Season 15 is a major Hunter’s Call expansion with new wildlife, Fishing and Raid Voyages, Distinctions and Emissary progression.",
+      "sourceUrl": "https://www.seaofthieves.com/season-15",
+      "confidence": "high"
+    }
+  ]
+}
